@@ -16,7 +16,7 @@
     cassette.classList.toggle('is-playing', playing);
     label.textContent = playing
       ? 'Mettre en pause'
-      : ended ? 'Remettre une pièce' : audio.currentTime > 0 ? 'Reprendre la fuite' : 'Faire tourner la cassette';
+      : ended ? 'Rejouer la bande' : audio.currentTime > 0 ? 'Reprendre la bande' : 'Lancer la bande';
   };
 
   button.addEventListener('click', () => {
@@ -34,15 +34,15 @@
   audio.addEventListener('play', () => {
     ended = false;
     sync();
-    status.textContent = 'La cassette tourne. Garde ton air innocent.';
+    status.textContent = 'Lecture en cours. La bande garde ses secrets.';
   });
   audio.addEventListener('pause', () => {
     sync();
-    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. La preuve est à l’abri.';
+    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. Pas un mot.';
   });
   audio.addEventListener('ended', () => {
     ended = true;
     sync();
-    status.textContent = 'La fuite est terminée. Personne n’a rien entendu.';
+    status.textContent = 'Fin de bande. Aucun nom lâché.';
   });
 })();

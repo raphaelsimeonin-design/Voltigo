@@ -32,22 +32,56 @@
 <div class="bottom-cta"><p>Alors, on peut compter sur toi ?</p><a class="button" data-playtest href="inscription.html">Participer au playtest <svg class="button-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
 <section class="sound-easter" aria-labelledby="sound-title">
 <div class="sound-cassette" aria-hidden="true">
-  <div class="cassette-label">
-    <span class="cassette-label-top">Pièce à conviction · A-01</span>
-    <strong class="cassette-title">Fuite<br>en musique</strong>
-    <div class="cassette-window"><span class="cassette-reel"></span><span class="cassette-tape"></span><span class="cassette-reel"></span></div>
-    <span class="cassette-label-bottom">Face A · 1:32 · Ne pas rembobiner</span>
-  </div>
+  <svg class="cassette-art" viewBox="0 0 360 255" role="presentation">
+    <defs>
+      <linearGradient id="tape-shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3153a0"/><stop offset="1" stop-color="#13285e"/></linearGradient>
+      <linearGradient id="tape-window" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#0b1745"/><stop offset="1" stop-color="#1d2f68"/></linearGradient>
+    </defs>
+    <rect x="9" y="8" width="342" height="239" rx="22" fill="#101d46"/>
+    <rect x="15" y="12" width="330" height="231" rx="19" fill="url(#tape-shell)" stroke="#5474c4" stroke-width="3"/>
+    <g class="cassette-screw" fill="#92a6d8" stroke="#13285e" stroke-width="2">
+      <circle cx="27" cy="25" r="5"/><circle cx="333" cy="25" r="5"/><circle cx="27" cy="230" r="5"/><circle cx="333" cy="230" r="5"/>
+    </g>
+    <g stroke="#13285e" stroke-width="1.5" opacity=".8"><path d="M24 25h6M330 25h6M24 230h6M330 230h6"/><path d="M27 22v6M333 22v6M27 227v6M333 227v6"/></g>
+    <rect x="34" y="28" width="292" height="78" rx="7" fill="#fbbb19"/>
+    <path d="M34 42h292" stroke="#e9a900" stroke-width="1"/>
+    <text x="48" y="40" fill="#51400b" font-family="IBM Plex Mono,monospace" font-size="7.5" font-weight="600" letter-spacing="1">CONFIDENTIEL · VOLTIGO</text>
+    <text x="48" y="72" fill="#1d1b2a" font-family="Baloo 2,Arial,sans-serif" font-size="21" font-weight="800" letter-spacing="-.4">NE BALANCE PAS</text>
+    <text x="48" y="94" fill="#51400b" font-family="IBM Plex Mono,monospace" font-size="7" font-weight="600" letter-spacing=".3">A : LE PLAN  /  B : MOTUS</text>
+    <path d="M294 28h32v25l-16-5-16 5z" fill="#dc1c2b"/>
+    <text x="310" y="43" text-anchor="middle" fill="#fff6e1" font-family="IBM Plex Mono,monospace" font-size="7" font-weight="600">A-01</text>
+    <rect x="34" y="116" width="292" height="96" rx="12" fill="url(#tape-window)" stroke="#92a6d8" stroke-width="2"/>
+    <path d="M129 145c10 0 13 8 21 13 6 4 10 5 18 5h24c8 0 12-1 18-5 8-5 11-13 21-13" fill="none" stroke="#ac5d29" stroke-width="9" stroke-linecap="round"/>
+    <path d="M129 143c10 0 13 8 21 13 6 4 10 5 18 5h24c8 0 12-1 18-5 8-5 11-13 21-13" fill="none" stroke="#f4b45d" stroke-width="1.5" stroke-linecap="round"/>
+    <g fill="#92d8ff" stroke="#d4efff" stroke-width="2"><circle cx="150" cy="158" r="8"/><circle cx="210" cy="158" r="8"/></g>
+    <g fill="#3153a0"><circle cx="150" cy="158" r="3"/><circle cx="210" cy="158" r="3"/></g>
+    <rect x="164" y="154" width="32" height="19" rx="3" fill="#d2d9ee" stroke="#92a6d8" stroke-width="2"/>
+    <path d="M169 158h22M169 163h22M169 168h22" stroke="#3153a0" stroke-width="1.5"/>
+    <g transform="translate(103 169)"><g class="cassette-spool cassette-spool-left">
+      <circle r="29" fill="#e5a900" stroke="#fff0bd" stroke-width="2"/>
+      <circle r="23" fill="#27489a" stroke="#92a6d8" stroke-width="2"/>
+      <g fill="#fbbb19"><rect x="-3.5" y="-18" width="7" height="11" rx="2"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(60)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(120)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(180)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(240)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(300)"/></g>
+      <circle r="8" fill="#fbbb19" stroke="#13285e" stroke-width="2"/><circle r="3" fill="#13285e"/>
+    </g></g>
+    <g transform="translate(257 169)"><g class="cassette-spool cassette-spool-right">
+      <circle r="29" fill="#e5a900" stroke="#fff0bd" stroke-width="2"/>
+      <circle r="23" fill="#27489a" stroke="#92a6d8" stroke-width="2"/>
+      <g fill="#fbbb19"><rect x="-3.5" y="-18" width="7" height="11" rx="2"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(60)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(120)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(180)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(240)"/><rect x="-3.5" y="-18" width="7" height="11" rx="2" transform="rotate(300)"/></g>
+      <circle r="8" fill="#fbbb19" stroke="#13285e" stroke-width="2"/><circle r="3" fill="#13285e"/>
+    </g></g>
+    <path d="M51 220h258" stroke="#5474c4" stroke-width="2"/>
+    <g fill="#13285e"><rect x="132" y="222" width="96" height="12" rx="3"/><rect x="139" y="225" width="14" height="6" rx="1"/><rect x="161" y="225" width="14" height="6" rx="1"/><rect x="185" y="225" width="14" height="6" rx="1"/><rect x="207" y="225" width="14" height="6" rx="1"/></g>
+  </svg>
 </div>
 <div class="sound-copy">
-  <p class="eyebrow">Objet trouvé dans la Planque</p>
-  <h2 id="sound-title">La fuite a son petit refrain.</h2>
-  <p class="sound-warning">Appuie pour lancer la cassette : <strong>le son va démarrer.</strong> Si quelqu’un demande, le coffre s’est mis à chanter.</p>
+  <p class="eyebrow">Objet saisi au repaire</p>
+  <h2 id="sound-title">La bande qui ne balance personne.</h2>
+  <p class="sound-warning">Un clic et la musique démarre. Même à fond, cette bande ne balancera personne.</p>
   <button class="button small sound-toggle" type="button" id="heist-toggle" aria-controls="heist-audio">
     <svg class="sound-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-heist-icon="play" d="M8 5v14l11-7z"/><path data-heist-icon="pause" d="M7 5h4v14H7zM15 5h4v14h-4z" hidden/></svg>
-    <span data-heist-label>Faire tourner la cassette</span>
+    <span data-heist-label>Lancer la bande</span>
   </button>
-  <p class="sound-status" id="heist-status" role="status" aria-live="polite">La cassette attend son complice.</p>
+  <p class="sound-status" id="heist-status" role="status" aria-live="polite">Son coupé. La bande garde ses secrets.</p>
   <audio id="heist-audio" preload="none"><source src="song.mp3" type="audio/mpeg">Ton navigateur ne peut pas lire ce fichier audio.</audio>
 </div>
 </section>
