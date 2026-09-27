@@ -63,7 +63,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{o
 .sound-easter audio{display:none}
 @keyframes heist-reel{to{transform:rotate(360deg)}}
 @keyframes heist-reel-reverse{to{transform:rotate(-360deg)}}
-@media(max-width:760px){.sound-easter{width:calc(100% - 36px);grid-template-columns:1fr;gap:22px;margin-bottom:54px;padding:23px 20px}.sound-cassette{max-width:220px}.sound-copy{text-align:center}.sound-copy .sound-warning{margin-inline:auto}.sound-toggle{margin-inline:auto}}
+@media(max-width:760px){.sound-easter{width:calc(100% - 36px);grid-template-columns:1fr;gap:22px;margin-bottom:54px;padding:23px 20px}.sound-cassette{max-width:220px}.sound-copy{text-align:center}.sound-copy .eyebrow,.sound-copy .sound-warning,.sound-copy .sound-status{margin-inline:auto}.sound-toggle{margin-inline:auto}}
 @media(prefers-reduced-motion:reduce){.sound-easter .cassette-spool{animation:none!important}}
 
 
