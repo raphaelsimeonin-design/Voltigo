@@ -50,7 +50,7 @@
   :root h1 { color: var(--gold); }
   h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 6px; }
   h3 { font-size: 21px; margin-bottom: 8px; font-weight: 800; }
-  p { margin: 0 0 12px; max-width: 64ch; }
+  p { margin: 0 0 15px; max-width: 64ch; }
   .lead { font-size: 20px; max-width: 56ch; font-weight: 500; }
   .eyebrow { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .note { font-size: 14px; color: var(--muted); }
@@ -83,8 +83,9 @@
   nav.toc a { color: var(--muted); text-decoration: none; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 13px; }
   nav.toc a:hover { color: var(--ink); }
 
-  section { padding-block: 104px 10px; border-bottom: 7px double var(--line); }
-  .sechead { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  section { padding-block: 80px 56px; border-bottom: 7px double var(--line); }
+  #rules > #idee { padding-top: 56px; }
+  .sechead { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
   .sechead .sub { color: var(--muted); font-weight: 500; font-size: 17px; max-width: 60ch; }
   /* Traces de pas reprises du dos « plan du casse » : une seule piste descend la page dans les gouttières et traverse entre deux sections */
   #rules { position: relative; padding-inline: var(--gutter, 0px); }
@@ -118,14 +119,14 @@
   .kcard .plaque { background: var(--plaque); color: var(--plaque-ink); padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
   .kcard .plaque h3 { color: inherit; margin: 0; font-size: 20px; }
   .kcard .plaque .n { font-size: 30px; opacity: .9; min-width: 26px; }
-  .kcard .body { padding: 16px 18px 6px; }
+  .kcard .body { padding: 18px 20px 16px; }
   .kcard .body p:last-child { margin-bottom: 8px; }
   .kcard.tint-mint .plaque { background: var(--banque); color: var(--creme); }
   .kcard.tint-muted .plaque { background: var(--surface-2); color: var(--ink); }
 
-  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
-  .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
+  .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
 
   /* Les quatre lieux */
   /* En-têtes des lieux à la même hauteur, quelle que soit la longueur des noms : chaque carte suit les deux rangées de la grille */
@@ -384,18 +385,18 @@
   .sechead + .pop { margin: -4px 0 16px 60px; }
 
   /* Aide-mémoire */
-  .memo { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .memo { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
   .memo ol, .memo ul { margin: 0; padding-left: 18px; font-size: 15px; }
   .memo li { margin-bottom: 6px; }
 
   /* Questions */
   /* Questions : cinq thèmes en cartes, chaque question se déplie ; réponse courte en gras, blague à part */
   .faq-tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 16px; margin: 0 0 18px; }
-  .faq-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .faq-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .faq-group .plaque h3 { font-size: 19px; }
   .faq-group .plaque .nb { margin-left: auto; min-width: 26px; padding: 1px 8px; border-radius: 999px; background: rgba(255, 246, 225, .16); font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; text-align: center; }
   .faq-list details + details { border-top: 2px solid var(--line); }
-  .faq-list summary { cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; font-weight: 700; font-size: 15.5px; line-height: 1.35; transition: background .15s; }
+  .faq-list summary { cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 14px; padding: 16px 20px; font-weight: 700; font-size: 15.5px; line-height: 1.35; transition: background .15s; }
   .faq-list summary::-webkit-details-marker { display: none; }
   .faq-list summary:hover { background: var(--surface-2); }
   .faq-list .q { flex: 1; text-wrap: pretty; }
@@ -403,8 +404,8 @@
   .faq-list .chev::before { content: ""; position: absolute; left: 50%; top: 44%; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translate(-50%, -50%) rotate(45deg); }
   .faq-list details[open] .chev { transform: rotate(180deg); background: var(--sky-soft); border-color: var(--sky); }
   .faq-list details[open] summary { background: var(--surface-2); }
-  .faq-list .a { padding: 4px 18px 16px; background: var(--surface-2); }
-  .faq-list .a p { margin: 0; max-width: 62ch; padding-left: 14px; border-left: 3px solid var(--sky); font-size: 15px; line-height: 1.6; }
+  .faq-list .a { padding: 8px 20px 22px; background: var(--surface-2); }
+  .faq-list .a p { margin: 0; max-width: 62ch; padding-left: 14px; border-left: 3px solid var(--sky); font-size: 15px; line-height: 1.7; }
   .faq-list .a p + p { margin-top: 8px; }
   .faq-list .a .quip { border-left-color: transparent; font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 15px; color: var(--muted); }
   @media (prefers-reduced-motion: reduce) { .faq-list .chev, .faq-list summary { transition: none; } }
@@ -489,6 +490,17 @@
   .memo-finish strong { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 62px; padding: 3px 7px; border-radius: 7px; background: var(--plaque); color: var(--plaque-ink); font: 800 18px/1.3 "Baloo 2", sans-serif; }
   .memo-visual .memo-tie { margin: 9px 0 0; font-size: 11.5px; }
   @media (max-width: 920px) { .memo-visual { grid-template-columns: 1fr; } .memo-visual .memo-scores { grid-template-columns: 1fr 1fr; gap: 12px 24px; } }
+
+  /* Rythme plus doux sur petit écran : titres, cartes et sections respirent sans rallonger inutilement la page. */
+  @media (max-width: 760px) {
+    section { padding-block: 54px 40px; }
+    #rules > #idee { padding-top: 36px; }
+    .sechead { margin-bottom: 20px; }
+    .grid2, .grid3, .grid4, .memo, .faq-grid { gap: 18px; }
+    .kcard .body { padding: 16px 16px 14px; }
+    .faq-list summary { padding: 15px 16px; }
+    .faq-list .a { padding: 6px 16px 18px; }
+  }
 
 </style>
 
