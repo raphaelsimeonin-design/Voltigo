@@ -16,7 +16,7 @@
     cassette.classList.toggle('is-playing', playing);
     label.textContent = playing
       ? 'Mettre en pause'
-      : ended ? 'Rejouer l’alibi' : audio.currentTime > 0 ? 'Reprendre l’alibi' : 'Lancer mon alibi';
+      : ended ? 'Rejouer la cassette' : audio.currentTime > 0 ? 'Reprendre la cassette' : 'Faire tourner la cassette';
   };
 
   button.addEventListener('click', () => {
