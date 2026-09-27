@@ -1,0 +1,1556 @@
+<meta charset="utf-8">
+<title>Voltigo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Comfortaa:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    /* Palette Encre vive du jeu */
+    --creme: #FFF6E1; --or: #FBBB19; --cle: #48B3E7; --butin: #FBBB19; --traitre: #DC1C2B; --alarme: #EF7C00; --flic: #004E9E;
+    --banque: #00794E; --banque-soft: #9CCC8F; --musee: #007AC3; --musee-soft: #CFE8F8; --casino: #E40031; --casino-soft: #FADADE; --bijou: #781D81; --bijou-soft: #DED5EB; --bijou-accent: #01B5DC;
+    --bg: #FFF6E1; --surface: #FFFFFF; --surface-2: #FFF0CC; --ink: #1D1B2A; --muted: #6B6356; --line: #EAD7A6;
+    --green: #00794E; --green-ink: #FFF6E1; --mint: #9CCC8F; --gold: #FBBB19; --gold-ink: #8A5A00; --gold-soft: #FFE9B3;
+    --sky: #48B3E7; --sky-soft: #DDF1FF; --danger: #DC1C2B; --danger-soft: #FADADE; --violet: #781D81;
+    --plaque: #1D1B2A; --plaque-ink: #FFF6E1; --pas: #DEBF78; --plan-fin: rgba(138, 90, 0, .07); --plan-gros: rgba(138, 90, 0, .13); --mur: rgba(138, 90, 0, .22);
+    --shadow: 0 10px 28px rgba(120, 80, 0, .12); color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1F3C88; --surface: #27489A; --surface-2: #2E54AB; --ink: #FFF6E1; --muted: #BBD0F2; --line: #3D63B8;
+      --green: #00794E; --green-ink: #FFF6E1; --mint: #9CCC8F; --gold: #FBBB19; --gold-ink: #FBBB19; --gold-soft: #5A4612;
+      --sky: #92D8FF; --sky-soft: #173B78; --danger: #FF6B6B; --danger-soft: #5A1F2A; --violet: #D9A6E0;
+      --musee-soft: #173B78; --casino-soft: #4A1E2A; --bijou-soft: #3B2A5E; --banque-soft: #1B4E3A;
+      --plaque: #13285E; --plaque-ink: #FFF6E1; --pas: #92D8FF; --plan-fin: rgba(146, 216, 255, .08); --plan-gros: rgba(146, 216, 255, .16); --mur: rgba(146, 216, 255, .38);
+      --shadow: 0 10px 28px rgba(0, 0, 0, .35); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1F3C88; --surface: #27489A; --surface-2: #2E54AB; --ink: #FFF6E1; --muted: #BBD0F2; --line: #3D63B8;
+    --green: #00794E; --green-ink: #FFF6E1; --mint: #9CCC8F; --gold: #FBBB19; --gold-ink: #FBBB19; --gold-soft: #5A4612;
+    --sky: #92D8FF; --sky-soft: #173B78; --danger: #FF6B6B; --danger-soft: #5A1F2A; --violet: #D9A6E0;
+    --musee-soft: #173B78; --casino-soft: #4A1E2A; --bijou-soft: #3B2A5E; --banque-soft: #1B4E3A;
+    --plaque: #13285E; --plaque-ink: #FFF6E1; --pas: #92D8FF; --plan-fin: rgba(146, 216, 255, .08); --plan-gros: rgba(146, 216, 255, .16); --mur: rgba(146, 216, 255, .38);
+    --shadow: 0 10px 28px rgba(0, 0, 0, .35); color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  .ico { display: inline-block; width: 1.15em; height: 1.15em; fill: currentColor; vertical-align: -.2em; flex: none; }
+  .plaque .ico { width: 26px; height: 26px; }
+  .pill .ico { width: 15px; height: 15px; vertical-align: -3px; margin-right: 4px; }
+  .mini .ico { width: 14px; height: 14px; position: absolute; right: 3px; bottom: 3px; opacity: .95; }
+  .dossier .al .ico { width: 20px; height: 20px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Comfortaa", "Nunito", Arial, sans-serif; font-size: 16.5px; line-height: 1.6; padding-inline: 20px; padding-block: 0 80px; }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  /* Barres pleine largeur : onglets, en-tête et sommaire s'étendent jusqu'aux bords de l'écran, leur contenu reste aligné sur la colonne centrale. */
+  .topbar, #rules header, nav.toc { margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); }
+  body { overflow-x: clip; }
+
+  h1, h2, h3, .big, .n { font-family: "Baloo 2", "Comfortaa", Arial, sans-serif; font-weight: 800; line-height: 1.05; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(64px, 11vw, 132px); letter-spacing: -.02em; color: var(--green); }
+  :root[data-theme="dark"] h1 { color: var(--gold); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) h1 { color: var(--gold); } }
+  h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 6px; }
+  h3 { font-size: 21px; margin-bottom: 8px; font-weight: 800; }
+  p { margin: 0 0 12px; max-width: 64ch; }
+  .lead { font-size: 20px; max-width: 56ch; font-weight: 500; }
+  .eyebrow { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .note { font-size: 14px; color: var(--muted); }
+  strong { font-weight: 700; }
+
+  header { padding-block: 40px 30px; border-bottom: 7px double var(--line); display: grid; gap: 22px; }
+  .titleblock { display: grid; gap: 6px; }
+  .tagline { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: clamp(18px, 2.4vw, 26px); color: var(--ink); max-width: 30ch; line-height: 1.2; }
+  /* Logo-titre « lettre de rançon » : tracés générés par Logo/rancon.py, sous-titre compris (étiquette Dymo) */
+  h1.logo { line-height: 0; margin-block: 10px 6px; }
+  h1.logo svg { display: block; width: clamp(280px, 62vw, 680px); height: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
+  /* Barre du haut, collée en haut de l'écran : le logo et le sous-titre */
+  .topbar { display: flex; align-items: center; padding-block: 10px; position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 2px solid var(--line); }
+  .topbar .live { display: inline-flex; align-items: center; gap: 6px; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); }
+  /* Le sommaire colle sous la barre ; une section visée par le sommaire s'arrête juste sous les deux (valeurs posées par le script) */
+  #rules nav.toc { top: var(--barre, 48px); }
+  #rules > section { scroll-margin-top: var(--ancre, 0px); }
+  .topbar .live svg { height: 24px; width: auto; flex: none; }
+  .topbar .live > span { white-space: nowrap; }
+  @media (max-width: 640px) { .topbar .live > span { display: none; } }
+  .meta { display: flex; flex-wrap: wrap; gap: 10px 24px; align-items: center; }
+  .seg { display: inline-flex; border: 3px solid var(--line); border-radius: 999px; overflow: hidden; background: var(--surface); }
+  .seg button { appearance: none; border: 0; background: transparent; color: var(--ink); font: inherit; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 14px; padding: 8px 16px; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--green); color: var(--green-ink); }
+  .seg button:focus-visible, button:focus-visible, select:focus-visible, summary:focus-visible { outline: 3px solid var(--sky); outline-offset: 2px; }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 6px 16px; padding-block: 14px; border-bottom: 7px double var(--line); position: sticky; background: var(--bg); z-index: 5; }
+  nav.toc a { color: var(--muted); text-decoration: none; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 13px; }
+  nav.toc a:hover { color: var(--ink); }
+
+  section { padding-block: 104px 10px; border-bottom: 7px double var(--line); }
+  .sechead { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+  .sechead .sub { color: var(--muted); font-weight: 500; font-size: 17px; max-width: 60ch; }
+  /* Traces de pas reprises du dos « plan du casse » : une seule piste descend la page dans les gouttières et traverse entre deux sections */
+  #rules { position: relative; padding-inline: var(--gutter, 0px); }
+  @media (min-width: 900px) { #rules { --gutter: 28px; } }
+  #rules > section { position: relative; z-index: 1; }
+  .pas-trail { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; fill: var(--pas); pointer-events: none; }
+  /* Trame de plan (blueprint) : lignes fines tous les 48 px, plus marquées tous les 240 px, derrière tout le contenu */
+  #rules::before { content: ""; position: absolute; top: 0; bottom: 0; left: calc(50% - 50vw); width: 100vw; z-index: -1; pointer-events: none;
+    background-image: linear-gradient(to right, var(--plan-gros) 1px, transparent 1px), linear-gradient(to bottom, var(--plan-gros) 1px, transparent 1px),
+                      linear-gradient(to right, var(--plan-fin) 1px, transparent 1px), linear-gradient(to bottom, var(--plan-fin) 1px, transparent 1px);
+    background-size: 240px 240px, 240px 240px, 48px 48px, 48px 48px; background-position: 50% 0; }
+  .pas-trail .murs { fill: none; stroke: var(--mur); stroke-width: 2; }
+  .pas-trail.anim use { opacity: 0; transition: opacity .35s ease-out; }
+  .pas-trail.anim use.go { opacity: 1; }
+  .pas-trail.anim use.now { transition: none; }
+  @media (prefers-reduced-motion: reduce) { .pas-trail use { opacity: 1 !important; transition: none !important; } }
+  .two { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+  /* Paires d'exemple de l'introduction : deux cartes côte à côte, un signe, un verdict */
+  .paires { margin: 6px 0 18px; display: grid; gap: 10px; }
+  .paire { display: flex; align-items: center; gap: 10px; }
+  .paire img { width: 64px; height: auto; aspect-ratio: 512 / 715; border-radius: 7px; box-shadow: 0 3px 10px rgba(0, 0, 0, .18); flex: none; }
+  .paire .op { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 26px; color: var(--muted); }
+  .paire .verdict-mini { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; padding: 6px 14px; border-radius: 999px; }
+  .paire.ok .verdict-mini { background: var(--mint); color: #0B3A26; }
+  .paire.ko .verdict-mini { background: var(--line); color: var(--ink); }
+  @media (max-width: 820px) { .two { grid-template-columns: 1fr; } }
+
+  /* Éléments repris des cartes : pastille, plaque, cadre crème */
+  .pastille { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 24px; color: var(--creme); background: var(--plaque); box-shadow: 0 0 0 4px var(--creme); }
+  .kcard { border-radius: 22px; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+  .kcard .plaque { background: var(--plaque); color: var(--plaque-ink); padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
+  .kcard .plaque h3 { color: inherit; margin: 0; font-size: 20px; }
+  .kcard .plaque .n { font-size: 30px; opacity: .9; min-width: 26px; }
+  .kcard .body { padding: 16px 18px 6px; }
+  .kcard .body p:last-child { margin-bottom: 8px; }
+  .kcard.tint-mint .plaque { background: var(--banque); color: var(--creme); }
+  .kcard.tint-muted .plaque { background: var(--surface-2); color: var(--ink); }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+
+  /* Les quatre lieux */
+  /* En-têtes des lieux à la même hauteur, quelle que soit la longueur des noms : chaque carte suit les deux rangées de la grille */
+  #lieux .grid4 { grid-auto-rows: auto auto; }
+  #lieux .lieu { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
+  .lieu { border-radius: 22px; border: 3px solid var(--creme); box-shadow: var(--shadow); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+  .lieu .top { padding: 16px 18px 12px; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: start; color: var(--creme); }
+  .lieu .top h3 { color: inherit; margin: 0; font-size: 26px; }
+  .lieu .top .initial { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 34px; line-height: 1; opacity: .95; }
+  .lieu .top .names { font-size: 13px; opacity: .92; font-weight: 500; display: grid; gap: 2px; }
+  .lieu .effect { padding: 14px 18px 16px; display: grid; gap: 6px; }
+  .lieu .effect .eyebrow { color: inherit; opacity: .8; }
+  .lieu .effect .txt { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 19px; line-height: 1.25; }
+  .lieu .effect .why { font-size: 14px; opacity: .85; }
+  .lieu.banque .top { background: var(--banque); } .lieu.banque .effect { background: var(--banque-soft); color: #0B3A26; }
+  .lieu.musee .top { background: var(--musee); } .lieu.musee .effect { background: var(--musee-soft); color: #0A2E4A; }
+  .lieu.casino .top { background: var(--casino); } .lieu.casino .effect { background: var(--casino-soft); color: #4A0A14; }
+  .lieu.bijou .top { background: var(--bijou); } .lieu.bijou .effect { background: var(--bijou-soft); color: #2E0F33; }
+  :root[data-theme="dark"] .lieu .effect, .dark .lieu .effect { color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lieu .effect { color: var(--ink); } }
+
+  .pill { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .04em; padding: 5px 12px; border-radius: 999px; border: 2px solid var(--line); background: var(--surface); }
+  .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+  .gallery img { display: block; width: 100%; height: auto; aspect-ratio: 1024 / 1430; border-radius: 12px; box-shadow: var(--shadow); }
+
+  table { border-collapse: collapse; width: 100%; font-size: 15px; }
+  .tablewrap { overflow-x: auto; border-radius: 18px; border: 3px solid var(--line); background: var(--surface); }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: "Comfortaa", sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; white-space: nowrap; }
+
+  .btn { appearance: none; border: 3px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 14px; padding: 9px 18px; border-radius: 999px; cursor: pointer; }
+  .btn.solid { background: var(--gold); border-color: var(--gold); color: #2A1B00; }
+  .btn:disabled { opacity: .4; cursor: default; }
+
+  .say { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 22px; color: var(--gold-ink); margin-bottom: 8px; }
+  .kcard .say { color: var(--gold-ink); }
+
+  /* Révélation */
+  .outcome .plaque .n { font-size: 26px; }
+  .sim { margin-top: 24px; border: 3px solid var(--line); border-radius: 22px; padding: 20px; background: var(--surface-2); display: grid; gap: 14px; }
+  /* Simulateur : deux roues de cartes (défilement aimanté), la carte au centre est jouée ; le verdict suit */
+  .sim-duel { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; }
+  .sim .vs { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; text-align: center; color: var(--muted); }
+  .roue { --card-width: 108px; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "lab lab lab" "prev piste next" "nom nom nom"; align-items: center; gap: 4px; }
+  .roue-lab { grid-area: lab; text-align: center; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .roue-piste { grid-area: piste; position: relative; display: flex; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 10px max(0px, calc(50% - var(--card-width) / 2)); perspective: 700px; outline: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%); }
+  .roue-piste::-webkit-scrollbar { display: none; }
+  .roue-piste:focus-visible .roue-carte.on img { box-shadow: 0 0 0 3px var(--sky), 0 0 0 7px var(--sky-soft), 0 8px 18px rgba(0, 0, 0, .3); }
+  .roue-carte { flex: none; width: var(--card-width); aspect-ratio: 512 / 715; padding: 0; border: 0; background: none; border-radius: 9px; scroll-snap-align: center; cursor: pointer; will-change: transform, opacity; }
+  .roue-carte img { display: block; width: 100%; height: 100%; border-radius: 9px; box-shadow: 0 5px 12px rgba(0, 0, 0, .25); pointer-events: none; transition: box-shadow .2s; }
+  .roue-carte.on img { box-shadow: 0 0 0 3px var(--sky), 0 8px 18px rgba(0, 0, 0, .3); }
+  .roue-fl { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: 800 22px/1 "Baloo 2", sans-serif; cursor: pointer; display: grid; place-items: center; padding: 0 0 3px; }
+  .roue-fl.prev { grid-area: prev; } .roue-fl.next { grid-area: next; }
+  .roue-fl:hover { border-color: var(--sky); }
+  .roue-nom { grid-area: nom; text-align: center; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px; line-height: 1.25; min-height: 2.5em; text-wrap: balance; }
+  .verdict.flash { animation: verdictIn .3s ease-out; }
+  @keyframes verdictIn { from { opacity: .35; transform: translateY(4px); } }
+  @media (prefers-reduced-motion: reduce) { .verdict.flash { animation: none; } }
+  .verdict { border-radius: 14px; padding: 14px 18px; background: var(--surface); border-left: 8px solid var(--line); }
+  .verdict[data-kind="ok"] { border-left-color: var(--mint); } .verdict[data-kind="vol"] { border-left-color: var(--danger); } .verdict[data-kind="ko"] { border-left-color: var(--line); }
+  .verdict .k { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; display: block; margin-bottom: 2px; }
+  .verdict p { margin: 0; font-size: 15px; }
+
+  /* Gagner */
+  .win .big { font-size: 30px; line-height: 1.1; margin-bottom: 8px; }
+  .palm { display: flex; gap: 8px; margin: 6px 0 10px; flex-wrap: wrap; }
+  .mini { position: relative; width: 44px; height: 62px; border-radius: 8px; border: 3px solid var(--creme); background: var(--surface-2); color: var(--creme); display: grid; place-items: center; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .mini.banque { background: var(--banque); } .mini.musee { background: var(--musee); } .mini.casino { background: var(--casino); } .mini.bijou { background: var(--bijou); }
+  .mini.neutre { background: var(--plaque); }
+  .mini.left { transform: rotate(-18deg); } .mini.right { transform: rotate(18deg); }
+    .dossier { display: flex; gap: 10px; align-items: center; margin: 4px 0 10px; }
+  .dossier .al { width: 40px; height: 56px; border-radius: 8px; border: 3px solid var(--creme); background: var(--plaque); display: grid; place-items: center; color: var(--creme); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+  .dossier .al.last { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .dossier .al.n { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; }
+  .dossier .arrow { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; color: var(--gold-ink); }
+
+  /* Variantes */
+  .variant header { padding: 0; border: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 13px; }
+  .switch input { appearance: none; width: 46px; height: 26px; border-radius: 999px; background: var(--line); position: relative; cursor: pointer; margin: 0; flex: none; }
+  .switch input::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface); transition: transform .15s; }
+  .switch input:checked { background: var(--mint); }
+  .switch input:checked::after { transform: translateX(20px); }
+  .switch input:disabled { opacity: .4; }
+  .variant .body { display: none; }
+  .variant.on .body { display: block; }
+  .variant .teaser { margin-bottom: 8px; }
+  .variant.on .teaser { display: none; }
+
+  /* Exemple */
+  /* Vue de table de l'exemple */
+  .tvwrap { overflow-x: auto; padding-bottom: 6px; }
+  .tableview { display: grid; grid-template-columns: 150px minmax(300px, 1fr) 150px; grid-template-rows: auto minmax(250px, auto) auto; gap: 10px; min-width: 740px; }
+  .seatv { border: 3px solid var(--line); border-radius: 18px; background: var(--surface); padding: 8px 10px; display: grid; gap: 6px; align-content: start; transition: border-color .2s, box-shadow .2s; }
+  .seatv.n { grid-column: 2; grid-row: 1; } .seatv.s { grid-column: 2; grid-row: 3; } .seatv.w { grid-column: 1; grid-row: 2; } .seatv.e { grid-column: 3; grid-row: 2; }
+  .seatv.n, .seatv.s { grid-template-columns: auto 1fr auto; align-items: center; }
+  .seatv.n .pname, .seatv.s .pname { grid-row: 1; }
+  .seatv.meneur { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-soft); }
+  .seatv.complice { border-color: var(--sky); box-shadow: 0 0 0 3px var(--sky-soft); }
+  .seatv.alarme { border-color: var(--alarme); box-shadow: 0 0 0 3px rgba(239, 124, 0, .3); }
+  .pname { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; }
+  .pname .role { display: block; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .hand, .planq, .cards { display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start; min-height: 52px; }
+  .seatv.w .hand, .seatv.e .hand, .seatv.w .planq, .seatv.e .planq { min-height: 0; }
+  .planq { border-top: 2px dashed var(--line); padding-top: 6px; position: relative; }
+  .plabel, .zl { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 100%; }
+  .mc { width: 36px; height: 50px; border-radius: 6px; background: var(--surface-2); border: 2px solid var(--line); display: grid; place-items: center; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 17px; color: var(--ink); position: relative; flex: none; }
+  .mc .ico { position: absolute; right: 2px; bottom: 2px; width: 15px; height: 15px; }
+  .mc.banque { color: var(--banque); } .mc.musee { color: var(--musee); } .mc.casino { color: var(--casino); } .mc.bijou { color: var(--bijou); }
+  .mc.tr { background: var(--traitre); color: var(--creme); border-color: var(--traitre); } .mc.al { background: var(--alarme); color: var(--creme); border-color: var(--alarme); }
+  .mc.back { background: url(cartes/13-dos-du-paquet.webp) center / cover; border: 0; }
+  .mc.gone { opacity: .35; }
+  .mc.big { width: 58px; height: 80px; font-size: 26px; border-radius: 9px; } .mc.big .ico { width: 23px; height: 23px; right: 4px; bottom: 4px; }
+  .pq { display: grid; gap: 2px; justify-items: center; }
+  .pq .to { font-family: "IBM Plex Mono", monospace; font-size: 9.5px; color: var(--ink); background: var(--gold); border-radius: 999px; padding: 0 6px; white-space: nowrap; }
+  .pq .to.face { background: var(--line); color: var(--muted); }
+  .felt { grid-column: 2; grid-row: 2; border-radius: 22px; background: var(--green); color: var(--green-ink); padding: 12px 14px; display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: 1fr auto; gap: 10px 14px; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .08), inset 0 -40px 80px rgba(0, 0, 0, .18); }
+  .felt .zone { display: grid; gap: 4px; align-content: start; }
+  .felt .zl { color: inherit; opacity: .8; }
+  .felt .pioche { grid-column: 1; grid-row: 1 / 3; } .felt .play { grid-column: 2; grid-row: 1; } .felt .defausse { grid-column: 3; grid-row: 1 / 3; } .felt .dossier { grid-column: 2; grid-row: 2; }
+  .felt .cards { min-height: 52px; }
+  .felt .cards:empty::after { content: "vide"; font-family: "IBM Plex Mono", monospace; font-size: 10px; opacity: .6; align-self: center; }
+  .play { display: grid; gap: 8px; justify-items: center; align-content: center; text-align: center; }
+  .play .bubble2 { background: var(--surface); color: var(--ink); border-radius: 16px 16px 16px 4px; padding: 6px 12px; font-family: "Baloo 2", sans-serif; font-weight: 600; font-size: 16px; }
+  .play .duo { display: flex; gap: 22px; align-items: flex-end; }
+  .play .slotv { display: grid; gap: 3px; justify-items: center; font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; opacity: .95; }
+  .play .res { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 15px; padding: 4px 12px; border-radius: 999px; background: rgba(255, 255, 255, .14); }
+  .play .res.ok { background: rgba(156, 204, 143, .35); } .play .res.vol { background: rgba(220, 28, 43, .45); } .play .res.al { background: rgba(239, 124, 0, .5); }
+  .play .idle { opacity: .8; font-size: 14px; }
+  .scene .step { font-family: "IBM Plex Mono", monospace; font-size: 12px; opacity: .85; }
+  .scene .who { color: var(--gold-ink); }
+  .scene .txt { font-size: 17px; }
+  .scene .lesson { border-left: 4px solid var(--gold); padding-left: 14px; color: var(--muted); font-size: 14.5px; margin-bottom: 10px; }
+  /* Boutons au-dessus de l'encadré, largeur fixe : ils restent au même endroit quelle que soit la longueur du texte ou du libellé */
+  .scene-col > .nav { display: flex; gap: 8px; margin: 0 0 14px; }
+  .scene-col > .nav { flex-wrap: wrap; }
+  .scene-col > .nav .btn { flex: none; width: 8.2em; text-align: center; padding-inline: 6px; white-space: nowrap; }
+  .scene-col > .nav #exAuto { width: 9em; }
+  
+  /* Barème illustré : vraies cartes en éventail, pastille de points */
+  .combos-title { margin: 26px 0 0; font-size: 24px; }
+  .combos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px 18px; margin-top: 18px; }
+  .combo { position: relative; border-radius: 22px; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); padding: 14px 16px 14px; display: grid; gap: 6px; align-content: start; }
+  .combo .fan { display: flex; justify-content: center; align-items: flex-end; height: 118px; margin-bottom: 4px; }
+  .combo .fan img { width: 72px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, .22); margin: 0 -12px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 115%; }
+  .combo .pts { position: absolute; top: -14px; right: -10px; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #2A1B00; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 28px; box-shadow: 0 0 0 4px var(--creme); z-index: 1; }
+  .combo.zero .pts { background: var(--line); color: var(--ink); }
+  .combo h4 { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 19px; margin: 0; }
+  .combo p { margin: 0; font-size: 14.5px; }
+  .combo .punch { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 16px; color: var(--gold-ink); }
+  /* Exemple : les vraies cartes en miniature */
+  .mc.img { background: none; border: 0; padding: 0; overflow: hidden; border-radius: 5px; box-shadow: 0 2px 6px rgba(0, 0, 0, .18); }
+  .mc.img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mc.img.big { border-radius: 8px; }
+  .play .vols { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; opacity: .9; }
+
+  /* Exemple : table carrée vue de dessus, mains en éventail, tout en unités du plateau (cqw) */
+  .ex-wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 28px; align-items: start; }
+  @media (max-width: 920px) { .ex-wrap { grid-template-columns: 1fr; } }
+  .ex-board { position: relative; width: 100%; max-width: 720px; margin: 0 auto; aspect-ratio: 1; container-type: inline-size; }
+  .ex-board img { display: block; }
+  /* Colonne plus courte que la table ; les anciens commentaires disparaissent en fondu. */
+  @media (min-width: 921px) {
+    .scene-col { height: 0; min-height: 85%; display: flex; flex-direction: column; }
+    .scene-col > .nav, .scene-col > .ex-chips { flex-shrink: 0; }
+    .scene-col > .scene { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+    .scene-col > .scene > .plaque { flex-shrink: 0; }
+    .scene-col > .scene > .body { flex: 1; min-height: 0; display: flex; overflow: clip; }
+    .ex-log-window { width: 100%; min-height: 0; overflow: clip; }
+    .ex-log-window.has-history { -webkit-mask-image: linear-gradient(to bottom, transparent, #000 32px); mask-image: linear-gradient(to bottom, transparent, #000 32px); }
+    .ex-log-window .ex-log { transform: translateY(var(--log-offset, 0px)); transition: transform .35s ease-out; }
+  }
+  .ex-table { position: absolute; inset: 16.5%; border-radius: 4.5cqw; padding: 1.5cqw; background: linear-gradient(145deg, #A8733F, #7A4B24 55%, #5E3718); box-shadow: 0 2.4cqw 5cqw rgba(0, 0, 0, .38), inset 0 .3cqw 0 rgba(255, 255, 255, .18); }
+  .ex-felt { width: 100%; height: 100%; border-radius: 3.2cqw; background: radial-gradient(circle at 50% 42%, #1E9A66 0%, #0B7A4E 55%, #055536 100%); box-shadow: inset 0 0 0 .35cqw rgba(255, 255, 255, .08), inset 0 -4cqw 7cqw rgba(0, 0, 0, .28); }
+  /* Cartes de l'exemple : une seule couche, chaque carte glisse d'une zone à l'autre. Position, angle et échelle en unités du plateau,
+     largeur de base 10cqw ; la carte se retourne (dos / face) sur elle-même. */
+  .ex-card { position: absolute; left: 0; top: 0; width: 10cqw; aspect-ratio: 512 / 715; margin: -6.982cqw 0 0 -5cqw; z-index: var(--z, 3); pointer-events: none;
+    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s)); transition: transform .7s cubic-bezier(.3, .75, .25, 1); }
+  .ex-card.inhand { pointer-events: auto; }
+  .ex-card .lift { width: 100%; height: 100%; perspective: 80cqw; transition: transform .3s ease-out; }
+  .ex-card.hi .lift { transform: translateY(-1.8cqw); }
+  .ex-card.inhand:hover { z-index: 40; }
+  .ex-card.inhand:hover .lift { transform: translateY(-3.2cqw); }
+  .ex-card .flip { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .6s ease-in-out; }
+  .ex-card.down .flip { transform: rotateY(180deg); }
+  .ex-card img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 1cqw; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: 0 .6cqw 1.4cqw rgba(0, 0, 0, .35); }
+  .ex-card img.bk { transform: rotateY(180deg); }
+  .ex-card.hi img.fr { box-shadow: 0 0 0 .55cqw #92D8FF, 0 1.2cqw 2.4cqw rgba(0, 0, 0, .45); }
+  /* Planques : une paire de Clés se range en deux cartes qui se chevauchent, cerclées de vert ; chaque carte ou groupe porte ses points */
+  .ex-card.paire img.fr { box-shadow: 0 0 0 .45cqw #9CCC8F, 0 .8cqw 1.8cqw rgba(0, 0, 0, .4); }
+  .ex-pts { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); z-index: 13; padding: .1cqw .8cqw .15cqw; border-radius: 999px; background: #FFF6E1; color: #1D1B2A; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: max(8.5px, 1.35cqw); line-height: 1.35; white-space: nowrap; box-shadow: 0 .25cqw .7cqw rgba(0, 0, 0, .35); transition: left .7s cubic-bezier(.3, .75, .25, 1), top .7s cubic-bezier(.3, .75, .25, 1); animation: exPop .35s ease-out; pointer-events: none; }
+  .ex-pts.zero { background: #3D4A6B; color: #D6DEF0; }
+  .ex-pts.paire { background: #9CCC8F; color: #0B3A26; }
+  .ex-board.instant .ex-pts { transition: none; }
+  .ex-board.instant .ex-card, .ex-board.instant .ex-card * { transition: none !important; }
+
+  /* Cartouches collés à la main de chaque joueur : au-dessus de l'éventail, ou à côté pour l'ouest et l'est */
+  .ex-plate { position: absolute; transform: translate(-50%, -50%); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .15cqw .9cqw; min-width: 15cqw; padding: .6cqw 1.3cqw .7cqw; border-radius: 1.8cqw; background: var(--surface); border: max(2px, .4cqw) solid var(--line); box-shadow: var(--shadow); text-align: center; transition: border-color .25s, box-shadow .25s; }
+  .p-n { left: 50%; top: 3.2%; } .p-s { left: 50%; top: 96.8%; } .p-w { left: 9.5%; top: 32.5%; } .p-e { left: 90.5%; top: 32.5%; }
+  .ex-plate .nm { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: max(11px, 2.3cqw); line-height: 1.1; }
+  .ex-plate .pt { padding: 0 .9cqw; border-radius: 999px; background: var(--plaque); color: var(--plaque-ink); font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: max(9px, 1.7cqw); line-height: 1.5; }
+  .ex-plate .rl { flex-basis: 100%; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: max(7px, 1.15cqw); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .ex-plate .say { position: absolute; left: calc(100% + .8cqw); top: 50%; translate: 0 -50%; padding: .3cqw 1.1cqw; border-radius: 999px; background: #FFF6E1; color: #1D1B2A; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: max(9px, 1.6cqw); white-space: nowrap; rotate: -6deg; box-shadow: 0 .4cqw 1cqw rgba(0, 0, 0, .3); animation: exPop .35s ease-out; }
+  .p-e .say { left: auto; right: calc(100% + .8cqw); rotate: 6deg; }
+  .ex-plate .say.al { background: #EF7C00; color: #FFF6E1; }
+  .ex-plate.meneur { border-color: var(--green); box-shadow: 0 0 0 .6cqw rgba(0, 121, 78, .4), var(--shadow); }
+  .ex-plate.complice { border-color: var(--sky); box-shadow: 0 0 0 .6cqw var(--sky-soft), var(--shadow); }
+  .ex-plate.alarme { border-color: var(--alarme); box-shadow: 0 0 0 .6cqw rgba(239, 124, 0, .35), var(--shadow); }
+
+  /* Planques en pointillés sur le tapis, devant chaque joueur (deux cartes) */
+  .ex-planq { position: absolute; transform: translate(-50%, -50%); z-index: 1; width: 13.8cqw; height: 9.6cqw; border-radius: 1.2cqw; border: 2px dashed rgba(255, 255, 255, .32); display: grid; place-items: center; }
+  .ex-planq.v { width: 9.6cqw; height: 13.8cqw; }
+  .q-n { left: 50%; top: 26%; } .q-s { left: 50%; top: 76%; } .q-w { left: 26%; top: 50%; } .q-e { left: 74%; top: 50%; }
+  .ex-planq::after { content: "Planque"; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: max(8px, 1.05cqw); letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+  .ex-planq.full::after { visibility: hidden; }
+  /* Pioche, défausse, dossier : étiquette au-dessus, emplacement en pointillés (les cartes se posent dessus) */
+  .ex-zone { position: absolute; transform: translate(-50%, -50%); z-index: 1; display: grid; justify-items: center; gap: .5cqw; color: #FFF6E1; }
+  .z-pioche { left: 26.5%; top: 26.5%; } .z-def { left: 73.5%; top: 26.5%; } .z-dos { left: 26.5%; top: 73.5%; }
+  .ex-zone .zl { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: max(7.5px, 1.05cqw); letter-spacing: .08em; text-transform: uppercase; opacity: .8; white-space: nowrap; }
+  .ex-zone .stk { width: 5.8cqw; aspect-ratio: 512 / 715; border-radius: .6cqw; border: 2px dashed rgba(255, 255, 255, .3); display: grid; place-items: center; }
+  .ex-zone .stk::after { content: "vide"; font-family: "IBM Plex Mono", monospace; font-size: max(8px, 1cqw); opacity: .6; }
+  .ex-zone.full .stk::after { visibility: hidden; }
+  /* Centre du tapis : l'annonce du meneur et le résultat du coup */
+  .ex-say, .ex-res { position: absolute; left: 50%; transform: translate(-50%, -50%); z-index: 18; text-align: center; font-family: "Baloo 2", sans-serif; transition: opacity .25s; }
+  .ex-say { top: 40.5%; max-width: 32cqw; background: #FFF6E1; color: #1D1B2A; border-radius: 2cqw 2cqw 2cqw .5cqw; padding: .5cqw 1.4cqw; font-weight: 700; font-size: max(10px, 1.65cqw); line-height: 1.2; box-shadow: 0 .5cqw 1.2cqw rgba(0, 0, 0, .3); }
+  .ex-res { top: 61%; padding: .3cqw 1.6cqw; border-radius: 999px; font-weight: 800; font-size: max(11px, 1.8cqw); white-space: nowrap; color: #FFF6E1; box-shadow: 0 .4cqw 1cqw rgba(0, 0, 0, .3); }
+  .ex-say:empty, .ex-res:empty { opacity: 0; }
+  .ex-say:not(:empty), .ex-res:not(:empty) { animation: exPop .35s ease-out; }
+  .ex-res.ok { background: #9CCC8F; color: #0B3A26; } .ex-res.vol { background: #DC1C2B; } .ex-res.al { background: #EF7C00; } .ex-res.ko { background: #13285E; }
+  /* Récit du coup : une phrase par étape, la dernière en avant */
+  .scene-col > .nav .btn.solid { background: var(--green); border-color: var(--green); color: var(--green-ink); }
+  .scene-col > .nav .btn[aria-pressed="true"] { background: var(--sky-soft); border-color: var(--sky); }
+  .ex-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: -4px 0 14px; }
+  .ex-chips button { appearance: none; border: 2px solid var(--line); background: var(--surface); color: var(--muted); font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; padding: 4px 10px; min-width: 2.6em; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+  .ex-chips button[aria-current="true"] { background: var(--plaque); border-color: var(--plaque); color: var(--plaque-ink); }
+  .ex-log { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 10px; }
+  .ex-log li { border-left: 4px solid var(--line); padding-left: 12px; font-size: 14.5px; line-height: 1.45; color: var(--muted); }
+  .ex-log li.now { border-left-color: var(--sky); color: var(--ink); font-size: 17px; animation: exIn .4s ease-out; }
+  .ex-log .joke { display: inline-block; margin-top: 6px; padding: 3px 10px; border-radius: 10px; background: var(--sky-soft); color: var(--ink); font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 14.5px; line-height: 1.35; rotate: -1.5deg; }
+  .ex-log li:not(.now) .joke { display: none; }
+  @keyframes exIn { from { opacity: 0; translate: 0 8px; } }
+  /* Une colonne : la table au-dessus, le récit dessous. On garde l'étape en cours et la précédente pour que tout tienne à l'écran. */
+  @media (max-width: 920px) { .ex-log li:not(.now):not(:nth-last-child(2)) { display: none; } }
+  @media (max-width: 560px) { .scene-col > .nav .btn { width: 7.4em; font-size: 13px; } .scene-col > .nav #exAuto { width: 8.2em; } }
+  @keyframes exPop { from { opacity: 0; translate: 0 -1.2cqw; scale: .85; } }
+  @media (prefers-reduced-motion: reduce) { .ex-log-window .ex-log, .ex-log li.now { animation: none !important; transition: none !important; } .ex-board * { animation: none !important; transition: none !important; } }
+
+  /* Petites blagues qui « popent » : pastille inclinée */
+  .pop { display: inline-block; margin: 2px 0 10px; padding: 4px 12px; border-radius: 12px; background: var(--gold-soft); color: var(--gold-ink); font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 14.5px; line-height: 1.35; transform: rotate(-1.8deg); box-shadow: 0 2px 0 rgba(0, 0, 0, .08); }
+  .pop.r { transform: rotate(1.6deg); }
+  .sechead + .pop { margin: -4px 0 16px 60px; }
+
+  /* Aide-mémoire */
+  .memo { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .memo ol, .memo ul { margin: 0; padding-left: 18px; font-size: 15px; }
+  .memo li { margin-bottom: 6px; }
+
+  /* Questions */
+  /* Questions : cinq thèmes en cartes, chaque question se déplie ; réponse courte en gras, blague à part */
+  .faq-tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 16px; margin: 0 0 18px; }
+  .faq-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .faq-group .plaque h3 { font-size: 19px; }
+  .faq-group .plaque .nb { margin-left: auto; min-width: 26px; padding: 1px 8px; border-radius: 999px; background: rgba(255, 246, 225, .16); font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; text-align: center; }
+  .faq-list details + details { border-top: 2px solid var(--line); }
+  .faq-list summary { cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 14px; padding: 14px 18px; font-weight: 700; font-size: 15.5px; line-height: 1.35; transition: background .15s; }
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary:hover { background: var(--surface-2); }
+  .faq-list .q { flex: 1; text-wrap: pretty; }
+  .faq-list .chev { flex: none; width: 24px; height: 24px; margin-top: -1px; border-radius: 50%; border: 2px solid var(--line); position: relative; transition: transform .25s ease, background .2s, border-color .2s; }
+  .faq-list .chev::before { content: ""; position: absolute; left: 50%; top: 44%; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translate(-50%, -50%) rotate(45deg); }
+  .faq-list details[open] .chev { transform: rotate(180deg); background: var(--sky-soft); border-color: var(--sky); }
+  .faq-list details[open] summary { background: var(--surface-2); }
+  .faq-list .a { padding: 4px 18px 16px; background: var(--surface-2); }
+  .faq-list .a p { margin: 0; max-width: 62ch; padding-left: 14px; border-left: 3px solid var(--sky); font-size: 15px; line-height: 1.6; }
+  .faq-list .a p + p { margin-top: 8px; }
+  .faq-list .a .quip { border-left-color: transparent; font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 15px; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { .faq-list .chev, .faq-list summary { transition: none; } }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  /* Quelques fiches retenues par le même scotch que l'avis de recrutement. */
+  .kcard.taped { position: relative; overflow: visible; margin-top: 14px; }
+  .kcard.taped::before { content: ""; position: absolute; z-index: 2; width: 115px; height: 27px; left: calc(50% - 57.5px); top: -15px; background: #FFF6E199; rotate: -7deg; pointer-events: none; }
+  .kcard.taped > .plaque { border-radius: 18px 18px 0 0; }
+  .kcard.taped > .body { border-radius: 0 0 18px 18px; }
+  .memo .taped:nth-child(even)::before { rotate: 5deg; }
+  :root[data-theme="dark"] .kcard.taped::before { background: #92D8FF66; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kcard.taped::before { background: #92D8FF66; } }
+
+  /* Une fin pleine largeur, identique à l'accueil, hors du plan et de ses pas. */
+  body { padding-bottom: 0; }
+  #rules > #faq { border-bottom: 0; padding-bottom: 64px; }
+  .footer { display: block; position: relative; z-index: 1; margin: 0 -20px; border: 0; border-top: 2px solid var(--line); padding: 27px 0; background: var(--bg); color: var(--muted); }
+  .footer .shell { width: min(1160px, calc(100% - 48px)); margin-inline: auto; display: flex; justify-content: space-between; align-items: center; gap: 25px; font-family: "Comfortaa", Arial, sans-serif; font-size: 12px; line-height: 1.65; }
+  .footer img { display: block; width: 125px; height: auto; }
+  .footer a { color: inherit; text-underline-offset: 4px; }
+  .footer a:focus-visible { outline: 3px solid var(--sky); outline-offset: 5px; }
+  @media (max-width: 760px) { .footer .shell { width: calc(100% - 36px); flex-wrap: wrap; justify-content: center; text-align: center; } }
+
+
+  /* Une seule fiche de préparation, légèrement de travers sous son scotch. */
+  #mise .setup-card { width: 100%; rotate: -.7deg; margin-block: 24px 18px; }
+  #mise .setup-card > .body { padding: 20px 26px 16px; }
+  #mise .setup-card ol { margin: 0 0 18px; padding-left: 22px; display: grid; gap: 12px; }
+  @media (max-width: 600px) {
+    #mise .setup-card { rotate: -.35deg; }
+    #mise .setup-card > .body { padding: 18px 18px 12px; }
+  }
+
+
+  /* Duel compact : cartes toujours côte à côte, commandes tactiles accessibles. */
+  .sim { padding: 12px; gap: 10px; border-radius: 18px; }
+  .roue-fl:disabled { opacity: .3; cursor: default; }
+  .verdict { padding: 10px 14px; border-radius: 12px; }
+  .verdict p { max-width: none; line-height: 1.5; }
+  @media (max-width: 760px) {
+    .sim { padding: 10px; gap: 8px; }
+    .sim-duel { gap: 4px; align-items: start; }
+    .sim .vs { align-self: start; margin-top: 94px; font-size: 18px; }
+    .roue { --card-width: clamp(88px, 25vw, 108px); grid-template-columns: 1fr 1fr; grid-template-areas: "lab lab" "piste piste" "nom nom" "prev next"; gap: 2px 6px; }
+    .roue-lab { font-size: 11px; letter-spacing: .04em; }
+    .roue-nom { font-size: 14px; min-height: 2.5em; }
+    .roue-fl.prev { justify-self: end; }
+    .roue-fl.next { justify-self: start; }
+    .roue-piste { -webkit-mask-image: linear-gradient(90deg, transparent, #000 5px, #000 calc(100% - 5px), transparent); mask-image: linear-gradient(90deg, transparent, #000 5px, #000 calc(100% - 5px), transparent); }
+    .verdict { padding: 10px 12px; border-left-width: 5px; }
+  }
+
+
+  /* Mémo visuel : symboles du jeu, actions courtes et combinaisons illustrées. */
+  .memo-visual { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .memo-visual .body { padding: 16px; }
+  .memo-visual .memo-rows { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+  .memo-visual .memo-rows li { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 10px; align-items: start; margin: 0; }
+  .memo-rows strong { display: block; font-family: "Baloo 2", sans-serif; font-size: 18px; line-height: 1.2; margin: 2px 0 4px; }
+  .memo-caption { display: block; font-size: 12.5px; line-height: 1.45; color: var(--muted); }
+  .memo-symbol { display: flex; align-items: center; justify-content: center; gap: 2px; min-height: 44px; border-radius: 10px; background: var(--sky-soft); color: var(--sky); }
+  .memo-symbol .ico { width: 19px; height: 24px; }
+  .memo-symbol > .ico:only-child { width: 28px; height: 28px; }
+  .memo-cardback { width: 22px; height: 30px; border: 2px solid currentColor; border-radius: 4px; rotate: -10deg; background: repeating-linear-gradient(45deg, transparent 0 4px, var(--sky) 4px 5px); }
+  .memo-five,.memo-cross { font-family: "Baloo 2", sans-serif; font-size: 31px; font-weight: 800; line-height: 1; }
+  .memo-five span { font-size: 20px; }
+  .memo-details { display: inline-block; margin-top: 14px; color: var(--muted); font-size: 12px; text-underline-offset: 4px; }
+  .memo-scores { display: grid; gap: 9px; }
+  .memo-score { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding-bottom: 9px; border-bottom: 1px solid var(--line); }
+  .memo-hand { display: flex; gap: 5px; margin-bottom: 4px; }
+  .memo-token { display: grid; place-items: center; width: 25px; height: 34px; border: 1px solid var(--line); border-radius: 5px; color: var(--ink); background: var(--surface-2); }
+  .memo-token.bank { background: #00794E; color: #FFF6E1; }
+  .memo-token.museum { background: #007AC3; color: #FFF6E1; }
+  .memo-token.casino { background: #E40031; color: #FFF6E1; }
+  .memo-token .ico { width: 17px; height: 20px; }
+  .memo-points { display: flex; align-items: baseline; justify-content: center; gap: 3px; min-width: 52px; padding: 3px 7px; background: var(--gold); color: #1D1B2A; border-radius: 10px; font: 800 29px/1.1 "Baloo 2", sans-serif; }
+  .memo-points small { font: 600 11px "Comfortaa", sans-serif; }
+  .memo-finish { display: grid; gap: 6px; margin-top: 12px; }
+  .memo-finish p { display: flex; align-items: center; gap: 9px; margin: 0; font-size: 12px; }
+  .memo-finish strong { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 62px; padding: 3px 7px; border-radius: 7px; background: var(--plaque); color: var(--plaque-ink); font: 800 18px/1.3 "Baloo 2", sans-serif; }
+  .memo-visual .memo-tie { margin: 9px 0 0; font-size: 11.5px; }
+  @media (max-width: 920px) { .memo-visual { grid-template-columns: 1fr; } .memo-visual .memo-scores { grid-template-columns: 1fr 1fr; gap: 12px 24px; } }
+
+</style>
+
+<div class="wrap">
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true"><symbol id="i-cle" viewBox="0 0 48 48"><path d="M30.00,31.00 29.97,31.85 29.89,32.70 29.75,33.54 29.56,34.36 29.31,35.18 29.01,35.97 28.66,36.75 28.26,37.50 27.81,38.22 27.31,38.91 26.77,39.57 26.19,40.19 25.57,40.77 24.91,41.31 24.22,41.81 23.50,42.26 22.75,42.66 21.97,43.01 21.18,43.31 20.36,43.56 19.54,43.75 18.70,43.89 17.85,43.97 17.00,44.00 16.15,43.97 15.30,43.89 14.46,43.75 13.64,43.56 12.82,43.31 12.03,43.01 11.25,42.66 10.50,42.26 9.78,41.81 9.09,41.31 8.43,40.77 7.81,40.19 7.23,39.57 6.69,38.91 6.19,38.22 5.74,37.50 5.34,36.75 4.99,35.97 4.69,35.18 4.44,34.36 4.25,33.54 4.11,32.70 4.03,31.85 4.00,31.00 4.03,30.15 4.11,29.30 4.25,28.46 4.44,27.64 4.69,26.82 4.99,26.03 5.34,25.25 5.74,24.50 6.19,23.78 6.69,23.09 7.23,22.43 7.81,21.81 8.43,21.23 9.09,20.69 9.78,20.19 10.50,19.74 11.25,19.34 12.03,18.99 12.82,18.69 13.64,18.44 14.46,18.25 15.30,18.11 16.15,18.03 17.00,18.00 17.85,18.03 18.70,18.11 19.54,18.25 20.36,18.44 21.18,18.69 21.97,18.99 22.75,19.34 23.50,19.74 24.22,20.19 24.91,20.69 25.57,21.23 26.19,21.81 26.77,22.43 27.31,23.09 27.81,23.78 28.26,24.50 28.66,25.25 29.01,26.03 29.31,26.82 29.56,27.64 29.75,28.46 29.89,29.30 29.97,30.15ZM22.59,30.63 22.55,30.27 22.49,29.91 22.41,29.55 22.30,29.20 22.17,28.86 22.02,28.52 21.85,28.20 21.66,27.89 21.44,27.59 21.21,27.31 20.96,27.04 20.69,26.79 20.41,26.56 20.11,26.34 19.80,26.15 19.48,25.98 19.14,25.83 18.80,25.70 18.45,25.59 18.09,25.51 17.73,25.45 17.37,25.41 17.00,25.40 16.63,25.41 16.27,25.45 15.91,25.51 15.55,25.59 15.20,25.70 14.86,25.83 14.52,25.98 14.20,26.15 13.89,26.34 13.59,26.56 13.31,26.79 13.04,27.04 12.79,27.31 12.56,27.59 12.34,27.89 12.15,28.20 11.98,28.52 11.83,28.86 11.70,29.20 11.59,29.55 11.51,29.91 11.45,30.27 11.41,30.63 11.40,31.00 11.41,31.37 11.45,31.73 11.51,32.09 11.59,32.45 11.70,32.80 11.83,33.14 11.98,33.48 12.15,33.80 12.34,34.11 12.56,34.41 12.79,34.69 13.04,34.96 13.31,35.21 13.59,35.44 13.89,35.66 14.20,35.85 14.52,36.02 14.86,36.17 15.20,36.30 15.55,36.41 15.91,36.49 16.27,36.55 16.63,36.59 17.00,36.60 17.37,36.59 17.73,36.55 18.09,36.49 18.45,36.41 18.80,36.30 19.14,36.17 19.48,36.02 19.80,35.85 20.11,35.66 20.41,35.44 20.69,35.21 20.96,34.96 21.21,34.69 21.44,34.41 21.66,34.11 21.85,33.80 22.02,33.48 22.17,33.14 22.30,32.80 22.41,32.45 22.49,32.09 22.55,31.73 22.59,31.37 22.60,31.00ZM34.99,6.99 35.41,6.63 35.88,6.32 36.37,6.07 36.90,5.89 37.45,5.79 38.00,5.75 38.55,5.79 39.10,5.89 39.63,6.07 40.12,6.32 40.59,6.63 41.01,6.99 41.37,7.41 41.68,7.88 41.93,8.37 42.11,8.90 42.21,9.45 42.25,10.00 42.21,10.55 42.11,11.10 41.93,11.63 41.68,12.12 41.37,12.59 41.01,13.01 28.49,25.52 28.07,25.89 27.61,26.20 27.11,26.44 26.59,26.62 26.04,26.73 25.49,26.76 24.93,26.73 24.39,26.62 23.86,26.44 23.36,26.20 22.90,25.89 22.48,25.52 22.11,25.10 21.80,24.64 21.56,24.14 21.38,23.61 21.27,23.07 21.24,22.51 21.27,21.96 21.38,21.41 21.56,20.89 21.80,20.39 22.11,19.93 22.48,19.51ZM42.42,15.48 42.66,15.75 42.86,16.05 43.02,16.37 43.13,16.71 43.20,17.07 43.22,17.42 43.20,17.78 43.13,18.14 43.02,18.48 42.86,18.80 42.66,19.10 42.42,19.37 42.15,19.61 41.85,19.81 41.53,19.97 41.19,20.08 40.83,20.15 40.47,20.17 40.12,20.15 39.76,20.08 39.42,19.97 39.10,19.81 38.80,19.61 38.53,19.37 33.58,14.42 33.34,14.15 33.14,13.85 32.98,13.53 32.87,13.19 32.80,12.83 32.78,12.47 32.80,12.12 32.87,11.76 32.98,11.42 33.14,11.10 33.34,10.80 33.58,10.53 33.85,10.29 34.15,10.09 34.47,9.93 34.81,9.82 35.17,9.75 35.53,9.72 35.88,9.75 36.24,9.82 36.58,9.93 36.90,10.09 37.20,10.29 37.47,10.53ZM35.35,20.43 35.59,20.70 35.79,21.00 35.94,21.32 36.06,21.66 36.13,22.02 36.15,22.37 36.13,22.73 36.06,23.09 35.94,23.43 35.79,23.75 35.59,24.05 35.35,24.32 35.08,24.56 34.78,24.76 34.46,24.92 34.12,25.03 33.76,25.10 33.40,25.12 33.04,25.10 32.69,25.03 32.35,24.92 32.03,24.76 31.73,24.56 31.46,24.32 27.57,20.43 27.33,20.16 27.13,19.86 26.97,19.54 26.86,19.20 26.79,18.84 26.76,18.49 26.79,18.13 26.86,17.77 26.97,17.43 27.13,17.11 27.33,16.81 27.57,16.54 27.84,16.30 28.14,16.10 28.46,15.94 28.80,15.83 29.16,15.76 29.51,15.74 29.87,15.76 30.23,15.83 30.57,15.94 30.89,16.10 31.19,16.30 31.46,16.54Z" fill-rule="nonzero"/></symbol><symbol id="i-butin" viewBox="0 0 48 48"><path d="M36.00,8.50 36.44,8.52 36.88,8.59 37.31,8.69 37.72,8.84 38.12,9.03 38.50,9.26 38.85,9.52 39.18,9.82 39.48,10.15 39.74,10.50 39.97,10.88 40.16,11.28 40.31,11.69 40.41,12.12 40.48,12.56 40.50,13.00 40.50,33.00 40.48,33.44 40.41,33.88 40.31,34.31 40.16,34.72 39.97,35.12 39.74,35.50 39.48,35.85 39.18,36.18 38.85,36.48 38.50,36.74 38.12,36.97 37.72,37.16 37.31,37.31 36.88,37.41 36.44,37.48 36.00,37.50 12.00,37.50 11.56,37.48 11.12,37.41 10.69,37.31 10.28,37.16 9.88,36.97 9.50,36.74 9.15,36.48 8.82,36.18 8.52,35.85 8.26,35.50 8.03,35.12 7.84,34.72 7.69,34.31 7.59,33.88 7.52,33.44 7.50,33.00 7.50,13.00 7.52,12.56 7.59,12.12 7.69,11.69 7.84,11.28 8.03,10.88 8.26,10.50 8.52,10.15 8.82,9.82 9.15,9.52 9.50,9.26 9.88,9.03 10.28,8.84 10.69,8.69 11.12,8.59 11.56,8.52 12.00,8.50ZM16.80,37.50 16.92,37.51 17.03,37.52 17.15,37.55 17.26,37.59 17.37,37.64 17.47,37.70 17.56,37.77 17.65,37.85 17.73,37.94 17.80,38.03 17.86,38.13 17.91,38.24 17.95,38.35 17.98,38.47 17.99,38.58 18.00,38.70 18.00,39.80 17.99,39.92 17.98,40.03 17.95,40.15 17.91,40.26 17.86,40.37 17.80,40.47 17.73,40.56 17.65,40.65 17.56,40.73 17.47,40.80 17.37,40.86 17.26,40.91 17.15,40.95 17.03,40.98 16.92,40.99 16.80,41.00 12.20,41.00 12.08,40.99 11.97,40.98 11.85,40.95 11.74,40.91 11.63,40.86 11.53,40.80 11.44,40.73 11.35,40.65 11.27,40.56 11.20,40.47 11.14,40.37 11.09,40.26 11.05,40.15 11.02,40.03 11.01,39.92 11.00,39.80 11.00,38.70 11.01,38.58 11.02,38.47 11.05,38.35 11.09,38.24 11.14,38.13 11.20,38.03 11.27,37.94 11.35,37.85 11.44,37.77 11.53,37.70 11.63,37.64 11.74,37.59 11.85,37.55 11.97,37.52 12.08,37.51 12.20,37.50ZM35.80,37.50 35.92,37.51 36.03,37.52 36.15,37.55 36.26,37.59 36.37,37.64 36.47,37.70 36.56,37.77 36.65,37.85 36.73,37.94 36.80,38.03 36.86,38.13 36.91,38.24 36.95,38.35 36.98,38.47 36.99,38.58 37.00,38.70 37.00,39.80 36.99,39.92 36.98,40.03 36.95,40.15 36.91,40.26 36.86,40.37 36.80,40.47 36.73,40.56 36.65,40.65 36.56,40.73 36.47,40.80 36.37,40.86 36.26,40.91 36.15,40.95 36.03,40.98 35.92,40.99 35.80,41.00 31.20,41.00 31.08,40.99 30.97,40.98 30.85,40.95 30.74,40.91 30.63,40.86 30.53,40.80 30.44,40.73 30.35,40.65 30.27,40.56 30.20,40.47 30.14,40.37 30.09,40.26 30.05,40.15 30.02,40.03 30.01,39.92 30.00,39.80 30.00,38.70 30.01,38.58 30.02,38.47 30.05,38.35 30.09,38.24 30.14,38.13 30.20,38.03 30.27,37.94 30.35,37.85 30.44,37.77 30.53,37.70 30.63,37.64 30.74,37.59 30.85,37.55 30.97,37.52 31.08,37.51 31.20,37.50ZM35.49,22.54 35.44,22.09 35.37,21.63 35.26,21.19 35.13,20.75 34.97,20.32 34.78,19.90 34.56,19.50 34.32,19.11 34.05,18.74 33.76,18.38 33.45,18.05 33.12,17.74 32.76,17.45 32.39,17.18 32.00,16.94 31.60,16.72 31.18,16.53 30.75,16.37 30.31,16.24 29.87,16.13 29.41,16.06 28.96,16.01 28.50,16.00 28.04,16.01 27.59,16.06 27.13,16.13 26.69,16.24 26.25,16.37 25.82,16.53 25.40,16.72 25.00,16.94 24.61,17.18 24.24,17.45 23.88,17.74 23.55,18.05 23.24,18.38 22.95,18.74 22.68,19.11 22.44,19.50 22.22,19.90 22.03,20.32 21.87,20.75 21.74,21.19 21.63,21.63 21.56,22.09 21.51,22.54 21.50,23.00 21.51,23.46 21.56,23.91 21.63,24.37 21.74,24.81 21.87,25.25 22.03,25.68 22.22,26.10 22.44,26.50 22.68,26.89 22.95,27.26 23.24,27.62 23.55,27.95 23.88,28.26 24.24,28.55 24.61,28.82 25.00,29.06 25.40,29.28 25.82,29.47 26.25,29.63 26.69,29.76 27.13,29.87 27.59,29.94 28.04,29.99 28.50,30.00 28.96,29.99 29.41,29.94 29.87,29.87 30.31,29.76 30.75,29.63 31.18,29.47 31.60,29.28 32.00,29.06 32.39,28.82 32.76,28.55 33.12,28.26 33.45,27.95 33.76,27.62 34.05,27.26 34.32,26.89 34.56,26.50 34.78,26.10 34.97,25.68 35.13,25.25 35.26,24.81 35.37,24.37 35.44,23.91 35.49,23.46 35.50,23.00ZM31.50,23.00 31.49,23.20 31.47,23.39 31.44,23.59 31.40,23.78 31.34,23.96 31.27,24.15 31.19,24.33 31.10,24.50 30.99,24.67 30.88,24.83 30.76,24.98 30.62,25.12 30.48,25.26 30.33,25.38 30.17,25.49 30.00,25.60 29.83,25.69 29.65,25.77 29.46,25.84 29.28,25.90 29.09,25.94 28.89,25.97 28.70,25.99 28.50,26.00 28.30,25.99 28.11,25.97 27.91,25.94 27.72,25.90 27.54,25.84 27.35,25.77 27.17,25.69 27.00,25.60 26.83,25.49 26.67,25.38 26.52,25.26 26.38,25.12 26.24,24.98 26.12,24.83 26.01,24.67 25.90,24.50 25.81,24.33 25.73,24.15 25.66,23.96 25.60,23.78 25.56,23.59 25.53,23.39 25.51,23.20 25.50,23.00 25.51,22.80 25.53,22.61 25.56,22.41 25.60,22.22 25.66,22.04 25.73,21.85 25.81,21.67 25.90,21.50 26.01,21.33 26.12,21.17 26.24,21.02 26.38,20.88 26.52,20.74 26.67,20.62 26.83,20.51 27.00,20.40 27.17,20.31 27.35,20.23 27.54,20.16 27.72,20.10 27.91,20.06 28.11,20.03 28.30,20.01 28.50,20.00 28.70,20.01 28.89,20.03 29.09,20.06 29.28,20.10 29.46,20.16 29.65,20.23 29.83,20.31 30.00,20.40 30.17,20.51 30.33,20.62 30.48,20.74 30.62,20.88 30.76,21.02 30.88,21.17 30.99,21.33 31.10,21.50 31.19,21.67 31.27,21.85 31.34,22.04 31.40,22.22 31.44,22.41 31.47,22.61 31.49,22.80ZM14.30,14.00 14.12,14.01 13.95,14.03 13.78,14.08 13.61,14.14 13.45,14.21 13.30,14.30 13.16,14.41 13.03,14.53 12.91,14.66 12.80,14.80 12.71,14.95 12.64,15.11 12.58,15.28 12.53,15.45 12.51,15.62 12.50,15.80 12.50,30.20 12.51,30.38 12.53,30.55 12.58,30.72 12.64,30.89 12.71,31.05 12.80,31.20 12.91,31.34 13.03,31.47 13.16,31.59 13.30,31.70 13.45,31.79 13.61,31.86 13.78,31.92 13.95,31.97 14.12,31.99 14.30,32.00 14.30,32.00 14.48,31.99 14.65,31.97 14.82,31.92 14.99,31.86 15.15,31.79 15.30,31.70 15.44,31.59 15.57,31.47 15.69,31.34 15.80,31.20 15.89,31.05 15.96,30.89 16.02,30.72 16.07,30.55 16.09,30.38 16.10,30.20 16.10,15.80 16.09,15.62 16.07,15.45 16.02,15.28 15.96,15.11 15.89,14.95 15.80,14.80 15.69,14.66 15.57,14.53 15.44,14.41 15.30,14.30 15.15,14.21 14.99,14.14 14.82,14.08 14.65,14.03 14.48,14.01 14.30,14.00Z" fill-rule="nonzero"/></symbol><symbol id="i-traitre" viewBox="0 0 128 128"><path d="M63.8 67.3 46.0 53.4 51.5 32.6 49.9 29.9 48.7 28.2 48.0 27.4 46.6 25.9 45.9 25.3 44.4 24.0 43.6 23.5 41.9 22.5 41.0 22.1 39.2 21.4 37.2 21.0 35.2 20.8 33.0 20.8 31.9 20.9 30.0 21.2 28.1 21.6 26.2 22.1 24.5 22.8 22.8 23.5 21.1 24.4 19.6 25.3 18.1 26.4 16.7 27.5 15.4 28.8 14.2 30.1 13.1 31.5 12.0 33.0 11.1 34.6 10.3 36.2 9.5 38.0 8.9 39.8 8.4 41.6 8.0 43.5 7.7 45.5 7.5 47.6 7.5 49.7 7.6 51.9 7.8 54.1 8.2 56.5 8.7 59.0 9.4 61.4 10.3 63.8 11.4 66.2 12.6 68.6 13.9 71.0 15.5 73.4 17.1 75.7 19.0 78.0 21.0 80.3 23.1 82.7 25.4 85.0 27.9 87.3 30.5 89.5 33.3 91.8 36.3 94.1 39.3 96.4 42.6 98.7 46.0 100.9 49.5 103.2 53.2 105.5 61.0 110.0 52.1 86.9ZM74.8 105.5 82.0 100.9 85.4 98.7 88.7 96.4 91.7 94.1 94.7 91.8 97.5 89.5 100.1 87.3 102.6 85.0 104.9 82.7 107.0 80.3 109.0 78.0 110.9 75.7 112.5 73.4 114.1 71.0 115.4 68.6 116.6 66.2 117.7 63.8 118.6 61.4 119.3 59.0 119.8 56.5 120.2 54.1 120.4 51.9 120.5 49.7 120.5 47.6 120.3 45.5 120.0 43.5 119.6 41.6 119.1 39.8 118.5 38.0 117.7 36.2 116.9 34.6 116.0 33.0 114.9 31.5 113.8 30.1 112.6 28.8 111.3 27.5 109.9 26.4 108.4 25.3 106.9 24.4 105.2 23.5 103.5 22.8 101.8 22.1 99.9 21.6 98.0 21.2 96.1 20.9 93.9 20.7 91.8 20.8 89.8 21.2 88.8 21.4 87.0 22.1 85.3 23.0 84.4 23.5 82.8 24.6 81.4 25.9 80.0 27.4 78.7 29.0 77.6 30.7 66.1 51.5 80.1 69.3 64.0 85.4 67.0 110.0Z" fill-rule="evenodd"/></symbol><symbol id="i-alarme" viewBox="0 0 48 48"><path d="M24.00,6.50 24.51,6.51 25.02,6.55 25.55,6.62 26.07,6.72 26.59,6.84 27.11,7.00 27.61,7.20 28.10,7.43 28.56,7.69 29.00,8.00 29.42,8.35 29.82,8.74 30.21,9.18 30.58,9.65 30.94,10.16 31.28,10.69 31.61,11.24 31.92,11.82 32.22,12.40 32.50,13.00 32.77,13.61 33.01,14.26 33.24,14.92 33.46,15.61 33.66,16.31 33.84,17.03 34.02,17.76 34.19,18.50 34.35,19.25 34.50,20.00 34.63,20.77 34.73,21.57 34.81,22.39 34.88,23.22 34.94,24.06 35.00,24.90 35.08,25.72 35.19,26.51 35.32,27.28 35.50,28.00 35.80,28.70 36.25,29.40 36.80,30.09 37.40,30.76 37.97,31.41 38.46,32.02 38.82,32.59 38.99,33.12 38.90,33.59 38.50,34.00 37.76,34.35 36.72,34.64 35.44,34.88 33.96,35.07 32.34,35.22 30.64,35.33 28.90,35.41 27.18,35.46 25.53,35.49 24.00,35.50 22.47,35.49 20.82,35.46 19.10,35.41 17.36,35.33 15.66,35.22 14.04,35.07 12.56,34.88 11.28,34.64 10.24,34.35 9.50,34.00 9.10,33.59 9.01,33.12 9.18,32.59 9.54,32.02 10.03,31.41 10.60,30.76 11.20,30.09 11.75,29.40 12.20,28.70 12.50,28.00 12.68,27.28 12.81,26.51 12.92,25.72 13.00,24.90 13.06,24.06 13.12,23.22 13.19,22.39 13.27,21.57 13.37,20.77 13.50,20.00 13.65,19.25 13.81,18.50 13.98,17.76 14.16,17.03 14.34,16.31 14.54,15.61 14.76,14.92 14.99,14.26 15.23,13.61 15.50,13.00 15.78,12.40 16.08,11.82 16.39,11.24 16.72,10.69 17.06,10.16 17.42,9.65 17.79,9.18 18.18,8.74 18.58,8.35 19.00,8.00 19.44,7.69 19.90,7.43 20.39,7.20 20.89,7.00 21.41,6.84 21.93,6.72 22.45,6.62 22.98,6.55 23.49,6.51ZM37.50,33.00 37.75,33.01 37.99,33.05 38.23,33.11 38.46,33.19 38.68,33.30 38.89,33.42 39.09,33.57 39.27,33.73 39.43,33.91 39.58,34.11 39.70,34.32 39.81,34.54 39.89,34.77 39.95,35.01 39.99,35.25 40.00,35.50 40.00,36.00 39.99,36.25 39.95,36.49 39.89,36.73 39.81,36.96 39.70,37.18 39.58,37.39 39.43,37.59 39.27,37.77 39.09,37.93 38.89,38.08 38.68,38.20 38.46,38.31 38.23,38.39 37.99,38.45 37.75,38.49 37.50,38.50 10.50,38.50 10.25,38.49 10.01,38.45 9.77,38.39 9.54,38.31 9.32,38.20 9.11,38.08 8.91,37.93 8.73,37.77 8.57,37.59 8.42,37.39 8.30,37.18 8.19,36.96 8.11,36.73 8.05,36.49 8.01,36.25 8.00,36.00 8.00,35.50 8.01,35.25 8.05,35.01 8.11,34.77 8.19,34.54 8.30,34.32 8.42,34.11 8.57,33.91 8.73,33.73 8.91,33.57 9.11,33.42 9.32,33.30 9.54,33.19 9.77,33.11 10.01,33.05 10.25,33.01 10.50,33.00ZM27.60,41.50 27.59,41.74 27.57,41.97 27.53,42.20 27.48,42.43 27.41,42.66 27.33,42.88 27.23,43.09 27.12,43.30 26.99,43.50 26.86,43.69 26.71,43.87 26.55,44.05 26.37,44.21 26.19,44.36 26.00,44.49 25.80,44.62 25.59,44.73 25.38,44.83 25.16,44.91 24.93,44.98 24.70,45.03 24.47,45.07 24.24,45.09 24.00,45.10 23.76,45.09 23.53,45.07 23.30,45.03 23.07,44.98 22.84,44.91 22.62,44.83 22.41,44.73 22.20,44.62 22.00,44.49 21.81,44.36 21.63,44.21 21.45,44.05 21.29,43.87 21.14,43.69 21.01,43.50 20.88,43.30 20.77,43.09 20.67,42.88 20.59,42.66 20.52,42.43 20.47,42.20 20.43,41.97 20.41,41.74 20.40,41.50 20.41,41.26 20.43,41.03 20.47,40.80 20.52,40.57 20.59,40.34 20.67,40.12 20.77,39.91 20.88,39.70 21.01,39.50 21.14,39.31 21.29,39.13 21.45,38.95 21.63,38.79 21.81,38.64 22.00,38.51 22.20,38.38 22.41,38.27 22.62,38.17 22.84,38.09 23.07,38.02 23.30,37.97 23.53,37.93 23.76,37.91 24.00,37.90 24.24,37.91 24.47,37.93 24.70,37.97 24.93,38.02 25.16,38.09 25.38,38.17 25.59,38.27 25.80,38.38 26.00,38.51 26.19,38.64 26.37,38.79 26.55,38.95 26.71,39.13 26.86,39.31 26.99,39.50 27.12,39.70 27.23,39.91 27.33,40.12 27.41,40.34 27.48,40.57 27.53,40.80 27.57,41.03 27.59,41.26ZM8.30,11.07 8.44,10.80 8.61,10.55 8.82,10.33 9.05,10.14 9.30,9.98 9.57,9.85 9.86,9.76 10.16,9.71 10.46,9.70 10.76,9.73 11.05,9.79 11.33,9.90 11.60,10.04 11.85,10.21 12.07,10.42 12.26,10.65 12.42,10.90 12.55,11.17 12.64,11.46 12.69,11.76 12.70,12.06 12.67,12.36 12.61,12.65 12.50,12.93 8.50,21.93 8.36,22.20 8.19,22.45 7.98,22.67 7.75,22.86 7.50,23.02 7.23,23.15 6.94,23.24 6.64,23.29 6.34,23.30 6.04,23.27 5.75,23.21 5.47,23.10 5.20,22.96 4.95,22.79 4.73,22.58 4.54,22.35 4.38,22.10 4.25,21.83 4.16,21.54 4.11,21.24 4.10,20.94 4.13,20.64 4.19,20.35 4.30,20.07ZM35.50,12.93 35.39,12.65 35.33,12.36 35.30,12.06 35.31,11.76 35.36,11.46 35.45,11.17 35.58,10.90 35.74,10.65 35.93,10.42 36.15,10.21 36.40,10.04 36.67,9.90 36.95,9.79 37.24,9.73 37.54,9.70 37.84,9.71 38.14,9.76 38.43,9.85 38.70,9.98 38.95,10.14 39.18,10.33 39.39,10.55 39.56,10.80 39.70,11.07 43.70,20.07 43.81,20.35 43.87,20.64 43.90,20.94 43.89,21.24 43.84,21.54 43.75,21.83 43.62,22.10 43.46,22.35 43.27,22.58 43.05,22.79 42.80,22.96 42.53,23.10 42.25,23.21 41.96,23.27 41.66,23.30 41.36,23.29 41.06,23.24 40.77,23.15 40.50,23.02 40.25,22.86 40.02,22.67 39.81,22.45 39.64,22.20 39.50,21.93Z" fill-rule="nonzero"/></symbol><symbol id="i-flic" viewBox="0 0 48 48"><path d="M24.00,6.50 24.91,6.54 25.82,6.64 26.75,6.81 27.67,7.01 28.59,7.25 29.51,7.51 30.41,7.77 31.30,8.04 32.16,8.28 33.00,8.50 33.84,8.68 34.71,8.81 35.58,8.93 36.44,9.04 37.28,9.16 38.08,9.30 38.81,9.50 39.47,9.75 40.04,10.08 40.50,10.50 40.84,11.03 41.06,11.64 41.20,12.33 41.25,13.08 41.25,13.88 41.21,14.70 41.14,15.54 41.08,16.38 41.02,17.20 41.00,18.00 41.01,18.78 41.03,19.55 41.05,20.33 41.06,21.12 41.06,21.91 41.04,22.70 40.98,23.51 40.87,24.33 40.72,25.16 40.50,26.00 40.22,26.87 39.90,27.78 39.52,28.72 39.11,29.67 38.66,30.62 38.17,31.57 37.66,32.49 37.12,33.38 36.57,34.22 36.00,35.00 35.39,35.73 34.73,36.44 34.02,37.12 33.28,37.76 32.53,38.38 31.78,38.96 31.03,39.52 30.31,40.04 29.63,40.53 29.00,41.00 28.42,41.45 27.87,41.89 27.35,42.31 26.86,42.70 26.38,43.06 25.90,43.38 25.44,43.64 24.97,43.83 24.49,43.96 24.00,44.00 23.51,43.96 23.03,43.83 22.56,43.64 22.10,43.38 21.62,43.06 21.14,42.70 20.65,42.31 20.13,41.89 19.58,41.45 19.00,41.00 18.37,40.53 17.69,40.04 16.97,39.52 16.22,38.96 15.47,38.38 14.72,37.76 13.98,37.12 13.27,36.44 12.61,35.73 12.00,35.00 11.43,34.22 10.88,33.38 10.34,32.49 9.83,31.57 9.34,30.62 8.89,29.67 8.48,28.72 8.10,27.78 7.78,26.87 7.50,26.00 7.28,25.16 7.13,24.33 7.02,23.51 6.96,22.70 6.94,21.91 6.94,21.12 6.95,20.33 6.97,19.55 6.99,18.78 7.00,18.00 6.98,17.21 6.92,16.38 6.86,15.54 6.79,14.70 6.75,13.88 6.75,13.08 6.80,12.33 6.94,11.64 7.16,11.02 7.50,10.50 7.96,10.08 8.53,9.75 9.19,9.50 9.92,9.30 10.72,9.16 11.56,9.04 12.42,8.93 13.29,8.81 14.16,8.68 15.00,8.50 15.84,8.28 16.70,8.04 17.59,7.77 18.49,7.51 19.41,7.25 20.33,7.01 21.25,6.81 22.18,6.64 23.09,6.54ZM20.94,20.29 12.78,20.85 19.05,26.11 17.06,34.05 24.00,29.70 30.94,34.05 28.95,26.11 35.22,20.85 27.06,20.29 24.00,12.70Z" fill-rule="nonzero"/></symbol><symbol id="i-voleur" viewBox="0 0 48 48"><path d="M2.50,22.50 2.60,21.57 2.89,20.66 3.33,19.80 3.88,18.97 4.53,18.19 5.24,17.45 5.97,16.76 6.69,16.12 7.38,15.53 8.00,15.00 8.58,14.53 9.17,14.10 9.76,13.72 10.36,13.40 10.97,13.12 11.58,12.90 12.18,12.72 12.79,12.60 13.40,12.53 14.00,12.50 14.61,12.54 15.23,12.66 15.86,12.84 16.50,13.07 17.12,13.34 17.74,13.65 18.35,13.98 18.93,14.32 19.48,14.67 20.00,15.00 20.48,15.38 20.93,15.83 21.35,16.34 21.74,16.88 22.12,17.41 22.50,17.90 22.86,18.34 23.23,18.69 23.61,18.92 24.00,19.00 24.39,18.92 24.77,18.69 25.14,18.34 25.50,17.90 25.88,17.41 26.26,16.88 26.65,16.34 27.07,15.83 27.52,15.38 28.00,15.00 28.52,14.67 29.07,14.32 29.65,13.98 30.26,13.65 30.88,13.34 31.50,13.07 32.14,12.84 32.77,12.66 33.39,12.54 34.00,12.50 34.60,12.53 35.21,12.60 35.82,12.72 36.42,12.90 37.03,13.12 37.64,13.40 38.24,13.72 38.83,14.10 39.42,14.53 40.00,15.00 40.62,15.53 41.31,16.12 42.03,16.76 42.76,17.45 43.47,18.19 44.12,18.97 44.67,19.80 45.11,20.66 45.40,21.57 45.50,22.50 45.40,23.53 45.11,24.68 44.67,25.92 44.12,27.22 43.47,28.53 42.76,29.82 42.03,31.05 41.31,32.18 40.62,33.18 40.00,34.00 39.42,34.67 38.83,35.23 38.24,35.70 37.64,36.08 37.03,36.38 36.42,36.60 35.82,36.77 35.21,36.89 34.60,36.96 34.00,37.00 33.39,36.98 32.77,36.87 32.14,36.69 31.50,36.44 30.88,36.16 30.26,35.84 29.65,35.50 29.07,35.15 28.52,34.82 28.00,34.50 27.52,34.16 27.07,33.75 26.65,33.30 26.26,32.84 25.88,32.38 25.50,31.94 25.14,31.57 24.77,31.27 24.39,31.07 24.00,31.00 23.61,31.07 23.23,31.27 22.86,31.57 22.50,31.94 22.12,32.38 21.74,32.84 21.35,33.30 20.93,33.75 20.48,34.16 20.00,34.50 19.48,34.82 18.93,35.15 18.35,35.50 17.74,35.84 17.12,36.16 16.50,36.44 15.86,36.69 15.23,36.87 14.61,36.98 14.00,37.00 13.40,36.96 12.79,36.89 12.18,36.77 11.58,36.60 10.97,36.38 10.36,36.08 9.76,35.70 9.17,35.23 8.58,34.67 8.00,34.00 7.38,33.18 6.69,32.18 5.97,31.05 5.24,29.82 4.53,28.53 3.88,27.22 3.33,25.92 2.89,24.68 2.60,23.53ZM19.96,23.55 19.88,23.31 19.77,23.08 19.65,22.86 19.50,22.64 19.32,22.44 19.13,22.24 18.92,22.06 18.68,21.88 18.43,21.72 18.16,21.58 17.87,21.44 17.57,21.32 17.25,21.22 16.92,21.13 16.58,21.06 16.23,21.00 15.88,20.96 15.51,20.93 15.14,20.92 14.77,20.93 14.39,20.96 14.02,21.00 13.64,21.06 13.27,21.13 12.90,21.22 12.54,21.33 12.18,21.45 11.84,21.58 11.50,21.73 11.18,21.89 10.87,22.06 10.58,22.25 10.30,22.44 10.04,22.65 9.79,22.87 9.57,23.09 9.37,23.32 9.18,23.56 9.02,23.80 8.89,24.05 8.77,24.30 8.68,24.55 8.61,24.80 8.57,25.06 8.55,25.31 8.56,25.56 8.59,25.81 8.64,26.05 8.72,26.29 8.83,26.52 8.95,26.74 9.10,26.96 9.28,27.16 9.47,27.36 9.68,27.54 9.92,27.72 10.17,27.88 10.44,28.02 10.73,28.16 11.03,28.28 11.35,28.38 11.68,28.47 12.02,28.54 12.37,28.60 12.72,28.64 13.09,28.67 13.46,28.68 13.83,28.67 14.21,28.64 14.58,28.60 14.96,28.54 15.33,28.47 15.70,28.38 16.06,28.27 16.42,28.15 16.76,28.02 17.10,27.87 17.42,27.71 17.73,27.54 18.02,27.35 18.30,27.16 18.56,26.95 18.81,26.73 19.03,26.51 19.23,26.28 19.42,26.04 19.58,25.80 19.71,25.55 19.83,25.30 19.92,25.05 19.99,24.80 20.03,24.54 20.05,24.29 20.04,24.04 20.01,23.79ZM39.44,25.56 39.45,25.31 39.43,25.06 39.39,24.80 39.32,24.55 39.23,24.30 39.11,24.05 38.98,23.80 38.82,23.56 38.63,23.32 38.43,23.09 38.21,22.87 37.96,22.65 37.70,22.44 37.42,22.25 37.13,22.06 36.82,21.89 36.50,21.73 36.16,21.58 35.82,21.45 35.46,21.33 35.10,21.22 34.73,21.13 34.36,21.06 33.98,21.00 33.61,20.96 33.23,20.93 32.86,20.92 32.49,20.93 32.12,20.96 31.77,21.00 31.42,21.06 31.08,21.13 30.75,21.22 30.43,21.32 30.13,21.44 29.84,21.58 29.57,21.72 29.32,21.88 29.08,22.06 28.87,22.24 28.68,22.44 28.50,22.64 28.35,22.86 28.23,23.08 28.12,23.31 28.04,23.55 27.99,23.79 27.96,24.04 27.95,24.29 27.97,24.54 28.01,24.80 28.08,25.05 28.17,25.30 28.29,25.55 28.42,25.80 28.58,26.04 28.77,26.28 28.97,26.51 29.19,26.73 29.44,26.95 29.70,27.16 29.98,27.35 30.27,27.54 30.58,27.71 30.90,27.87 31.24,28.02 31.58,28.15 31.94,28.27 32.30,28.38 32.67,28.47 33.04,28.54 33.42,28.60 33.79,28.64 34.17,28.67 34.54,28.68 34.91,28.67 35.28,28.64 35.63,28.60 35.98,28.54 36.32,28.47 36.65,28.38 36.97,28.28 37.27,28.16 37.56,28.02 37.83,27.88 38.08,27.72 38.32,27.54 38.53,27.36 38.72,27.16 38.90,26.96 39.05,26.74 39.17,26.52 39.28,26.29 39.36,26.05 39.41,25.81Z" fill-rule="nonzero"/></symbol><symbol id="i-pas" viewBox="0 0 16 26"><ellipse cx="8" cy="3.7" rx="4" ry="3.4"/><path d="M8 8.8 C5.5 8.8 4.2 10.8 3.8 13.4 C3.2 17.4 2 25 8 25 C14 25 12.8 17.4 12.2 13.4 C11.8 10.8 10.5 8.8 8 8.8 Z"/></symbol></svg>
+
+<div class="topbar">
+  <span class="live"><!-- logo:onglets --><svg xmlns="http://www.w3.org/2000/svg" viewBox="-93 -752 4634 872" role="img" aria-label="Voltigo"><title>Voltigo</title><g transform="translate(0 -22.2029) rotate(4.6471 314 -301)"><polygon points="-40.224,-659.224 677.821,-662.34 668.041,59.598 -39.2085,61.3127" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="-40.224,-659.224 677.821,-662.34 668.041,59.598 -39.2085,61.3127" fill="#00794E"/><path d="M428 -20Q414 -8 384.5 1Q355 10 320 10Q279 10 248.5 -2.5Q218 -15 207 -37Q193 -65 174 -111Q155 -157 133 -215Q111 -273 89 -335Q67 -397 48.5 -458.5Q30 -520 17 -572Q31 -586 57.5 -597.5Q84 -609 114 -609Q151 -609 174.5 -593Q198 -577 209 -536Q236 -438 263.5 -348.5Q291 -259 321 -162H327Q345 -224 363.5 -295Q382 -366 401 -440.5Q420 -515 437 -588Q455 -597 476 -603Q497 -609 522 -609Q559 -609 585 -592.5Q611 -576 611 -538Q611 -517 601 -475Q591 -433 574 -379.5Q557 -326 536.5 -269.5Q516 -213 495.5 -162Q475 -111 457 -73Q439 -35 428 -20Z" fill="#FFF6E1"/></g><g transform="translate(0 -29.4949) rotate(-4.32253 1048.5 -301)"><polygon points="667.548,-656.926 1424.49,-660.174 1415.02,59.9936 685.881,59.9673" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="667.548,-656.926 1424.49,-660.174 1415.02,59.9936 685.881,59.9673" fill="#FFF6E1"/><path d="M1365 -304Q1365 -200 1323.5 -128Q1282 -56 1210.5 -19Q1139 18 1048 18Q957 18 885.5 -19Q814 -56 773 -128Q732 -200 732 -304Q732 -408 774 -479.5Q816 -551 887.5 -588Q959 -625 1048 -625Q1137 -625 1209 -588Q1281 -551 1323 -479.5Q1365 -408 1365 -304ZM1185 -304Q1185 -393 1148 -438.5Q1111 -484 1048 -484Q987 -484 949.5 -439Q912 -394 912 -304Q912 -213 949.5 -168Q987 -123 1049 -123Q1111 -123 1148 -168Q1185 -213 1185 -304Z" fill="#1D1B2A"/></g><g transform="translate(0 15.4156) rotate(5.51199 1746.5 -301)"><polygon points="1479.81,-653.266 2009.09,-665.456 2016.45,56.2278 1476.08,61.604" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="1479.81,-653.266 2009.09,-665.456 2016.45,56.2278 1476.08,61.604" fill="#E40031"/><path d="M1535 -442H1710V-6L1628 3Q1585 3 1560 -22Q1535 -47 1535 -90ZM1628 3V-138H1939Q1946 -127 1952 -109Q1958 -91 1958 -70Q1958 -33 1942 -15Q1926 3 1898 3ZM1710 -211H1535V-608Q1547 -610 1570.5 -613.5Q1594 -617 1616 -617Q1666 -617 1688 -600Q1710 -583 1710 -534Z" fill="#FFF6E1"/></g><g transform="translate(0 24.7582) rotate(-3.14873 2270 -301)"><polygon points="1947.74,-659.965 2581.2,-659.989 2583.28,54.6788 2503.19,34.4621 2423.1,60.2454 2343.01,37.0286 2262.93,62.8119 2182.84,28.5951 2102.75,65.3784 2022.66,31.1617 1942.57,52.9449" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="1947.74,-659.965 2581.2,-659.989 2583.28,54.6788 2503.19,34.4621 2423.1,60.2454 2343.01,37.0286 2262.93,62.8119 2182.84,28.5951 2102.75,65.3784 2022.66,31.1617 1942.57,52.9449" fill="#EF7C00"/><path d="M2178 -466V-606H2511Q2518 -595 2523.5 -577Q2529 -559 2529 -538Q2529 -501 2512.5 -483.5Q2496 -466 2468 -466ZM2362 -606V-466H2029Q2022 -477 2016.5 -495Q2011 -513 2011 -534Q2011 -572 2027.5 -589Q2044 -606 2072 -606ZM2180 -493H2355V-1Q2344 2 2321 5Q2298 8 2274 8Q2222 8 2201 -10.5Q2180 -29 2180 -75Z" fill="#1D1B2A"/></g><g transform="translate(0 -5.95905) rotate(7.08562 2771.5 -301)"><polygon points="2630.01,-660.7 2916.7,-648.893 2905.69,60.4006 2624.58,59.8042" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="2630.01,-660.7 2916.7,-648.893 2905.69,60.4006 2624.58,59.8042" fill="#007AC3"/><path d="M2684 -442H2859V-1Q2848 2 2825 5Q2802 8 2778 8Q2726 8 2705 -10.5Q2684 -29 2684 -75ZM2859 -211H2684V-608Q2696 -610 2719.5 -613.5Q2743 -617 2765 -617Q2815 -617 2837 -600Q2859 -583 2859 -534Z" fill="#FFF6E1"/></g><g transform="translate(0 -27.5606) rotate(-5.82175 3318.5 -301)"><polygon points="2980.39,-657.191 3660.83,-660.749 3666.33,58.1488 2975.44,53.0371" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="2980.39,-657.191 3660.83,-660.749 3666.33,58.1488 2975.44,53.0371" fill="#FFF6E1"/><path d="M3608 -303V-97Q3608 -66 3597 -51Q3586 -36 3562 -22Q3534 -6 3480.5 6Q3427 18 3374 18Q3278 18 3199.5 -15Q3121 -48 3075 -119Q3029 -190 3029 -302Q3029 -407 3075.5 -479Q3122 -551 3200.5 -588Q3279 -625 3376 -625Q3439 -625 3485.5 -611.5Q3532 -598 3557 -573.5Q3582 -549 3582 -516Q3582 -491 3569 -471.5Q3556 -452 3539 -441Q3514 -456 3476 -470Q3438 -484 3389 -484Q3336 -484 3295 -461.5Q3254 -439 3231.5 -398.5Q3209 -358 3209 -303Q3209 -243 3230.5 -202.5Q3252 -162 3290 -142Q3328 -122 3377 -122Q3399 -122 3415.5 -126.5Q3432 -131 3441 -135V-231H3334Q3328 -242 3322.5 -260Q3317 -278 3317 -298Q3317 -334 3333.5 -350Q3350 -366 3376 -366H3545Q3575 -366 3591.5 -349.5Q3608 -333 3608 -303Z" fill="#1D1B2A"/></g><g transform="translate(0 25.0734) rotate(7.72219 4079.5 -301)"><polygon points="3712.18,-664.372 4462.63,-654.801 4447.68,59.4384 3699.55,54.3714" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="3712.18,-664.372 4462.63,-654.801 4447.68,59.4384 3699.55,54.3714" fill="#781D81"/><path d="M4396 -304Q4396 -200 4354.5 -128Q4313 -56 4241.5 -19Q4170 18 4079 18Q3988 18 3916.5 -19Q3845 -56 3804 -128Q3763 -200 3763 -304Q3763 -408 3805 -479.5Q3847 -551 3918.5 -588Q3990 -625 4079 -625Q4168 -625 4240 -588Q4312 -551 4354 -479.5Q4396 -408 4396 -304ZM4216 -304Q4216 -393 4179 -438.5Q4142 -484 4079 -484Q4018 -484 3980.5 -439Q3943 -394 3943 -304Q3943 -213 3980.5 -168Q4018 -123 4080 -123Q4142 -123 4179 -168Q4216 -213 4216 -304Z" fill="#FFF6E1"/></g><rect x="1882" y="-712" width="300" height="92" fill="#FFF6E1" opacity=".55" transform="rotate(-6 2032 -662)"/><rect x="3565.97" y="-49.5459" width="270" height="86" fill="#FFF6E1" opacity=".62" transform="rotate(-43.8217 3690.97 -12.5459)"/></svg><!-- /logo:onglets --> <span>· un coup se fait à deux</span></span>
+  <a href="index.html" style="margin-left:auto;padding-left:16px;flex-shrink:0;font-size:13px;font-weight:700;color:var(--ink);text-underline-offset:4px">← Accueil</a>
+</div>
+
+<!-- ===================== RÈGLES ===================== -->
+<div id="rules">
+<header>
+  <div class="titleblock">
+    <div class="eyebrow">Règles · version 9 · révisée le 26 septembre 2026</div>
+    <h1 class="logo"><!-- logo:titre --><svg xmlns="http://www.w3.org/2000/svg" viewBox="-93 -752 4634 1242.4" role="img" aria-label="Voltigo, un coup se fait à deux"><title>Voltigo</title><g transform="translate(0 -22.2029) rotate(4.6471 314 -301)"><polygon points="-40.224,-659.224 677.821,-662.34 668.041,59.598 -39.2085,61.3127" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="-40.224,-659.224 677.821,-662.34 668.041,59.598 -39.2085,61.3127" fill="#00794E"/><path d="M428 -20Q414 -8 384.5 1Q355 10 320 10Q279 10 248.5 -2.5Q218 -15 207 -37Q193 -65 174 -111Q155 -157 133 -215Q111 -273 89 -335Q67 -397 48.5 -458.5Q30 -520 17 -572Q31 -586 57.5 -597.5Q84 -609 114 -609Q151 -609 174.5 -593Q198 -577 209 -536Q236 -438 263.5 -348.5Q291 -259 321 -162H327Q345 -224 363.5 -295Q382 -366 401 -440.5Q420 -515 437 -588Q455 -597 476 -603Q497 -609 522 -609Q559 -609 585 -592.5Q611 -576 611 -538Q611 -517 601 -475Q591 -433 574 -379.5Q557 -326 536.5 -269.5Q516 -213 495.5 -162Q475 -111 457 -73Q439 -35 428 -20Z" fill="#FFF6E1"/></g><g transform="translate(0 -29.4949) rotate(-4.32253 1048.5 -301)"><polygon points="667.548,-656.926 1424.49,-660.174 1415.02,59.9936 685.881,59.9673" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="667.548,-656.926 1424.49,-660.174 1415.02,59.9936 685.881,59.9673" fill="#FFF6E1"/><path d="M1365 -304Q1365 -200 1323.5 -128Q1282 -56 1210.5 -19Q1139 18 1048 18Q957 18 885.5 -19Q814 -56 773 -128Q732 -200 732 -304Q732 -408 774 -479.5Q816 -551 887.5 -588Q959 -625 1048 -625Q1137 -625 1209 -588Q1281 -551 1323 -479.5Q1365 -408 1365 -304ZM1185 -304Q1185 -393 1148 -438.5Q1111 -484 1048 -484Q987 -484 949.5 -439Q912 -394 912 -304Q912 -213 949.5 -168Q987 -123 1049 -123Q1111 -123 1148 -168Q1185 -213 1185 -304Z" fill="#1D1B2A"/></g><g transform="translate(0 15.4156) rotate(5.51199 1746.5 -301)"><polygon points="1479.81,-653.266 2009.09,-665.456 2016.45,56.2278 1476.08,61.604" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="1479.81,-653.266 2009.09,-665.456 2016.45,56.2278 1476.08,61.604" fill="#E40031"/><path d="M1535 -442H1710V-6L1628 3Q1585 3 1560 -22Q1535 -47 1535 -90ZM1628 3V-138H1939Q1946 -127 1952 -109Q1958 -91 1958 -70Q1958 -33 1942 -15Q1926 3 1898 3ZM1710 -211H1535V-608Q1547 -610 1570.5 -613.5Q1594 -617 1616 -617Q1666 -617 1688 -600Q1710 -583 1710 -534Z" fill="#FFF6E1"/></g><g transform="translate(0 24.7582) rotate(-3.14873 2270 -301)"><polygon points="1947.74,-659.965 2581.2,-659.989 2583.28,54.6788 2503.19,34.4621 2423.1,60.2454 2343.01,37.0286 2262.93,62.8119 2182.84,28.5951 2102.75,65.3784 2022.66,31.1617 1942.57,52.9449" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="1947.74,-659.965 2581.2,-659.989 2583.28,54.6788 2503.19,34.4621 2423.1,60.2454 2343.01,37.0286 2262.93,62.8119 2182.84,28.5951 2102.75,65.3784 2022.66,31.1617 1942.57,52.9449" fill="#EF7C00"/><path d="M2178 -466V-606H2511Q2518 -595 2523.5 -577Q2529 -559 2529 -538Q2529 -501 2512.5 -483.5Q2496 -466 2468 -466ZM2362 -606V-466H2029Q2022 -477 2016.5 -495Q2011 -513 2011 -534Q2011 -572 2027.5 -589Q2044 -606 2072 -606ZM2180 -493H2355V-1Q2344 2 2321 5Q2298 8 2274 8Q2222 8 2201 -10.5Q2180 -29 2180 -75Z" fill="#1D1B2A"/></g><g transform="translate(0 -5.95905) rotate(7.08562 2771.5 -301)"><polygon points="2630.01,-660.7 2916.7,-648.893 2905.69,60.4006 2624.58,59.8042" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="2630.01,-660.7 2916.7,-648.893 2905.69,60.4006 2624.58,59.8042" fill="#007AC3"/><path d="M2684 -442H2859V-1Q2848 2 2825 5Q2802 8 2778 8Q2726 8 2705 -10.5Q2684 -29 2684 -75ZM2859 -211H2684V-608Q2696 -610 2719.5 -613.5Q2743 -617 2765 -617Q2815 -617 2837 -600Q2859 -583 2859 -534Z" fill="#FFF6E1"/></g><g transform="translate(0 -27.5606) rotate(-5.82175 3318.5 -301)"><polygon points="2980.39,-657.191 3660.83,-660.749 3666.33,58.1488 2975.44,53.0371" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="2980.39,-657.191 3660.83,-660.749 3666.33,58.1488 2975.44,53.0371" fill="#FFF6E1"/><path d="M3608 -303V-97Q3608 -66 3597 -51Q3586 -36 3562 -22Q3534 -6 3480.5 6Q3427 18 3374 18Q3278 18 3199.5 -15Q3121 -48 3075 -119Q3029 -190 3029 -302Q3029 -407 3075.5 -479Q3122 -551 3200.5 -588Q3279 -625 3376 -625Q3439 -625 3485.5 -611.5Q3532 -598 3557 -573.5Q3582 -549 3582 -516Q3582 -491 3569 -471.5Q3556 -452 3539 -441Q3514 -456 3476 -470Q3438 -484 3389 -484Q3336 -484 3295 -461.5Q3254 -439 3231.5 -398.5Q3209 -358 3209 -303Q3209 -243 3230.5 -202.5Q3252 -162 3290 -142Q3328 -122 3377 -122Q3399 -122 3415.5 -126.5Q3432 -131 3441 -135V-231H3334Q3328 -242 3322.5 -260Q3317 -278 3317 -298Q3317 -334 3333.5 -350Q3350 -366 3376 -366H3545Q3575 -366 3591.5 -349.5Q3608 -333 3608 -303Z" fill="#1D1B2A"/></g><g transform="translate(0 25.0734) rotate(7.72219 4079.5 -301)"><polygon points="3712.18,-664.372 4462.63,-654.801 4447.68,59.4384 3699.55,54.3714" fill="#1D1B2A" opacity=".28" transform="translate(16 20)"/><polygon points="3712.18,-664.372 4462.63,-654.801 4447.68,59.4384 3699.55,54.3714" fill="#781D81"/><path d="M4396 -304Q4396 -200 4354.5 -128Q4313 -56 4241.5 -19Q4170 18 4079 18Q3988 18 3916.5 -19Q3845 -56 3804 -128Q3763 -200 3763 -304Q3763 -408 3805 -479.5Q3847 -551 3918.5 -588Q3990 -625 4079 -625Q4168 -625 4240 -588Q4312 -551 4354 -479.5Q4396 -408 4396 -304ZM4216 -304Q4216 -393 4179 -438.5Q4142 -484 4079 -484Q4018 -484 3980.5 -439Q3943 -394 3943 -304Q3943 -213 3980.5 -168Q4018 -123 4080 -123Q4142 -123 4179 -168Q4216 -213 4216 -304Z" fill="#FFF6E1"/></g><rect x="1882" y="-712" width="300" height="92" fill="#FFF6E1" opacity=".55" transform="rotate(-6 2032 -662)"/><rect x="3565.97" y="-49.5459" width="270" height="86" fill="#FFF6E1" opacity=".62" transform="rotate(-43.8217 3690.97 -12.5459)"/><g transform="rotate(-2 2215.5 200)"><rect x="930.441" y="200" width="2570.12" height="230.4" rx="18" fill="#1D1B2A"/><rect x="944.441" y="212" width="2542.12" height="6" fill="#FFF6E1" opacity=".12"/><g transform="translate(1020.44 375.4) scale(0.154161)" fill="#FFF6E1"><path d="M427 16Q331 16 257 -19.5Q183 -55 141.5 -118Q100 -181 100 -262V-729Q100 -752 115 -766.5Q130 -781 152 -781Q175 -781 189.5 -766.5Q204 -752 204 -729V-262Q204 -208 232.5 -166.5Q261 -125 311.5 -101.5Q362 -78 427 -78Q490 -78 538.5 -101.5Q587 -125 614.5 -166.5Q642 -208 642 -262V-729Q642 -752 657 -766.5Q672 -781 694 -781Q717 -781 731 -766.5Q745 -752 745 -729V-262Q745 -181 704.5 -118Q664 -55 592 -19.5Q520 16 427 16Z"/><path d="M1086 0Q1064 0 1049.5 -15Q1035 -30 1035 -52V-729Q1035 -752 1049.5 -766.5Q1064 -781 1086 -781Q1110 -781 1126 -762L1562 -182V-729Q1562 -752 1577 -766.5Q1592 -781 1614 -781Q1637 -781 1651 -766.5Q1665 -752 1665 -729V-52Q1665 -30 1651 -15Q1637 0 1614 0Q1604 0 1592.5 -4.5Q1581 -9 1574 -18L1138 -598V-52Q1138 -30 1123.5 -15Q1109 0 1086 0Z"/><path d="M2688 10Q2607 10 2536.5 -20.5Q2466 -51 2413.5 -105.5Q2361 -160 2331.5 -233Q2302 -306 2302 -391Q2302 -475 2331.5 -547.5Q2361 -620 2413.5 -674.5Q2466 -729 2536 -760Q2606 -791 2688 -791Q2765 -791 2820.5 -771Q2876 -751 2932 -705Q2940 -699 2944.5 -692.5Q2949 -686 2950.5 -679.5Q2952 -673 2952 -664Q2952 -645 2938.5 -632.5Q2925 -620 2906 -618.5Q2887 -617 2869 -631Q2832 -663 2792.5 -680Q2753 -697 2688 -697Q2629 -697 2577 -673Q2525 -649 2485.5 -607Q2446 -565 2424 -509.5Q2402 -454 2402 -391Q2402 -327 2424 -271.5Q2446 -216 2485.5 -174Q2525 -132 2577 -108.5Q2629 -85 2688 -85Q2739 -85 2784.5 -102.5Q2830 -120 2872 -151Q2890 -164 2907.5 -162.5Q2925 -161 2937 -148.5Q2949 -136 2949 -114Q2949 -104 2945 -94.5Q2941 -85 2933 -77Q2879 -34 2817.5 -12Q2756 10 2688 10Z"/><path d="M3566 10Q3478 10 3405 -19.5Q3332 -49 3279.5 -102.5Q3227 -156 3198 -229.5Q3169 -303 3169 -391Q3169 -479 3198 -552Q3227 -625 3279.5 -678.5Q3332 -732 3405 -761.5Q3478 -791 3566 -791Q3654 -791 3726.5 -761.5Q3799 -732 3852 -678.5Q3905 -625 3934 -552Q3963 -479 3963 -391Q3963 -303 3934 -229.5Q3905 -156 3852 -102.5Q3799 -49 3726.5 -19.5Q3654 10 3566 10ZM3566 -84Q3631 -84 3685.5 -107.5Q3740 -131 3780 -172.5Q3820 -214 3841.5 -270Q3863 -326 3863 -391Q3863 -456 3841.5 -512Q3820 -568 3780 -609.5Q3740 -651 3685.5 -674Q3631 -697 3566 -697Q3501 -697 3446.5 -674Q3392 -651 3352.5 -609.5Q3313 -568 3291 -512Q3269 -456 3269 -391Q3269 -326 3291 -270Q3313 -214 3352.5 -172.5Q3392 -131 3446.5 -107.5Q3501 -84 3566 -84Z"/><path d="M4543 16Q4447 16 4373 -19.5Q4299 -55 4257.5 -118Q4216 -181 4216 -262V-729Q4216 -752 4231 -766.5Q4246 -781 4268 -781Q4291 -781 4305.5 -766.5Q4320 -752 4320 -729V-262Q4320 -208 4348.5 -166.5Q4377 -125 4427.5 -101.5Q4478 -78 4543 -78Q4606 -78 4654.5 -101.5Q4703 -125 4730.5 -166.5Q4758 -208 4758 -262V-729Q4758 -752 4773 -766.5Q4788 -781 4810 -781Q4833 -781 4847 -766.5Q4861 -752 4861 -729V-262Q4861 -181 4820.5 -118Q4780 -55 4708 -19.5Q4636 16 4543 16Z"/><path d="M5203 0Q5181 0 5166 -15Q5151 -30 5151 -52V-729Q5151 -752 5166 -766.5Q5181 -781 5203 -781H5403Q5478 -781 5536 -748Q5594 -715 5626.5 -656.5Q5659 -598 5659 -522Q5659 -449 5626.5 -392Q5594 -335 5536 -303Q5478 -271 5403 -271H5255V-52Q5255 -30 5240.5 -15Q5226 0 5203 0ZM5255 -367H5403Q5449 -367 5484 -387Q5519 -407 5539 -442Q5559 -477 5559 -522Q5559 -570 5539 -606.5Q5519 -643 5484 -664Q5449 -685 5403 -685H5255Z"/><path d="M6495 10Q6431 10 6373 -10Q6315 -30 6272 -66Q6229 -102 6209 -149Q6199 -170 6209.5 -188Q6220 -206 6245 -211Q6263 -215 6280.5 -205.5Q6298 -196 6307 -177Q6319 -152 6346.5 -131Q6374 -110 6413 -97Q6452 -84 6495 -84Q6543 -84 6583.5 -99Q6624 -114 6649 -142.5Q6674 -171 6674 -213Q6674 -266 6632.5 -308Q6591 -350 6496 -360Q6372 -372 6301 -433Q6230 -494 6230 -584Q6230 -650 6267 -696Q6304 -742 6367.5 -766Q6431 -790 6509 -790Q6570 -790 6615.5 -773Q6661 -756 6695 -726Q6729 -696 6754 -655Q6768 -633 6765.5 -613.5Q6763 -594 6746 -583Q6727 -571 6705 -578Q6683 -585 6672 -604Q6656 -633 6633 -653Q6610 -673 6579 -684.5Q6548 -696 6506 -696Q6432 -697 6382 -668.5Q6332 -640 6332 -581Q6332 -551 6347.5 -523.5Q6363 -496 6404.5 -476Q6446 -456 6524 -448Q6643 -436 6709.5 -375.5Q6776 -315 6776 -216Q6776 -159 6752.5 -117Q6729 -75 6689.5 -46.5Q6650 -18 6599.5 -4Q6549 10 6495 10Z"/><path d="M7077 0Q7055 0 7040 -15Q7025 -30 7025 -52V-729Q7025 -752 7040 -766.5Q7055 -781 7077 -781H7529Q7552 -781 7566 -767.5Q7580 -754 7580 -732Q7580 -711 7566 -698Q7552 -685 7529 -685H7129V-442H7416Q7439 -442 7453 -428.5Q7467 -415 7467 -394Q7467 -373 7453 -359.5Q7439 -346 7416 -346H7129V-96H7529Q7552 -96 7566 -83Q7580 -70 7580 -49Q7580 -27 7566 -13.5Q7552 0 7529 0Z"/><path d="M8187 0Q8165 0 8150 -15Q8135 -30 8135 -52V-729Q8135 -752 8150 -766.5Q8165 -781 8187 -781H8639Q8662 -781 8676 -767.5Q8690 -754 8690 -732Q8690 -711 8676 -698Q8662 -685 8639 -685H8239V-442H8526Q8549 -442 8563 -428.5Q8577 -415 8577 -394Q8577 -373 8563 -359.5Q8549 -346 8526 -346H8239V-52Q8239 -30 8224 -15Q8209 0 8187 0Z"/><path d="M8762 0Q8734 0 8719 -24Q8704 -48 8716 -75L8997 -746Q9012 -781 9046 -781Q9082 -781 9095 -746L9377 -73Q9388 -45 9373.5 -22.5Q9359 0 9330 0Q9315 0 9301.5 -8.5Q9288 -17 9282 -32L9034 -648H9062L8810 -32Q8803 -16 8789.5 -8Q8776 0 8762 0ZM8815 -172 8855 -258H9247L9287 -172Z"/><path d="M9638 0Q9616 0 9601 -15Q9586 -30 9586 -52V-729Q9586 -752 9601 -766.5Q9616 -781 9638 -781Q9661 -781 9675.5 -766.5Q9690 -752 9690 -729V-52Q9690 -30 9675.5 -15Q9661 0 9638 0Z"/><path d="M10211 0Q10189 0 10174 -15Q10159 -30 10159 -52V-781H10263V-52Q10263 -30 10248 -15Q10233 0 10211 0ZM9943 -685Q9922 -685 9908.5 -698.5Q9895 -712 9895 -733Q9895 -754 9908.5 -767.5Q9922 -781 9943 -781H10478Q10499 -781 10512.5 -767.5Q10526 -754 10526 -733Q10526 -712 10512.5 -698.5Q10499 -685 10478 -685Z"/><path d="M11083 0Q11055 0 11040 -24Q11025 -48 11037 -75L11318 -746Q11333 -781 11367 -781Q11403 -781 11416 -746L11698 -73Q11709 -45 11694.5 -22.5Q11680 0 11651 0Q11636 0 11622.5 -8.5Q11609 -17 11603 -32L11355 -648H11383L11131 -32Q11124 -16 11110.5 -8Q11097 0 11083 0ZM11136 -172 11176 -258H11568L11608 -172ZM11363 -867Q11341 -867 11328 -881L11230 -978Q11217 -991 11217 -1013Q11217 -1035 11231 -1050Q11245 -1065 11267 -1065Q11288 -1065 11304 -1050L11401 -952Q11414 -939 11414 -918Q11414 -896 11399.5 -881.5Q11385 -867 11363 -867Z"/><path d="M12342 0Q12320 0 12305 -15Q12290 -30 12290 -52V-729Q12290 -752 12305 -766.5Q12320 -781 12342 -781H12523Q12609 -781 12679.5 -752.5Q12750 -724 12802 -671.5Q12854 -619 12882 -548Q12910 -477 12910 -391Q12910 -305 12882 -233.5Q12854 -162 12802 -109.5Q12750 -57 12679.5 -28.5Q12609 0 12523 0ZM12394 -92H12523Q12607 -92 12671.5 -130.5Q12736 -169 12773 -236.5Q12810 -304 12810 -391Q12810 -479 12773 -546Q12736 -613 12671.5 -651Q12607 -689 12523 -689H12394Z"/><path d="M13215 0Q13193 0 13178 -15Q13163 -30 13163 -52V-729Q13163 -752 13178 -766.5Q13193 -781 13215 -781H13667Q13690 -781 13704 -767.5Q13718 -754 13718 -732Q13718 -711 13704 -698Q13690 -685 13667 -685H13267V-442H13554Q13577 -442 13591 -428.5Q13605 -415 13605 -394Q13605 -373 13591 -359.5Q13577 -346 13554 -346H13267V-96H13667Q13690 -96 13704 -83Q13718 -70 13718 -49Q13718 -27 13704 -13.5Q13690 0 13667 0Z"/><path d="M14280 16Q14184 16 14110 -19.5Q14036 -55 13994.5 -118Q13953 -181 13953 -262V-729Q13953 -752 13968 -766.5Q13983 -781 14005 -781Q14028 -781 14042.5 -766.5Q14057 -752 14057 -729V-262Q14057 -208 14085.5 -166.5Q14114 -125 14164.5 -101.5Q14215 -78 14280 -78Q14343 -78 14391.5 -101.5Q14440 -125 14467.5 -166.5Q14495 -208 14495 -262V-729Q14495 -752 14510 -766.5Q14525 -781 14547 -781Q14570 -781 14584 -766.5Q14598 -752 14598 -729V-262Q14598 -181 14557.5 -118Q14517 -55 14445 -19.5Q14373 16 14280 16Z"/><path d="M14885 0Q14862 0 14850 -14.5Q14838 -29 14838 -48.5Q14838 -68 14850 -84L15102 -420L15147 -460L15377 -766Q15391 -781 15414 -781Q15435 -781 15447 -768Q15459 -755 15460 -736Q15461 -717 15449 -699L15206 -375L15163 -337L14921 -15Q14906 0 14885 0ZM15408 0Q15395 0 15385.5 -4.5Q15376 -9 15368 -19L15135 -342L15098 -373L14863 -699Q14851 -715 14853 -734Q14855 -753 14867.5 -767Q14880 -781 14901 -781Q14927 -781 14938 -766L15160 -458L15198 -427L15445 -84Q15457 -68 15456 -48Q15455 -28 15442.5 -14Q15430 0 15408 0Z"/></g></g></svg><!-- /logo:titre --></h1>
+    <div class="tagline sr-only">Un coup se fait à deux.</div>
+  </div>
+  <div class="meta">
+    <span class="eyebrow">15 à 20 minutes · expliqué en 3 minutes</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sommaire">
+  <a href="#idee">L'idée</a><a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a><a href="#memo">Aide-mémoire</a><a href="#faq">Questions</a>
+</nav>
+
+<section id="idee">
+  <div class="two">
+    <div>
+      <h2>Le jeu en une minute</h2>
+      <p class="lead">Un jeu de bluff pour <strong>3 à 6 voleurs</strong>. Monte des coups à deux, mais remplis ta propre <strong>Planque</strong> pour gagner.</p>
+      <p>Pour réussir un coup, il faut une <strong>Clé</strong> et un <strong>Butin du même lieu</strong>.</p>
+      <figure class="paires" aria-label="Exemples de paires">
+        <div class="paire ok"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Clé du Casino" width="512" height="715"><span class="op">+</span><img src="cartes/06-la-caisse.webp" alt="Butin du Casino" width="512" height="715"><span class="op">=</span><span class="verdict-mini">Coup réussi</span></div>
+        <div class="paire ko"><img src="cartes/01-la-combinaison-du-coffre.webp" alt="Clé de la Banque" width="512" height="715"><span class="op">+</span><img src="cartes/04-le-tableau.webp" alt="Butin du Musée" width="512" height="715"><span class="op">=</span><span class="verdict-mini">Coup raté</span></div>
+      </figure>
+      <p>À ton tour, pose une carte <strong>face cachée</strong> et annonce ton coup : « Clé du Casino, qui a le butin ? » Choisis un <strong>complice</strong> parmi les volontaires, ou tente la pioche. <strong>Tout le monde peut mentir.</strong></p>
+      <p>Révélez les deux cartes. Coup réussi : chacun garde sa carte dans sa <strong>Planque</strong>, devant lui, pour marquer des points. Coup raté : les deux cartes vont à la défausse.</p>
+      <span class="pop">Un jeu de voleurs, pas de notaires.</span>
+      <p>Le premier à <strong>12 points</strong> gagne. Si la <strong>quatrième Alarme</strong> arrive au dossier de police avant, la partie s’arrête : le plus de points gagne.</p>
+    </div>
+    <div class="grid2" style="gap:14px">
+      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><h3>La Clé</h3></div><div class="body"><p>Elle ouvre le lieu. Associe-la au Butin correspondant.</p><span class="pop">L'épargne du voleur prudent.</span></div></div>
+      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Le Butin</h3></div><div class="body"><p>Il remplit ta Planque… mais peut attirer les Traîtres.</p><span class="pop r">Ça brille, ça se fauche.</span></div></div>
+      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3></div><div class="body"><p>Mène avec lui face à un Butin : tu peux voler un Butin à ton complice.</p><span class="pop">Personne ne sait qui en a un.</span></div></div>
+      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L'Alarme</h3></div><div class="body"><p>Elle annule un coup réussi auquel tu ne participes pas, puis rejoint le dossier de police.</p><span class="pop r">Personne n'aime les sirènes.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="materiel">
+  <div class="sechead"><div class="pastille">68</div><div><h2>Les cartes</h2><div class="sub">Tout est écrit dessus. Pas de dés, pas de pions, pas d'alibi.</div></div></div>
+  <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>5 Traîtres</span><span class="pill">5 Aide-mémoire</span></div>
+  <div class="gallery" aria-label="Aperçu des cartes">
+    <img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre · Clé de la Banque" loading="lazy" width="512" height="715">
+    <img src="cartes/02-les-lingots.webp" alt="Les lingots · Butin de la Banque" loading="lazy" width="512" height="715">
+    <img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien de nuit · Clé du Musée" loading="lazy" width="512" height="715">
+    <img src="cartes/04-le-tableau.webp" alt="Le tableau · Butin du Musée" loading="lazy" width="512" height="715">
+    <img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée · Clé du Casino" loading="lazy" width="512" height="715">
+    <img src="cartes/06-la-caisse.webp" alt="La caisse · Butin du Casino" loading="lazy" width="512" height="715">
+    <img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l'alarme · Clé de la Bijouterie" loading="lazy" width="512" height="715">
+    <img src="cartes/08-les-diamants.webp" alt="Les diamants · Butin de la Bijouterie" loading="lazy" width="512" height="715">
+    <img src="cartes/15-passe-partout.webp" alt="Passe-partout · Clé de tous les lieux" loading="lazy" width="512" height="715">
+    <img src="cartes/16-pactole.webp" alt="Pactole · Butin de tous les lieux" loading="lazy" width="512" height="715">
+    <img src="cartes/09-traitre.webp" alt="Traître" loading="lazy" width="512" height="715">
+    <img src="cartes/10-alarme.webp" alt="Alarme" loading="lazy" width="512" height="715">
+    <img src="cartes/14-aide-memoire.webp" alt="Aide-mémoire" loading="lazy" width="512" height="715">
+  </div>
+  <div class="tablewrap" style="margin-top:22px"><table>
+    <thead><tr><th>Cartes</th><th>Combien</th><th>Rôle</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Clés et Butins</strong></td><td class="num">48</td><td>6 Clés et 6 Butins par lieu.</td></tr>
+      <tr><td><strong>Passe-partout</strong></td><td class="num">2</td><td>« Ouvre tous les lieux » : une Clé qui va avec n'importe quel Butin.</td></tr>
+      <tr><td><strong>Pactole</strong></td><td class="num">2</td><td>« Va avec toutes les Clés » : un Butin qui va avec n'importe quelle Clé.</td></tr>
+      <tr><td><strong>Alarmes</strong></td><td class="num">6</td><td>Annulent un coup réussi. La quatrième au dossier finit la partie.</td></tr>
+      <tr><td><strong>Traîtres</strong></td><td class="num">5</td><td>Volent un Butin, puis vont à la défausse.</td></tr>
+      <tr><td><strong>Aide-mémoire</strong></td><td class="num">5</td><td>Une par joueur.</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="mise">
+  <div class="sechead"><div class="pastille">1</div><div><h2>Mise en place</h2><div class="sub">Une minute. Gants noirs en option.</div></div></div>
+  <div class="kcard taped setup-card"><div class="plaque"><h3>Avant de commencer</h3></div><div class="body">
+    <ol>
+      <li>Mets les <strong>aide-mémoire</strong> à part et mélange les <strong>63 autres cartes</strong>, Traîtres compris.</li>
+      <li>Distribue <strong>cinq cartes à chacun</strong>. Pose le reste au centre, face cachée : c’est la <strong>pioche</strong>.</li>
+      <li>Garde une place devant chacun pour sa <strong>Planque</strong>, et au centre pour la <strong>défausse</strong> et le <strong>dossier de police</strong>. Ces trois espaces sont vides au départ.</li>
+      <li>Le dernier à avoir prêté quelque chose <strong>commence</strong>. Puis jouez dans le <strong>sens horaire</strong>.</li>
+    </ol>
+    <span class="pop r">Les Traîtres se cachent parmi les honnêtes cartes. Comme dans la vie.</span>
+  </div></div>
+</section>
+
+<section id="tour">
+  <div class="sechead"><div class="pastille">2</div><div><h2>Ton tour, en quatre gestes</h2><div class="sub">Mène un coup, puis passe la main à ton voisin de gauche.</div></div></div>
+  <div class="grid4">
+    <div class="kcard"><div class="plaque"><span class="n">1</span><h3>Mène</h3></div><div class="body">
+      <div class="say">« Clé du Casino, qui a le butin ? »</div>
+      <p>Pose une carte <strong>face cachée</strong> au centre. Annonce à tous ce qu’elle est censée être et la moitié qui te manque. <strong>Tu peux mentir.</strong></p>
+      <p class="note">Passe-partout ou Pactole : annonce le lieu de ton choix.</p>
+      <span class="pop">Voleur, pas témoin sous serment.</span>
+    </div></div>
+    <div class="kcard"><div class="plaque"><span class="n">2</span><h3>Choisis ton complice</h3></div><div class="body">
+      <div class="say">« Je l’ai ! » Ou silence radio.</div>
+      <p>Les volontaires posent chacun <strong>une carte face cachée</strong>, sincère ou bluffée. Choisis ton <strong>complice</strong> sans regarder les cartes ; les autres reprennent la leur.</p>
+      <p>Tu peux préférer le <strong>dessus de la pioche</strong>. Sans volontaire, c’est obligatoire.</p>
+    </div></div>
+    <div class="kcard"><div class="plaque"><span class="n">3</span><h3>Révélez</h3></div><div class="body">
+      <div class="say">Clé + Butin du même lieu ?</div>
+      <p><strong>Coup réussi :</strong> chacun range sa carte dans sa Planque, puis le complice applique l’effet du lieu.</p>
+      <p><strong>Coup raté :</strong> les deux cartes vont à la défausse, face visible.</p>
+      <p class="note">Cartes spéciales, Alarmes et coups avec la pioche : les cas particuliers sont <a href="#revelation" style="color:inherit;text-underline-offset:3px">juste en dessous</a>.</p>
+    </div></div>
+    <div class="kcard"><div class="plaque"><span class="n">4</span><h3>Complétez vos mains</h3></div><div class="body">
+      <div class="say">Retour à cinq.</div>
+      <p>Après les effets, <strong>tout le monde</strong> pioche pour revenir à <strong>cinq cartes</strong>, +1 par effet de Banque reçu.</p>
+      <p>Le meneur commence, puis on suit le <strong>sens horaire</strong>. Déjà assez de cartes ? Ne pioche pas.</p>
+      <span class="pop r">Un voleur n’a jamais les mains vides.</span>
+    </div></div>
+  </div>
+</section>
+
+<section id="revelation">
+  <div class="sechead"><div class="pastille">3</div><div><h2>La révélation</h2><div class="sub">Le moment où l'on découvre qui a menti.</div></div></div>
+  <span class="pop">Indice : quelqu'un a menti.</span>
+  <div class="grid2">
+    <div class="kcard outcome"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Coup réussi</h3></div><div class="body">
+      <p><strong>Clé + Butin du même lieu :</strong> chacun range sa carte dans sa Planque. Le <strong>complice</strong> applique l’effet du lieu, qu’il ait posé la Clé ou le Butin.</p>
+      <p class="note">Avec la pioche : garde ta carte, défausse celle piochée. Aucun effet.</p>
+    </div></div>
+    <div class="kcard outcome"><div class="plaque"><h3>Coup raté</h3></div><div class="body">
+      <p><strong>Les cartes ne vont pas ensemble ?</strong> Défausse les deux, face visible. Les cartes spéciales sont détaillées ci-dessous.</p>
+      <span class="pop r">Rien n’entre en Planque, à part un peu de honte.</span>
+    </div></div>
+  </div>
+  <div class="grid3" style="margin-top:18px">
+    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Passe-partout et Pactole</h3></div><div class="body">
+      <p><strong>Passe-partout :</strong> remplace n’importe quelle Clé. <strong>Pactole :</strong> remplace n’importe quel Butin.</p>
+      <p>Le lieu et l’effet viennent de l’autre carte. Les deux ensemble : <strong>coup réussi, sans effet</strong>.</p>
+      <p class="note">En Planque : le Passe-partout complète une paire ; le Pactole, une famille. Lieu au choix.</p>
+      <span class="pop r">Tout le monde les veut, personne n’avoue les avoir.</span>
+    </div></div>
+    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3></div><div class="body">
+      <p><strong>Mène avec lui en annonçant une Clé.</strong> Si ton complice révèle un Butin (Pactole compris), vole ce Butin ou un Butin de sa Planque.</p>
+      <p>Range le Butin volé dans ta Planque. Si tu as choisi celui de sa Planque, défausse celui qu’il a posé.</p>
+      <p class="note">En réponse, pioché, face à une Clé ou face à la pioche : <strong>aucun vol</strong>. Le Traître joué finit toujours à la défausse. Une trahison ne déclenche ni effet de lieu ni Alarme.</p>
+      <span class="pop">Tu tends la main, tu reprends le sac.</span>
+    </div></div>
+    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L’Alarme</h3></div><div class="body">
+      <p><strong>Tu es hors du coup ?</strong> Dès qu’il réussit, avant son effet, joue une Alarme : les deux cartes sont défaussées, sans effet. L’Alarme rejoint le <strong>dossier de police</strong>.</p>
+      <p>Posée face cachée dans un coup : elle ne sonne pas, le coup rate. <strong>Retournée de la pioche :</strong> elle sonne et rejoint le dossier.</p>
+      <p class="note"><strong>Une seule en main.</strong> Si tu en reçois une deuxième, défausse-la.</p>
+      <span class="pop">Rien de personnel.</span>
+    </div></div>
+  </div>
+
+  <div class="sim" aria-label="Simulateur de révélation">
+    <div class="sim-duel">
+      <div class="roue" id="roueA"><span class="roue-lab">Meneur</span><button type="button" class="roue-fl prev" aria-label="Carte précédente">‹</button><div class="roue-piste" tabindex="0" role="listbox" aria-label="Carte du meneur"></div><button type="button" class="roue-fl next" aria-label="Carte suivante">›</button><span class="roue-nom"></span></div>
+      <div class="vs" aria-hidden="true">×</div>
+      <div class="roue" id="roueB"><span class="roue-lab">Complice</span><button type="button" class="roue-fl prev" aria-label="Carte précédente">‹</button><div class="roue-piste" tabindex="0" role="listbox" aria-label="Carte du complice"></div><button type="button" class="roue-fl next" aria-label="Carte suivante">›</button><span class="roue-nom"></span></div>
+    </div>
+    <div class="verdict" id="verdict" data-kind="ok" role="status" aria-live="polite" aria-atomic="true"><span class="k"></span><p></p></div>
+  </div>
+</section>
+
+<section id="lieux">
+  <div class="sechead"><div class="pastille">4</div><div><h2>Les quatre lieux</h2><div class="sub">Coup réussi : <strong>le complice</strong> profite du lieu, qu’il ait posé la Clé ou le Butin.</div></div></div>
+  <div class="grid4">
+    <div class="lieu banque"><div class="top"><div><h3>Banque</h3><div class="names"><span>Clé · La combinaison du coffre</span><span>Butin · Les lingots</span></div></div><div class="initial">B</div></div>
+      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Pioche une carte : ta main gagne une place pour le reste de la partie.</div><div class="why">Les bonus s’additionnent : une Banque, six cartes en main ; deux Banques, sept.</div></div></div>
+    <div class="lieu musee"><div class="top"><div><h3>Musée</h3><div class="names"><span>Clé · Le badge du gardien de nuit</span><span>Butin · Le tableau</span></div></div><div class="initial">M</div></div>
+      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Regarde la main d’un autre joueur et prends la carte de ton choix.</div><div class="why">Donne-lui ensuite une carte de ta main en échange. Le nombre de cartes de chacun reste le même.</div></div></div>
+    <div class="lieu casino"><div class="top"><div><h3>Casino</h3><div class="names"><span>Clé · Le passe de la salle privée</span><span>Butin · La caisse</span></div></div><div class="initial">C</div></div>
+      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">Les cartes défaussées sont visibles : à toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div></div>
+    <div class="lieu bijou"><div class="top"><div><h3>Bijouterie</h3><div class="names"><span>Clé · Le code de l'alarme</span><span>Butin · Les diamants</span></div></div><div class="initial">J</div></div>
+      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Prends une Alarme au dossier, dans la défausse ou dans la pioche.</div><div class="why">Si tu cherches dans la pioche, remélange-la. Déjà une Alarme en main ? Défausse la nouvelle.</div></div></div>
+  </div>
+  <span class="pop r">Le meneur monte le coup, le complice fait ses emplettes.</span>
+</section>
+
+<section id="gagner">
+  <div class="sechead"><div class="pastille">5</div><div><h2>Gagner</h2><div class="sub">Deux fins : 12 points, ou la police. La première arrivée arrête tout.</div></div></div>
+  <div class="grid2">
+    <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Fortune faite</h3></div><div class="body">
+      <div class="big">12 points</div>
+      <div class="dossier" role="img" aria-label="Exemple : une famille (7), une paire (4) et un Butin seul (1) font 12 points"><div class="al n">7</div><span class="arrow">+</span><div class="al n">4</div><span class="arrow">+</span><div class="al n">1</div><span class="arrow">=</span><div class="al n last">12</div></div>
+      <p class="note" style="margin:0 0 8px">Par exemple : une famille, une paire et un Butin seul.</p>
+      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> De 3 à 6 joueurs, c'est toujours 12. Plusieurs à la fois : le plus de points, puis le plus de Clés, puis victoire partagée.</p>
+      <span class="pop">Rangé des voitures.</span>
+    </div></div>
+    <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>La police débarque</h3></div><div class="body">
+      <div class="big">Quatrième Alarme</div>
+      <div class="dossier" aria-hidden="true"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al last"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div></div>
+      <p>Personne n'a encore 12 points ? Qu'elle annule un coup ou sorte de la pioche, la quatrième Alarme au dossier arrête la partie aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong> Égalité : le plus de Clés, Passe-partout compris, puis victoire partagée.</p>
+    </div></div>
+  </div>
+  <h3 class="combos-title">Le barème, en images</h3>
+  <div class="combos">
+    <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés.</p><p class="punch">Le tour des grands magasins.</p></div>
+    <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><h4>La paire</h4><p>Deux Clés du même lieu.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
+    <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/08-les-diamants.webp" alt="Les diamants" width="512" height="715" style="--r:0deg"></div><h4>Le Butin seul</h4><p>Un Butin hors d'une famille.</p><p class="punch">Petit, mais ça brille.</p></div>
+    <div class="combo zero"><div class="pts">0</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien de nuit" width="512" height="715" style="--r:0deg"></div><h4>La Clé seule</h4><p>Une Clé hors d'une paire. Elle ne se vole jamais et elle départage les égalités.</p><p class="punch">Zéro pointé.</p></div>
+  </div>
+  <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux : six Butins de quatre lieux font deux familles, 14 points : de quoi gagner.</p>
+</section>
+
+<section id="exemple">
+  <div class="sechead"><div class="pastille">▶</div><div><h2>Un début de partie</h2><div class="sub">Quatre joueurs vus de dessus, étape par étape. Les mains sont visibles : on triche pour toi.</div></div></div>
+  <div class="ex-wrap">
+    <div class="ex-board" id="exBoard" aria-label="La table vue de dessus">
+      <div class="ex-table"><div class="ex-felt"></div></div>
+      <div class="ex-planq q-n" data-planq="A"></div><div class="ex-planq q-e v" data-planq="B"></div><div class="ex-planq q-s" data-planq="C"></div><div class="ex-planq q-w v" data-planq="D"></div>
+      <div class="ex-zone z-pioche"><span class="zl">Pioche</span><div class="stk"></div></div>
+      <div class="ex-zone z-def" id="exDef"><span class="zl">Défausse</span><div class="stk"></div></div>
+      <div class="ex-zone z-dos" id="exDos"><span class="zl">Dossier de police</span><div class="stk"></div></div>
+      <div class="ex-plate p-n" data-seat="A"></div><div class="ex-plate p-e" data-seat="B"></div><div class="ex-plate p-s" data-seat="C"></div><div class="ex-plate p-w" data-seat="D"></div>
+      <div class="ex-say" id="exSay"></div><div class="ex-res" id="exRes"></div>
+    </div>
+    <div class="scene-col">
+    <div class="nav"><button class="btn" id="exPrev">Précédent</button><button class="btn solid" id="exNext">Suivant</button><button class="btn" id="exAuto" aria-pressed="false">Lecture auto</button></div>
+    <div class="ex-chips" id="exChips" aria-label="Aller à un coup"></div>
+    <div class="kcard scene"><div class="plaque"><h3 id="exWho"></h3><span style="flex:1"></span><span class="step" id="exStep"></span></div><div class="body">
+      <div class="ex-log-window"><ol class="ex-log" id="exLog" aria-live="polite"></ol></div>
+    </div></div>
+    </div>
+  </div>
+</section>
+
+<section id="memo">
+  <div class="sechead"><div class="pastille">✓</div><div><h2>Aide-mémoire</h2><div class="sub">Un coup d’œil, et on repart.</div></div></div>
+  <div class="memo memo-visual">
+    <div class="kcard taped"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-voleur"/></svg><h3>Ton tour</h3></div><div class="body"><ol class="memo-rows memo-turn"><li><span class="memo-symbol" aria-hidden="true"><span class="memo-cardback"></span></span><div><strong>Pose & annonce</strong><span class="memo-caption">Face cachée : ta carte + ce qu’il manque.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-voleur"/></svg></span><div><strong>Complice ou pioche</strong><span class="memo-caption">Choisis un volontaire ou la carte du dessus.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span><div><strong>Révélez</strong><span class="memo-caption">Appliquez le résultat du coup.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><span class="memo-five">5<span>+</span></span></span><div><strong>5 cartes +1 par Banque</strong><span class="memo-caption">Tous complètent : meneur, puis sens horaire.</span></div></li></ol></div></div>
+    <div class="kcard taped"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Le résultat</h3></div><div class="body"><ul class="memo-rows"><li><span class="memo-symbol" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><b>+</b><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span><div><strong>Même lieu → Planques</strong><span class="memo-caption">Chacun sa carte. Effet au complice.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><b class="memo-cross">×</b></span><div><strong>Raté → défausse</strong><span class="memo-caption">Les deux cartes, face visible.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg></span><div><strong>Traître → vol</strong><span class="memo-caption">Meneur face à un Butin : vole un Butin, puis défausse le Traître.</span></div></li><li><span class="memo-symbol" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></span><div><strong>Alarme → annulation</strong><span class="memo-caption">Hors du coup, avant l’effet. Alarme au dossier.</span></div></li></ul><a class="memo-details" href="#revelation">Pioche et cartes spéciales →</a></div></div>
+    <div class="kcard taped"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Les points</h3></div><div class="body"><div class="memo-scores"><div class="memo-score"><div><div class="memo-hand" aria-hidden="true"><span class="memo-token bank"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span><span class="memo-token museum"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span><span class="memo-token casino"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span></div><span class="memo-caption">3 Butins, 3 lieux différents</span></div><span class="memo-points">7<small>pts</small></span></div><div class="memo-score"><div><div class="memo-hand" aria-hidden="true"><span class="memo-token museum"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></span><span class="memo-token museum"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></span></div><span class="memo-caption">2 Clés du même lieu</span></div><span class="memo-points">4<small>pts</small></span></div><div class="memo-score"><div><div class="memo-hand" aria-hidden="true"><span class="memo-token "><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></span></div><span class="memo-caption">Butin seul</span></div><span class="memo-points">1<small>pts</small></span></div><div class="memo-score"><div><div class="memo-hand" aria-hidden="true"><span class="memo-token "><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></span></div><span class="memo-caption">Clé seule</span></div><span class="memo-points">0<small>pts</small></span></div></div><div class="memo-finish"><p><strong>12 pts</strong><span>Tu gagnes.</span></p><p><strong>4e <svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><span class="sr-only">Alarme</span></strong><span>Le plus de points gagne.</span></p></div><p class="memo-caption memo-tie">Égalité : le plus de Clés, puis victoire partagée.</p></div></div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="sechead"><div class="pastille">?</div><div><h2>Questions fréquentes</h2><div class="sub">Celles qu'on pose la bouche pleine de chips.</div></div></div>
+  <div class="faq-tools"><span class="eyebrow">21 questions · 5 thèmes</span><button class="btn" type="button" id="faqAll" aria-pressed="false">Tout déplier</button></div>
+  <div class="faq-grid">
+    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-voleur"/></svg><h3>« Je l'ai ! » et le coup</h3><span class="nb">4</span></div><div class="faq-list">
+      <details><summary><span class="q">Qui peut dire « Je l'ai ! » ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tout le monde sauf le meneur</strong>, avec ou sans la carte. Le meneur choisit un volontaire ; les autres reprennent leur carte sans la montrer.</p><p class="quip">Bluffer et être choisi : le coup rate, et toute la table l'a vu.</p></div></details>
+      <details><summary><span class="q">La pioche plutôt qu'un volontaire ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Obligatoire sans volontaire</strong>, sinon au choix. Si ça réussit : ta carte en Planque, l'autre à la défausse, pas d'effet. Une Alarme retournée sonne.</p></div></details>
+      <details><summary><span class="q">Qui garde le Butin quand le meneur annonce « Butin » ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le meneur</strong> : chaque carte va à son poseur. Poser le Butin : un point, exposé au Traître. Poser la Clé : vers une paire, à l'abri. L'effet va au complice dans les deux cas.</p></div></details>
+      <details><summary><span class="q">Pourquoi l'effet va-t-il au complice ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le meneur choisit la couleur, le complice touche l'effet.</strong> Répondre juste rapporte toujours, et le meneur choisit qui il arme.</p></div></details>
+    </div></div>
+    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Planque et points</h3><span class="nb">4</span></div><div class="faq-list">
+      <details><summary><span class="q">Comment compter ma Planque ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Regroupe au mieux</strong>, chaque carte dans un seul groupe : famille 7, paire 4, Butin restant 1, Clé restante 0. Le Pactole complète une famille, le Passe-partout une paire.</p></div></details>
+      <details><summary><span class="q">Combien valent le Passe-partout et le Pactole ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Seuls : Passe-partout 0, Pactole 1</strong>, comme une Clé et un Butin. En joker : le Passe-partout complète n'importe quelle paire (4 points), le Pactole une famille, dans le lieu de ton choix (7 points).</p></div></details>
+      <details><summary><span class="q">Passe-partout contre Pactole ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Réussi, sans effet</strong> : aucun lieu n'est en jeu.</p></div></details>
+      <details><summary><span class="q">À 12 points, c'est gagné tout de suite ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Oui, à la fin du coup</strong>, quel que soit le nombre de joueurs. Une Alarme peut encore annuler le coup qui t'y mène ; un vol au Traître compte aussi. Deux joueurs passent 12 dans le même coup : le plus de points l'emporte, puis le plus de Clés.</p><p class="quip">Le casse du siècle se fête ailleurs.</p></div></details>
+    </div></div>
+    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L'Alarme</h3><span class="nb">4</span></div><div class="faq-list">
+      <details><summary><span class="q">Quand jouer une Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>À tout moment, sur un coup réussi dont tu n'es pas</strong>, volontaire ou pioche. La quatrième finit la partie : réfléchis si tu n'as pas le plus de points. Et garde-la pour celui qui approche de 12.</p></div></details>
+      <details><summary><span class="q">J'ai déjà une Alarme et j'en reçois une autre ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>La deuxième part à la défausse</strong>, d'où qu'elle vienne.</p><p class="quip">Une sirène par voleur.</p></div></details>
+      <details><summary><span class="q">L'Alarme peut-elle arrêter une trahison ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Non</strong> : une trahison n'est pas un coup réussi.</p></div></details>
+      <details><summary><span class="q">Bijouterie : où prendre l'Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Partout sauf dans une main</strong> : au dossier (la police recule), dans la défausse, ou dans la pioche, remélangée ensuite. Aucune dehors : effet perdu. Déjà une en main : la nouvelle part à la défausse.</p></div></details>
+    </div></div>
+    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3><span class="nb">5</span></div><div class="faq-list">
+      <details><summary><span class="q">Puis-je répondre avec un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Oui, mais il ne vole rien</strong> : il ne vole que si tu mènes avec. Posé en réponse, il fait juste rater le coup et part à la défausse. Pratique pour s'en débarrasser, comme d'une Alarme.</p><p class="quip">Un Traître qui répond, c'est un Traître qui démissionne.</p></div></details>
+      <details><summary><span class="q">Qui a les Traîtres ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Personne ne sait</strong> : ils sont dans la pioche et changent de main au fil des pioches. Chaque Traître joué part à la défausse, face visible : un de moins dans la nature.</p></div></details>
+      <details><summary><span class="q">La carte de la pioche est un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Coup raté</strong> : défaussé, sans vol.</p><p class="quip">La pioche ne trahit pas, elle déçoit.</p></div></details>
+      <details><summary><span class="q">Que vole un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le Butin posé</strong>, Pactole compris, ou à la place un Butin de la Planque du complice (le posé est défaussé). Jamais une Clé. Face à la pioche : perdu.</p></div></details>
+      <details><summary><span class="q">Mon Traître joué, je ne peux plus trahir ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Si</strong> : reprends-en un au Casino, au vu de tous, ou repioche-le quand la défausse est remélangée.</p></div></details>
+    </div></div>
+    <div class="kcard faq-group"><div class="plaque"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="7" width="22" height="30" rx="4" transform="rotate(-10 24 22)" fill="none" stroke="currentColor" stroke-width="4"/><rect x="15" y="12" width="22" height="30" rx="4" fill="currentColor"/></svg><h3>Main et pioche</h3><span class="nb">4</span></div><div class="faq-list">
+      <details><summary><span class="q">Qui pioche à la fin du coup ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tout le monde</strong>, une fois les effets appliqués : le meneur d'abord, puis dans le sens horaire, chacun jusqu'à cinq cartes (plus avec la Banque). Complice, joueur volé, joueur qui a sonné l'Alarme : personne ne garde une main courte.</p></div></details>
+      <details><summary><span class="q">Plus de cinq cartes en main ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tu ne défausses jamais</strong> : tu ne complètes pas, c'est tout. La Banque agrandit ta main pour la partie : six, puis sept.</p></div></details>
+      <details><summary><span class="q">Au Casino, la défausse est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Effet perdu.</strong></p><p class="quip">La maison ne fait pas crédit.</p></div></details>
+      <details><summary><span class="q">La pioche est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Remélange la défausse.</strong> La partie ne finit qu'à 12 points ou à la police.</p></div></details>
+    </div></div>
+  </div>
+</section>
+
+</div>
+
+</div>
+
+<footer class="footer"><div class="shell"><img src="voltigo-logo.svg" alt="Voltigo" width="125" height="24"><span>Un coup se fait à deux. Une revanche aussi.</span><a href="index.html">Retour à l’accueil</a></div></footer>
+
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+  // Questions : tout déplier / tout replier
+  (function () {
+    const btn = $("#faqAll"); if (!btn) return;
+    const items = $$("#faq details");
+    const maj = () => { const tout = items.every(d => d.open); btn.textContent = tout ? "Tout replier" : "Tout déplier"; btn.setAttribute("aria-pressed", String(tout)); };
+    btn.addEventListener("click", () => { const ouvrir = !items.every(d => d.open); items.forEach(d => { d.open = ouvrir; }); maj(); });
+    items.forEach(d => d.addEventListener("toggle", maj));
+  })();
+
+  // Ancres du sommaire : le titre d'une section doit arriver juste sous la barre et le sommaire, qui restent collés en haut
+  (function () {
+    const barre = $(".topbar"), toc = $("nav.toc"), sec = $("#rules > section");
+    function mesurer() {
+      const h = barre.offsetHeight, pad = parseFloat(getComputedStyle(sec).paddingTop) || 0;
+      document.documentElement.style.setProperty("--barre", h + "px");
+      document.documentElement.style.setProperty("--ancre", (h + toc.offsetHeight + 18 - pad) + "px");
+    }
+    mesurer();
+    addEventListener("resize", mesurer);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(mesurer);
+  })();
+
+  // Traces de pas : une piste continue, calculée d'après la mise en page, qui flâne dans les gouttières
+  // et traverse entre deux sections quand le tirage le décide. Le tracé est fait d'arcs de cercle raccordés
+  // (jamais d'angle), avec de temps en temps une petite boucle quand la gouttière est assez large.
+  (function () {
+    const rules = $("#rules"); if (!rules) return;
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "pas-trail"); svg.setAttribute("aria-hidden", "true");
+    rules.appendChild(svg);
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const anim = !reduced; if (anim) svg.classList.add("anim");
+    const STRIDE = 38, FOOT_W = 16, FOOT_H = 26, TOE = 4, DS = 3;
+    const REACH = 18;       // du milieu de la piste au bord d'un pied (décalage gauche/droite compris)
+    const BAND = 24;        // marge des traversées sous le filet de la section et au-dessus de son titre
+    let prints = [], lastKey = "";
+    // Tirage figé : le tracé est le même à chaque visite, mais il ne suit aucune règle visible.
+    function rng(seed) { let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+
+    // Crayon : position, cap (0 = vers la droite, PI/2 = vers le bas), et la suite des points tracés
+    let pen, pts;
+    function arc(dth, r) {
+      const n = Math.max(1, Math.ceil(Math.abs(dth) * r / DS)), d = dth / n, chord = 2 * r * Math.sin(Math.abs(d) / 2);
+      for (let i = 0; i < n; i++) { pen.x += Math.cos(pen.h + d / 2) * chord; pen.y += Math.sin(pen.h + d / 2) * chord; pen.h += d; pts.push({ x: pen.x, y: pen.y }); }
+    }
+    function line(len) {
+      const n = Math.max(1, Math.ceil(len / DS)), s = len / n;
+      for (let i = 0; i < n; i++) { pen.x += Math.cos(pen.h) * s; pen.y += Math.sin(pen.h) * s; pts.push({ x: pen.x, y: pen.y }); }
+    }
+    // Virage en S : avance de L dans le cap, se décale de off sur le côté, et repart dans le même cap
+    function sbend(L, off) {
+      if (L < 1) return;
+      if (Math.abs(off) < 0.5) return line(L);
+      const th = 2 * Math.atan(Math.abs(off) / L), r = L / (2 * Math.sin(th)), s = Math.sign(off);
+      arc(s * th, r); arc(-s * th, r);
+    }
+    // Rayon le plus grand pour quitter (ou rejoindre) une gouttière sans que les pieds débordent :
+    // u = distance latérale avant d'arriver au-dessus du contenu, h = marge verticale disponible à cet endroit.
+    function maxRadius(u, h, cap) {
+      for (let R = cap; R > 24; R -= 2) {
+        if (R <= u) return R;
+        const c = 1 - u / R;
+        if (R * (1 - Math.sqrt(1 - c * c)) <= h) return R;
+      }
+      return 24;
+    }
+    // Boucle cursive (trochoïde) : le chemin s'écarte, remonte, fait le tour et recroise sa propre trace,
+    // puis repart vers le bas dans le même axe. b = largeur de la boucle / 2 (hauteur 2,5 b), la dérive vaut 20 % de b.
+    function loopShape(b, side) {
+      const a = 0.2 * b, out = [];
+      const n = Math.ceil(2 * Math.PI * b / DS);
+      for (let i = 1; i <= n; i++) {
+        const t = -Math.PI + 2 * Math.PI * i / n;
+        out.push({ x: side * b * (1 + Math.cos(t)), y: a * (t + Math.PI) - 1.25 * b * Math.sin(t) });
+      }
+      return { pts: out, dx: 0, dy: 2 * Math.PI * a, minX: Math.min(0, 2 * b * side), maxX: Math.max(0, 2 * b * side) };
+    }
+
+    function build() {
+      const H = rules.offsetHeight, rect = rules.getBoundingClientRect();
+      const VW = document.documentElement.clientWidth;
+      if (!rect.width || !H) return;
+      const sections = $$("#rules > section"); if (!sections.length) return;
+      const pad = parseFloat(getComputedStyle(rules).paddingLeft) || 0;
+      const key = VW + "x" + H + "/" + rect.left + "/" + pad; if (key === lastKey) return; lastKey = key;
+      const contentL = rect.left + pad, contentR = rect.right - pad;
+      const gutter = contentL;                       // largeur libre à gauche de l'écran, la même à droite
+      const walls = gutter >= 60;
+      const cL = gutter / 2, cR = VW - gutter / 2;   // axes des deux gouttières
+      const amp = Math.max(0, gutter / 2 - (walls ? 34 : 21));  // débattement sans toucher les couloirs ni le contenu
+      const top0 = rect.top;
+      // Où une grande boucle a le droit de passer : partout sauf sur ce qui se lit ou se voit (texte, filets, icônes),
+      // et derrière les éléments opaques (cartes, tableaux, images), qui cachent les pas. Index par tranches de 40 px.
+      const ROW = 40, opaqueRows = new Map(), blockRows = new Map();
+      const addRow = (map, o) => { for (let r = Math.floor(o.t / ROW); r <= Math.floor(o.b / ROW); r++) { if (!map.has(r)) map.set(r, []); map.get(r).push(o); } };
+      const box = (b, m) => ({ l: b.left - m, r: b.right + m, t: b.top - top0 - m, b: b.bottom - top0 + m, rad: 0 });
+      const opaqueEls = new Set();
+      sections.forEach(sec => {
+        sec.querySelectorAll("*").forEach(e => {
+          if (e.closest && [...opaqueEls].some(o => o.contains(e))) return;
+          const cs = getComputedStyle(e), b = e.getBoundingClientRect();
+          if (!b.width || !b.height || cs.visibility === "hidden") return;
+          const m = cs.backgroundColor.match(/rgba?\(([^)]+)\)/);
+          const alpha = m ? (m[1].split(",")[3] === undefined ? 1 : parseFloat(m[1].split(",")[3])) : 0;
+          if ((alpha >= 0.9 || e.tagName === "IMG") && b.width >= 24 && b.height >= 24) {
+            opaqueEls.add(e);
+            const o = box(b, 0); o.rad = Math.min(parseFloat(cs.borderTopLeftRadius) || 0, b.width / 2, b.height / 2); addRow(opaqueRows, o);
+            return;
+          }
+          const bordered = ["Top", "Right", "Bottom", "Left"].some(k => parseFloat(cs["border" + k + "Width"]) > 0 && !/rgba\([^)]*,\s*0\)/.test(cs["border" + k + "Color"]));
+          if (bordered || e.tagName === "svg" || e.tagName === "IMG" || e.tagName === "BUTTON" || e.tagName === "INPUT") addRow(blockRows, box(b, 4));
+        });
+        const tw = document.createTreeWalker(sec, NodeFilter.SHOW_TEXT), range = document.createRange();
+        for (let t = tw.nextNode(); t; t = tw.nextNode()) {
+          if (!t.nodeValue.trim()) continue;
+          if ([...opaqueEls].some(o => o.contains(t))) continue;
+          range.selectNodeContents(t);
+          for (const r of range.getClientRects()) if (r.width && r.height) addRow(blockRows, box(r, 5));
+        }
+        const sb = sec.getBoundingClientRect();
+        addRow(blockRows, { l: sb.left, r: sb.right, t: sb.bottom - top0 - 10, b: sb.bottom - top0 + 2, rad: 0 });  // filet double sous la section
+      });
+      const inRR = (o, x, y) => {
+        if (x < o.l || x > o.r || y < o.t || y > o.b) return false;
+        if (!o.rad) return true;
+        const cx = Math.max(o.l + o.rad, Math.min(o.r - o.rad, x)), cy = Math.max(o.t + o.rad, Math.min(o.b - o.rad, y));
+        return Math.hypot(x - cx, y - cy) <= o.rad;
+      };
+      const hit = (map, x, y) => (map.get(Math.floor(y / ROW)) || []).some(o => inRR(o, x, y));
+      const hidden = (x, y) => x > contentL && x < contentR && hit(opaqueRows, x, y);
+      const allowed = (x, y) => x > 2 && x < VW - 2 && y > 0 && y < H && (x < contentL - 2 || x > contentR + 2 || hidden(x, y) || !hit(blockRows, x, y));
+      const side = amp > 4 ? 5 : 3;                  // écart pied gauche / pied droit
+      const rnd = rng(20260925);
+      let onLeft = rnd() < 0.5;
+      const axis = () => onLeft ? cL : cR;
+      const laneRnd = f => axis() + amp * (2 * rnd() - 1) * (f || 1);
+
+      // Descente libre d'une gouttière jusqu'à yEnd, en arrivant à l'abscisse xEnd.
+      // Chaque virage en S se décale d'au plus 35 % de sa longueur : jamais de pointe, que des courbes larges.
+      let sinceLoop = 1, loopsDone = 0;
+      const clampOff = (dx, L) => Math.max(-0.35 * L, Math.min(0.35 * L, dx));
+      function run(yEnd, xEnd, loops) {
+        let wantLoop = loops && (sinceLoop >= 1 || rnd() < 0.5);
+        sinceLoop++;
+        for (;;) {
+          const rest = yEnd - pen.y;
+          if (rest <= 1) break;
+          if (rest < 420) { sbend(rest, -(xEnd - pen.x)); break; }
+          if (wantLoop && rest > 800) {
+            // Grande boucle : la piste peut plonger sous une carte, et la boucle en ressortir, tête bien visible.
+            // On essaie tailles, sens et positions ; on garde la plus grande dont tout le trajet (approche, tour, retour)
+            // ne pose aucun pied sur du texte, et dont la tête reste visible.
+            let best = null;
+            for (let k = 0; k < 120; k++) {
+              const b = 70 + rnd() * 90;
+              if (best && b <= best.b) continue;
+              // la tête part vers le bord de l'écran ; l'entrée de la boucle peut être jusqu'à 110 px sous le contenu
+              const sd = onLeft ? -1 : 1, shape = loopShape(b, sd);
+              const x0 = onLeft ? 22 + 2 * b + rnd() * (contentL + 110 - 22 - 2 * b) : VW - 22 - 2 * b - rnd() * (VW - 22 - 2 * b - (contentR - 110));
+              if (onLeft ? x0 < 22 + 2 * b : x0 > VW - 22 - 2 * b) continue;
+              const xBack = laneRnd();
+              const L1 = Math.max(180, Math.abs(x0 - pen.x) / 0.6) + rnd() * 60, L2 = Math.max(180, Math.abs(xBack - x0) / 0.6);
+              if (rest < L1 + shape.dy + L2 + 320) continue;
+              // trajet simulé à part, puis contrôlé point par point
+              const savePen = pen, savePts = pts;
+              pts = []; pen = { x: pen.x, y: pen.y, h: Math.PI / 2 };
+              sbend(L1, -(x0 - pen.x));
+              const i0 = pts.length, ox = pen.x, oy = pen.y;
+              shape.pts.forEach(q => pts.push({ x: ox + q.x, y: oy + q.y }));
+              const i1 = pts.length;
+              pen = { x: ox, y: oy + shape.dy, h: Math.PI / 2 };
+              sbend(L2, -(xBack - pen.x));
+              const seg = pts, endPen = pen;
+              pen = savePen; pts = savePts;
+              let ok = true, seen = 0, n = 0, head = 0, nHead = 0;
+              for (let i = 0; i < seg.length && ok; i += 2) {
+                const { x, y } = seg[i];
+                for (const [dx, dy] of [[0, 0], [16, 0], [-16, 0], [0, 16], [0, -16]]) if (!allowed(x + dx, y + dy)) { ok = false; break; }
+                if (i >= i0 && i < i1) {
+                  const vis = !hidden(x, y); n++; if (vis) seen++;
+                  if (Math.abs(x - ox) > 1.2 * b) { nHead++; if (vis) head++; }
+                }
+              }
+              if (ok && seen >= 0.5 * n && head >= 0.9 * nHead) best = { b, seg, endPen };
+            }
+            if (best) {
+              // La première boucle du parcours est retirée : un simple virage en S rejoint le même point d'arrivée,
+              // si bien que tout le reste du tracé (et les boucles suivantes) ne bouge pas.
+              if (loopsDone++ === 0) sbend(best.endPen.y - pen.y, -(best.endPen.x - pen.x));
+              else best.seg.forEach(q => pts.push(q));
+              pen = best.endPen;
+              wantLoop = false; sinceLoop = 0; continue;
+            }
+          }
+          const L = Math.min(rest - 220, 200 + rnd() * 200);
+          sbend(L, -clampOff((rest < 820 ? xEnd : laneRnd()) - pen.x, L));
+        }
+      }
+
+      const y0 = sections[0].getBoundingClientRect().top - top0 + 24;
+      pts = []; pen = { x: laneRnd(0.5), y: y0, h: Math.PI / 2 }; pts.push({ x: pen.x, y: pen.y });
+      sections.forEach((sec, i) => {
+        if (i === 0) return;
+        const yTop = sec.getBoundingClientRect().top - top0;
+        const cross = rnd() < 0.72 && contentR - contentL > 320;
+        if (!cross) { run(yTop + 104, laneRnd(), true); return; }
+        const bandTop = yTop + BAND, bandBot = yTop + 104 - BAND;
+        const sx = onLeft ? 1 : -1;                  // sens de la traversée
+        // couloir d'entrée : plutôt côté écran, pour prendre le virage le plus large possible
+        const xa = axis() - sx * amp * (0.3 + 0.7 * rnd());
+        const ys = bandTop + (bandBot - bandTop) * (0.55 + 0.45 * rnd());
+        const edgeA = onLeft ? contentL - REACH : contentR + REACH;
+        const R1 = maxRadius(Math.abs(edgeA - xa), ys - bandTop, 130 + rnd() * 110);
+        if (ys - R1 < pen.y + 160) { run(yTop + 104, laneRnd(), true); return; }
+        run(ys - R1, xa, true);
+        arc(-sx * Math.PI / 2, R1);
+        onLeft = !onLeft;
+        const xb = axis() + sx * amp * (0.3 + 0.7 * rnd());
+        const ye = bandTop + (bandBot - bandTop) * (0.45 * rnd());
+        const edgeB = onLeft ? contentL - REACH : contentR + REACH;
+        const R2 = maxRadius(Math.abs(xb - edgeB), bandBot - ye, 130 + rnd() * 110);
+        // traversée en léger zigzag dans le couloir, puis virage vers le bas
+        const xEnd = xb - sx * R2;
+        let span = Math.abs(xEnd - pen.x);
+        const n = Math.max(1, Math.round(span / (190 + rnd() * 90)));
+        for (let j = 0; j < n; j++) {
+          const L = Math.abs(xEnd - pen.x) / (n - j);
+          const yt = j === n - 1 ? ye : bandTop + 4 + (bandBot - bandTop - 8) * rnd();
+          sbend(L, (yt - pen.y) * sx);
+        }
+        arc(sx * Math.PI / 2, R2);
+        pen.h = Math.PI / 2;
+      });
+      run(H - 24, laneRnd(0.5), true);
+
+      svg.style.left = (-rect.left) + "px"; svg.style.width = VW + "px";
+      // Pas de viewBox : une unité = un pixel. Quand la page change de hauteur (question ouverte, exemple),
+      // le dessin ne s'étire ni ne se recentre en attendant le recalcul, il est seulement coupé ou prolongé.
+      svg.removeAttribute("viewBox"); svg.setAttribute("width", VW); svg.setAttribute("height", H);
+
+      // Longueurs cumulées, puis un pas tous les STRIDE, raccourci dans les virages serrés
+      const cum = [0];
+      for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+      const L = cum[cum.length - 1];
+      let seg = 0;
+      function at(t) {
+        t = Math.max(0, Math.min(L, t));
+        while (seg > 0 && cum[seg] > t) seg--;
+        while (seg < pts.length - 2 && cum[seg + 1] < t) seg++;
+        const a = pts[seg], b = pts[seg + 1] || a, f = (t - cum[seg]) / ((cum[seg + 1] - cum[seg]) || 1);
+        return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+      }
+      function heading(t) { const q = at(t + 2), o = at(t - 2); return Math.atan2(q.y - o.y, q.x - o.x); }
+      const frag = document.createDocumentFragment();
+      prints = []; let reach = -Infinity;
+      for (let t = STRIDE / 2, m = 0; t < L - FOOT_H / 2; m++) {
+        const p = at(t), h = heading(t);
+        let dh = heading(t + 8) - heading(t - 8); dh = Math.abs(Math.atan2(Math.sin(dh), Math.cos(dh)));
+        const r = dh > 1e-4 ? 16 / dh : 1e9;
+        const sign = m % 2 ? 1 : -1;
+        const x = p.x - Math.sin(h) * side * sign, y = p.y + Math.cos(h) * side * sign;
+        const ang = h * 180 / Math.PI - 90 + TOE * sign;
+        const u = document.createElementNS("http://www.w3.org/2000/svg", "use");
+        u.setAttribute("href", "#i-pas"); u.setAttribute("width", FOOT_W); u.setAttribute("height", FOOT_H);
+        u.setAttribute("transform", "translate(" + x.toFixed(1) + " " + y.toFixed(1) + ") rotate(" + ang.toFixed(1) + ") translate(" + (-FOOT_W / 2) + " " + (-FOOT_H / 2) + ")");
+        reach = Math.max(reach, y);
+        frag.appendChild(u); prints.push({ el: u, reach: reach });
+        t += STRIDE * Math.min(1, Math.max(0.62, r / 70));
+      }
+      if (walls) {  // couloirs du plan : deux doubles traits de chaque côté, entre le bord de l'écran et le contenu
+        const g = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        g.setAttribute("class", "murs");
+        const yTop = sections[0].getBoundingClientRect().top - top0 - 30, yBot = H - 8;
+        const xs = [10, 16, contentL - 16, contentL - 10, contentR + 10, contentR + 16, VW - 16, VW - 10];
+        g.setAttribute("d", xs.map(x => "M" + x + " " + yTop.toFixed(0) + "V" + yBot).join(""));
+        frag.prepend(g);
+      }
+      svg.replaceChildren(frag);
+      // Après un recalcul (polices, images, redimensionnement), ce qui était déjà visible le reste, sans rejouer l'animation
+      revealed = 0;
+      while (revealed < prints.length && prints[revealed].reach <= shownY) show(prints[revealed++], true);
+      kick();
+    }
+
+    // Apparition au fil du scroll : strictement dans l'ordre de la marche, un pas après l'autre.
+    // Ce qui est déjà passé au-dessus de l'écran apparaît d'un coup ; le reste accélère si le retard s'accumule.
+    const RATE = 24;        // pas par seconde, au calme
+    let revealed = 0, shownY = -Infinity, raf = 0, lastT = 0, credit = 0;
+    function show(pr, now) { if (now) pr.el.classList.add("now"); pr.el.classList.add("go"); shownY = Math.max(shownY, pr.reach); }
+    function tick(time) {
+      raf = 0;
+      const top = rules.getBoundingClientRect().top, viewTop = -top, limit = window.innerHeight - 30 - top;
+      while (revealed < prints.length && prints[revealed].reach < viewTop) show(prints[revealed++], true);
+      let target = revealed;
+      while (target < prints.length && prints[target].reach < limit) target++;
+      if (target <= revealed) { lastT = 0; return; }
+      if (!lastT) credit = 1;
+      else credit += Math.min(100, time - lastT) / 1000 * Math.max(RATE, (target - revealed) / 0.8);
+      lastT = time;
+      while (credit >= 1 && revealed < target) { show(prints[revealed++]); credit -= 1; }
+      raf = requestAnimationFrame(tick);
+    }
+    function kick() { if (anim && prints.length && !raf) raf = requestAnimationFrame(tick); }
+    addEventListener("scroll", kick, { passive: true });
+    let timer = 0;
+    const schedule = () => { clearTimeout(timer); timer = setTimeout(build, 120); };
+    if ("ResizeObserver" in window) new ResizeObserver(schedule).observe(rules); else addEventListener("resize", schedule);
+    // Question ouverte ou fermée : recalcul presque tout de suite (la réponse a le temps de s'afficher d'abord),
+    // pour que les pas ne restent pas sur le texte qui a bougé
+    rules.addEventListener("toggle", () => { clearTimeout(timer); timer = setTimeout(build, 30); }, true);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+    addEventListener("load", schedule);
+    build();
+  })();
+
+  const lieux = {
+    Banque: { de: "de la Banque", ouv: "la combinaison du coffre", emp: "les lingots", eff: "il pioche une carte et sa main compte désormais une carte de plus" },
+    Musée: { de: "du Musée", ouv: "le badge du gardien de nuit", emp: "le tableau", eff: "il regarde la main d'un joueur, y prend la carte de son choix et lui en donne une" },
+    Casino: { de: "du Casino", ouv: "le passe de la salle privée", emp: "la caisse", eff: "il échange une carte de sa main contre une carte de son choix dans la défausse" },
+    Bijouterie: { de: "de la Bijouterie", ouv: "le code de l'alarme", emp: "les diamants", eff: "il prend une Alarme, où qu'elle soit, sauf en main" }
+  };
+  const opts = [];
+  Object.keys(lieux).forEach(c => { opts.push({ v: "ouv:" + c, l: "Clé " + lieux[c].de + " · " + lieux[c].ouv }); opts.push({ v: "emp:" + c, l: "Butin " + lieux[c].de + " · " + lieux[c].emp }); });
+  opts.push({ v: "ouv:*", l: "Passe-partout · ouvre tous les lieux" }); opts.push({ v: "emp:*", l: "Pactole · va avec toutes les Clés" });
+  opts.push({ v: "traitre", l: "Traître" }); opts.push({ v: "alarme", l: "Alarme" });
+  // Roues du simulateur : la carte au centre est celle qui est jouée ; les autres pivotent et s'estompent vers les bords
+  const IMG_SIM = { "ouv:Banque": "01-la-combinaison-du-coffre", "emp:Banque": "02-les-lingots", "ouv:Musée": "03-le-badge-du-gardien-de-nuit", "emp:Musée": "04-le-tableau",
+    "ouv:Casino": "05-le-passe-de-la-salle-privee", "emp:Casino": "06-la-caisse", "ouv:Bijouterie": "07-le-code-de-l-alarme", "emp:Bijouterie": "08-les-diamants",
+    "ouv:*": "15-passe-partout", "emp:*": "16-pactole", "traitre": "09-traitre", "alarme": "10-alarme" };
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const roues = {};
+  function roue(id, list, def) {
+    const r = $("#" + id), piste = r.querySelector(".roue-piste"), nom = r.querySelector(".roue-nom");
+    piste.innerHTML = list.map((o, i) => `<button type="button" id="${id}-card-${i}" tabindex="-1" class="roue-carte" role="option" aria-label="${o.l}"><img src="cartes/${IMG_SIM[o.v]}.webp" alt="" width="512" height="715"></button>`).join("");
+    const cartes = [...piste.children];
+    let cur = -1, dernier = 0, paintFrame = 0;
+    function peindre() {
+      const width = piste.clientWidth, scroll = piste.scrollLeft;
+      let best = 0, bd = Infinity;
+      // Regrouper les mesures avant de modifier les styles.
+      const distances = cartes.map(e => (e.offsetLeft + e.offsetWidth / 2 - scroll - width / 2) / (e.offsetWidth + 6));
+      cartes.forEach((e, i) => {
+        const d = distances[i], a = Math.min(Math.abs(d), 2.6);
+        if (Math.abs(d) < bd) { bd = Math.abs(d); best = i; }
+        e.style.transform = `rotateY(${Math.max(-55, Math.min(55, -d * 30)).toFixed(1)}deg) scale(${(1 - a * .13).toFixed(3)})`;
+        e.style.opacity = Math.max(.1, 1 - a * .36).toFixed(2);
+      });
+      if (best !== cur) {
+        cur = best;
+        cartes.forEach((e, i) => { e.classList.toggle("on", i === cur); e.setAttribute("aria-selected", String(i === cur)); });
+        nom.textContent = list[cur].l;
+        piste.setAttribute("aria-activedescendant", cartes[cur].id);
+        r.querySelector(".prev").disabled = cur === 0;
+        r.querySelector(".next").disabled = cur === cartes.length - 1;
+        verdict();
+      }
+    }
+    const aller = (i, doux = true) => {
+      i = Math.max(0, Math.min(cartes.length - 1, i)); const e = cartes[i];
+      piste.scrollTo({ left: e.offsetLeft - (piste.clientWidth - e.offsetWidth) / 2, behavior: doux && !reduit ? "smooth" : "auto" });
+    };
+    piste.addEventListener("scroll", () => {
+      if (!paintFrame) paintFrame = requestAnimationFrame(() => { paintFrame = 0; peindre(); });
+    }, { passive: true });
+    cartes.forEach((e, i) => e.addEventListener("click", () => aller(i)));
+    r.querySelector(".prev").addEventListener("click", () => aller(cur - 1));
+    r.querySelector(".next").addEventListener("click", () => aller(cur + 1));
+    piste.addEventListener("keydown", e => {
+      if (e.key === "ArrowLeft") { aller(cur - 1); e.preventDefault(); }
+      if (e.key === "ArrowRight") { aller(cur + 1); e.preventDefault(); }
+      if (e.key === "Home") { aller(0); e.preventDefault(); }
+      if (e.key === "End") { aller(cartes.length - 1); e.preventDefault(); }
+    });
+    // Molette verticale : une carte par cran ; aux extrémités, la page reprend la main
+    piste.addEventListener("wheel", e => {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      const s = Math.sign(e.deltaY);
+      if ((s < 0 && cur === 0) || (s > 0 && cur === cartes.length - 1)) return;
+      e.preventDefault();
+      const now = performance.now(); if (now - dernier < 160) return; dernier = now;
+      aller(cur + s);
+    }, { passive: false });
+    addEventListener("resize", () => { const i = cur; cur = -1; aller(i, false); peindre(); });
+    roues[id] = { get v() { return list[Math.max(cur, 0)].v; } };
+    aller(Math.max(0, list.findIndex(o => o.v === def)), false); peindre();
+  }
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const nameOf = (half, lieu) => lieu === "*" ? (half === "ouv" ? "le Passe-partout" : "le Pactole") : lieux[lieu][half];
+  function verdict() {
+    if (!roues.roueA || !roues.roueB) return;
+    const a = roues.roueA.v, b = roues.roueB.v; const v = $("#verdict");
+    const parse = x => x.includes(":") ? x.split(":") : [x, null];
+    const [ta, ca] = parse(a), [tb, cb] = parse(b);
+    const k = v.querySelector(".k"), p = v.querySelector("p");
+    if (ca && cb && ta !== tb && (ca === cb || ca === "*" || cb === "*")) {
+      v.dataset.kind = "ok"; k.textContent = "Coup réussi";
+      const lieu = ca !== "*" ? ca : cb !== "*" ? cb : null;
+      const mCard = nameOf(ta, ca), cCard = nameOf(tb, cb);
+      const eff = lieu ? "Puis le complice applique l'effet " + lieux[lieu].de + " : " + lieux[lieu].eff + "." : "Aucun lieu n'est en jeu : pas d'effet.";
+      p.textContent = cap(mCard) + " entre dans la Planque du meneur, " + cCard + " dans celle du complice. " + eff;
+      return;
+    }
+    if (ta === "traitre") {
+      if (tb === "emp") {
+        v.dataset.kind = "vol"; k.textContent = "Trahison · vol";
+        const n = nameOf("emp", cb);
+        p.textContent = "Le Traître du meneur vole " + n + ", qui entre dans sa Planque, ou à la place un Butin de la Planque du complice ; " + n + " va alors à la défausse. Le Traître va à la défausse, face visible : un de moins dans la nature.";
+      } else {
+        v.dataset.kind = "ko"; k.textContent = "Trahison ratée";
+        p.textContent = "Un Traître ne vole qu'un Butin. Il va à la défausse sans rien voler, avec la carte du complice. Le meneur a perdu son Traître pour rien.";
+      }
+      return;
+    }
+    v.dataset.kind = "ko"; k.textContent = "Coup raté";
+    let why = "Les deux cartes sont défaussées. ";
+    if (tb === "traitre") { p.textContent = why + "Un Traître posé en réponse ne vole rien : il fait juste rater le coup. Au moins, le complice s'en est débarrassé."; return; }
+    if (ca && cb && ta === tb) why += (ta === "ouv" ? "Deux Clés" : "Deux Butins") + " : il manque l'autre moitié.";
+    else if (ca && cb) why += "Deux lieux différents : l'un des deux a menti, ou n'avait pas la bonne carte.";
+    else why += "Une Alarme n'est pas une moitié de coup : posée dans un coup, elle le fait rater. Retournée du dessus de la pioche, elle sonne et va au dossier.";
+    p.textContent = why;
+  }
+  roue("roueA", opts, "ouv:Casino"); roue("roueB", opts, "emp:Casino");
+
+  // ---- Exemple : un début de partie joué pas à pas (v9 : « Je l'ai ! », pioche, Traîtres cachés, universelles jokers).
+  // Le script ci-dessous rejoue les six coups sur une table ; chaque étape en garde un instantané complet.
+  // Afficher une étape, c'est poser chaque carte à sa place : les transitions CSS font glisser et retourner les cartes, dans les deux sens.
+  const LIEU = { B: ["banque", "Banque", "la combinaison du coffre", "les lingots"], M: ["musee", "Musée", "le badge du gardien de nuit", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
+  const NOM = { A: "Ana", B: "Bilal", C: "Chloé", D: "Dov" };
+  const IMG = { "K-B": "01-la-combinaison-du-coffre", "L-B": "02-les-lingots", "K-M": "03-le-badge-du-gardien-de-nuit", "L-M": "04-le-tableau", "K-C": "05-le-passe-de-la-salle-privee", "L-C": "06-la-caisse", "K-J": "07-le-code-de-l-alarme", "L-J": "08-les-diamants", "T": "09-traitre", "A": "10-alarme", "K-U": "15-passe-partout", "L-U": "16-pactole" };
+  function cardName(code) {
+    if (code === "T") return "Traître"; if (code === "A") return "Alarme";
+    if (code === "K-U") return "Passe-partout · Clé de tous les lieux"; if (code === "L-U") return "Pactole · Butin de tous les lieux";
+    const [k, l] = code.split("-"); return (k === "K" ? "Clé " : "Butin ") + (l === "B" ? "de la Banque" : l === "M" ? "du Musée" : l === "C" ? "du Casino" : "de la Bijouterie") + " · " + LIEU[l][k === "K" ? 2 : 3];
+  }
+  // Points d'une Planque v9 : famille de 3 Butins différents 7, paire de Clés du même lieu 4, Butin seul 1, Clé seule 0.
+  // Passe-partout et Pactole prennent le lieu le plus avantageux (on essaie tous les lieux).
+  function points(codes) {
+    const unis = codes.filter(c => c.endsWith("-U")), rest = codes.filter(c => !c.endsWith("-U"));
+    function score(list) {
+      const b = {}, c = {};
+      list.forEach(x => { const [k, l] = x.split("-"); if (k === "K") c[l] = (c[l] || 0) + 1; else b[l] = (b[l] || 0) + 1; });
+      let pts = 0; for (const l in c) pts += Math.floor(c[l] / 2) * 4;
+      const cnt = Object.values(b), tot = cnt.reduce((x, y) => x + y, 0); let fam = 0;
+      for (;;) { cnt.sort((x, y) => y - x); if (cnt.length >= 3 && cnt[2] > 0) { cnt[0]--; cnt[1]--; cnt[2]--; fam++; } else break; }
+      return pts + fam * 7 + (tot - 3 * fam);
+    }
+    let best = 0;
+    (function tryAll(i, acc) {
+      if (i === unis.length) { best = Math.max(best, score(rest.concat(acc))); return; }
+      for (const l of ["B", "M", "C", "J"]) tryAll(i + 1, acc.concat(unis[i][0] + "-" + l));
+    })(0, []);
+    return best;
+  }
+
+  // Décompte d'une Planque, groupe par groupe (même barème que points()) : paires de Clés du même lieu (4, le Passe-partout
+  // complète une Clé seule), familles de trois Butins de lieux différents (7, le Pactole en joker), puis Butin seul 1, Clé seule 0.
+  function groupes(ids) {
+    const code = id => K[id], used = new Set(), out = [];
+    const cles = ids.filter(id => code(id)[0] === "K" && code(id) !== "K-U");
+    for (const id of cles) {
+      if (used.has(id)) continue;
+      const mate = cles.find(o => o !== id && !used.has(o) && code(o) === code(id));
+      if (mate) { used.add(id); used.add(mate); out.push({ ids: [id, mate], pts: 4 }); }
+    }
+    for (const u of ids.filter(id => code(id) === "K-U")) {
+      const seule = cles.find(o => !used.has(o));
+      if (seule) { used.add(seule); used.add(u); out.push({ ids: [seule, u], pts: 4 }); }
+    }
+    for (;;) {
+      const libres = ids.filter(id => code(id)[0] === "L" && !used.has(id)), fam = [], lieux = new Set();
+      for (const id of libres) if (code(id) !== "L-U" && !lieux.has(code(id))) { lieux.add(code(id)); fam.push(id); }
+      for (const id of libres) if (code(id) === "L-U" && fam.length < 3) fam.push(id);
+      if (fam.length < 3) break;
+      fam.slice(0, 3).forEach(id => used.add(id)); out.push({ ids: fam.slice(0, 3), pts: 7 });
+    }
+    for (const id of ids) if (!used.has(id)) out.push({ ids: [id], pts: code(id)[0] === "L" ? 1 : 0 });
+    return out.sort((a, b) => ids.indexOf(a.ids[0]) - ids.indexOf(b.ids[0]));
+  }
+
+  // Table : chaque carte a un identifiant, l'état dit où elle est.
+  const K = {}; let nid = 0;
+  const mk = code => { const id = "x" + nid++; K[id] = code; return id; };
+  const S = { hands: { A: [], B: [], C: [], D: [] }, planq: { A: [], B: [], C: [], D: [] }, offers: {}, mid: {}, alarm: null, discard: [], dossier: [], deck: [],
+              revealed: false, roles: {}, announce: "", res: null };
+  // Mains de départ : cinq cartes chacun, au hasard. Bilal et Chloé ont un Traître, et personne ne le sait.
+  const start = { A: ["K-M", "K-B", "L-C", "K-C", "A"], B: ["L-M", "T", "L-B", "K-J", "L-J"], C: ["T", "L-J", "K-M", "L-B", "K-C"], D: ["L-M", "L-U", "K-J", "A", "L-B"] };
+  for (const p in start) S.hands[p] = start[p].map(mk);
+  // Pioche, dans l'ordre où les cartes en sortiront
+  S.deck = ["L-J", "K-M", "T", "L-C", "K-J", "K-U", "L-C", "A", "L-M", "L-M", "K-M", "L-B", "K-C", "L-J"].map(mk);
+  const h = (p, code) => S.hands[p].find(id => K[id] === code);
+  function take(id) {
+    for (const p in S.hands) { const i = S.hands[p].indexOf(id); if (i >= 0) { S.hands[p].splice(i, 1); return; } }
+    for (const p in S.planq) { const i = S.planq[p].indexOf(id); if (i >= 0) { S.planq[p].splice(i, 1); return; } }
+    for (const p in S.offers) if (S.offers[p].id === id) { delete S.offers[p]; return; }
+    for (const s in S.mid) if (S.mid[s] === id) { delete S.mid[s]; return; }
+    if (S.alarm === id) { S.alarm = null; return; }
+    for (const z of ["discard", "dossier", "deck"]) { const i = S[z].indexOf(id); if (i >= 0) { S[z].splice(i, 1); return; } }
+  }
+  const toHand = (p, id) => { take(id); S.hands[p].push(id); };
+  const toPlanq = (p, id) => { take(id); S.planq[p].push(id); };
+  const toMid = (slot, id) => { take(id); S.mid[slot] = id; };
+  const toDiscard = id => { take(id); S.discard.push(id); };
+  const toDossier = id => { take(id); S.dossier.push(id); };
+  const toAlarm = id => { take(id); S.alarm = id; };
+  // Un volontaire pose sa carte devant lui ; s'il n'est pas choisi, elle revient à sa place dans sa main
+  const offer = (p, id) => { const i = S.hands[p].indexOf(id); take(id); S.offers[p] = { id, i }; };
+  const back = p => { const o = S.offers[p]; delete S.offers[p]; S.hands[p].splice(o.i, 0, o.id); };
+  const draw = (p, n = 1) => { const got = S.deck.slice(0, n); got.forEach(id => toHand(p, id)); return got; };
+  // Fin du coup : effets appliqués, tout le monde complète sa main, meneur d'abord puis dans le sens horaire
+  const MAX = { A: 5, B: 5, C: 5, D: 5 }, mots = n => ["", "une", "deux", "trois", "quatre", "cinq"][n];
+  function completer(m, premier) {
+    const ordre = ["A", "B", "C", "D"], i0 = ordre.indexOf(m), got = [], parts = [];
+    for (let k = 0; k < 4; k++) {
+      const p = ordre[(i0 + k) % 4], n = MAX[p] - S.hands[p].length;
+      if (n > 0) { got.push(...draw(p, n)); parts.push(parts.length ? NOM[p] + " " + mots(n) : NOM[p] + " pioche " + mots(n) + " carte" + (n > 1 ? "s" : "")); }
+    }
+    const liste = parts.length > 1 ? parts.slice(0, -1).join(", ") + " et " + parts[parts.length - 1] : parts[0];
+    return { got, txt: (premier ? "Fin du coup : tout le monde complète sa main, en commençant par le meneur. " : "Fin du coup : ") + liste + "." };
+  }
+  function newCoup(m) { S.roles = { [m]: "meneur" }; S.announce = ""; S.res = null; S.revealed = false; }
+
+  const TITRES = ["Mise en place", "Coup 1 · Ana mène", "Coup 2 · Bilal mène", "Coup 3 · Chloé mène", "Coup 4 · Dov mène", "Coup 5 · Ana mène", "Coup 6 · Bilal mène"];
+  const beats = [];
+  function beat(coup, cap, joke, o = {}) { beats.push({ coup, cap, joke, hi: o.hi || [], says: o.says || {}, st: JSON.parse(JSON.stringify(S)) }); }
+  const JLA = "Je l'ai !";
+
+  // Mise en place
+  beat(0, "Cinq cartes chacun, piochées au hasard. Ici, toutes les mains sont visibles : on triche pour toi.");
+  beat(0, "Bilal et Chloé ont chacun un Traître. Personne d'autre ne le sait.", null, { hi: [h("B", "T"), h("C", "T")] });
+  beat(0, "Planques et dossier de police vides. Ana commence.", "Elle a prêté sa voiture à Dov.");
+
+  // Coup 1 : trois « Je l'ai ! » dont un bluff, puis l'effet du Musée
+  newCoup("A");
+  const km = h("A", "K-M");
+  beat(1, "Au tour d'Ana. Elle a le badge du gardien de nuit, une Clé du Musée. Il lui faut le tableau, le Butin du Musée.", null, { hi: [km] });
+  toMid("m", km); S.announce = "« Clé du Musée, qui a le butin ? »";
+  beat(1, "Elle pose le badge face cachée et annonce le coup à toute la table.");
+  const b1 = h("B", "L-M"), d1 = h("D", "L-M"), c1 = h("C", "K-C");
+  offer("B", b1); offer("D", d1); offer("C", c1);
+  beat(1, "Bilal et Dov ont le tableau : « Je l'ai ! ». Chloé aussi… avec le passe du Casino. Elle bluffe. Chacun pose une carte face cachée.", null, { says: { B: JLA, D: JLA, C: JLA } });
+  toMid("c", b1); back("D"); back("C"); S.roles.B = "complice";
+  beat(1, "Ana choisit Bilal, sans voir les cartes. Dov et Chloé reprennent la leur.", "Le bluff de Chloé ne sera jamais révélé.");
+  S.revealed = true; S.res = ["ok", "Coup réussi"];
+  beat(1, "On retourne : badge et tableau, même lieu. Coup réussi !");
+  toPlanq("A", km); toPlanq("B", b1); S.res = null; S.revealed = false;
+  beat(1, "Chaque carte va dans la Planque de celui qui l'a posée. Le tableau vaut 1 point à Bilal.");
+  const pu = h("D", "L-U"), kj = h("B", "K-J");
+  toHand("B", pu); toHand("D", kj);
+  beat(1, "Effet du Musée, pour le complice : Bilal regarde la main de Dov, lui prend le Pactole et lui donne une Clé.", "Dov s'est fait faire les poches.", { hi: [pu, kj] });
+  const f1 = completer("A", true);
+  beat(1, f1.txt + " Au tour de Bilal.", "Pas seulement le meneur : le complice aussi revient à cinq.", { hi: f1.got });
+
+  // Coup 2 : personne ne répond, la pioche joue le complice
+  newCoup("B");
+  const lb = h("B", "L-B");
+  beat(2, "Bilal a les lingots, un Butin de la Banque. Il lui faut la combinaison du coffre, la Clé de la Banque.", null, { hi: [lb] });
+  toMid("m", lb); S.announce = "« Butin de la Banque, qui a la clé ? »";
+  beat(2, "Il pose les lingots face cachée et annonce.");
+  beat(2, "Ana a la combinaison… mais se tait : elle la garde pour faire une paire de Clés.", null, { hi: [h("A", "K-B")], says: { A: "…" } });
+  const t2 = S.deck[0]; toMid("c", t2);
+  beat(2, "Personne ne dit « Je l'ai ! ». Bilal prend donc la carte du dessus de la pioche.", "Sans volontaire, la pioche joue le complice.");
+  S.revealed = true; S.res = ["ko", "Coup raté"];
+  beat(2, "C'est un Traître. Lingots contre Traître : coup raté. Sorti de la pioche, un Traître ne vole rien.", "La pioche ne trahit pas, elle déçoit.");
+  toDiscard(lb); toDiscard(t2); S.res = null; S.revealed = false;
+  beat(2, "Les deux cartes partent à la défausse, face visible.");
+  const f2 = completer("B");
+  beat(2, f2.txt + " Au tour de Chloé.", null, { hi: f2.got });
+
+  // Coup 3 : le Traître de Chloé
+  newCoup("C");
+  const tc = h("C", "T");
+  beat(3, "Chloé a un Traître. Pour voler, il faut mener avec, en annonçant une Clé.", null, { hi: [tc] });
+  toMid("m", tc); S.announce = "« Clé du Casino, qui a le butin ? »";
+  beat(3, "Elle le pose face cachée et ment : elle annonce une Clé du Casino.");
+  const a3 = h("A", "L-C"), b3 = h("B", "L-C");
+  offer("A", a3); offer("B", b3);
+  beat(3, "Ana et Bilal ont la caisse, le Butin du Casino : « Je l'ai ! ». Ils posent leur carte.", null, { says: { A: JLA, B: JLA } });
+  toMid("c", a3); back("B"); S.roles.A = "complice";
+  beat(3, "Chloé choisit Ana. Bilal reprend sa carte.");
+  S.revealed = true; S.res = ["vol", "Trahison !"];
+  beat(3, "On retourne : un Traître face à un Butin. Chloé vole la caisse !");
+  toPlanq("C", a3); toDiscard(tc); S.res = null; S.revealed = false;
+  beat(3, "La caisse va dans la Planque de Chloé : 1 point. Le Traître part à la défausse.", "Les Clés ne se volent jamais : le badge d'Ana est à l'abri.");
+  const f3 = completer("C");
+  beat(3, f3.txt + " Ana remplace sa caisse volée. Au tour de Dov.", "Ana révise sa confiance en l'humanité.", { hi: f3.got });
+
+  // Coup 4 : l'Alarme d'Ana annule un coup réussi
+  newCoup("D");
+  const kd = h("D", "K-J");
+  beat(4, "Dov a deux codes de l'alarme, la Clé de la Bijouterie. Il lui faut les diamants.", null, { hi: S.hands.D.filter(id => K[id] === "K-J") });
+  toMid("m", kd); S.announce = "« Clé de la Bijouterie, qui a le butin ? »";
+  beat(4, "Il en pose un face cachée et annonce.");
+  const c4 = h("C", "L-J"), b4 = h("B", "L-J");
+  offer("C", c4); offer("B", b4);
+  beat(4, "Chloé et Bilal ont les diamants : « Je l'ai ! ». Ils posent leur carte.", null, { says: { C: JLA, B: JLA } });
+  toMid("c", c4); back("B"); S.roles.C = "complice";
+  beat(4, "Dov choisit Chloé. Bilal reprend sa carte.");
+  S.revealed = true; S.res = ["ok", "Coup réussi"];
+  beat(4, "Code et diamants : coup réussi. Chloé passerait à 2 points, et l'effet de la Bijouterie lui donnerait une Alarme…");
+  const al = h("A", "A"); toAlarm(al); S.roles.A = "alarme"; S.res = ["al", "Annulé par l'Alarme d'Ana"];
+  beat(4, "… mais Ana, qui n'est pas dans le coup, joue une Alarme. Coup annulé !", "Une Alarme se joue à tout moment, sur un coup réussi.", { says: { A: "Alarme !" } });
+  toDiscard(kd); toDiscard(c4); toDossier(al); S.res = null; S.revealed = false;
+  beat(4, "Pas d'effet : les deux cartes vont à la défausse, l'Alarme au dossier de police.", "À la quatrième Alarme, la police débarque.");
+  const f4 = completer("D");
+  beat(4, f4.txt + " Ana, qui n'était pas dans le coup, remplace son Alarme. Retour à Ana.", "Elle repioche… une Alarme. Certains ont le chic.", { hi: f4.got });
+
+  // Coup 5 : le Pactole de Bilal, puis l'effet de la Banque
+  newCoup("A");
+  const kb = h("A", "K-B");
+  beat(5, "Ana a la combinaison du coffre, la Clé de la Banque. Il lui faut les lingots.", null, { hi: [kb] });
+  toMid("m", kb); S.announce = "« Clé de la Banque, qui a le butin ? »";
+  beat(5, "Elle la pose face cachée et annonce.");
+  const d5 = h("D", "L-B"), c5 = h("C", "L-B"), b5 = h("B", "L-U");
+  offer("D", d5); offer("C", c5); offer("B", b5);
+  beat(5, "Dov et Chloé ont les lingots. Bilal a le Pactole, qui va avec toutes les Clés. Trois « Je l'ai ! ».", null, { says: { D: JLA, C: JLA, B: JLA } });
+  toMid("c", b5); back("D"); back("C"); S.roles.B = "complice";
+  beat(5, "Ana choisit Bilal. Dov et Chloé reprennent leur carte.");
+  S.revealed = true; S.res = ["ok", "Coup réussi"];
+  beat(5, "Combinaison et Pactole : coup réussi, dans le lieu de la vraie carte, la Banque.");
+  toPlanq("A", kb); toPlanq("B", b5); S.res = null; S.revealed = false;
+  beat(5, "Chacun range sa carte. Bilal : 2 points. Ana : deux Clés de lieux différents, 0 point.");
+  MAX.B = 6; const b6 = draw("B");
+  beat(5, "Effet de la Banque, pour le complice : Bilal pioche une carte. Sa main compte une carte de plus pour toute la partie.", null, { hi: b6 });
+  const f5 = completer("A");
+  beat(5, f5.txt + " Ana tombe sur un deuxième badge du gardien de nuit. Au tour de Bilal.", "Tout le monde surveille Bilal. Personne ne surveille Ana.", { hi: f5.got });
+
+  // Coup 6 : Ana répond avec son deuxième badge et fait une paire de Clés en Planque
+  newCoup("B");
+  const lm6 = h("B", "L-M");
+  beat(6, "Bilal a le tableau, le Butin du Musée. Il lui faut le badge du gardien de nuit.", null, { hi: [lm6] });
+  toMid("m", lm6); S.announce = "« Butin du Musée, qui a la clé ? »";
+  beat(6, "Il pose le tableau face cachée et annonce.");
+  const a6 = h("A", "K-M"), c6 = h("C", "K-M");
+  offer("A", a6); offer("C", c6);
+  beat(6, "Ana et Chloé ont le badge : « Je l'ai ! ». Elles posent leur carte.", null, { says: { A: JLA, C: JLA } });
+  toMid("c", a6); back("C"); S.roles.A = "complice";
+  beat(6, "Bilal choisit Ana. Chloé reprend sa carte.");
+  S.revealed = true; S.res = ["ok", "Coup réussi"];
+  beat(6, "Tableau et badge : coup réussi.");
+  toPlanq("B", lm6); toPlanq("A", a6); S.res = null; S.revealed = false;
+  beat(6, "Ana range son badge contre celui du coup 1. Deux Clés du même lieu : c'est une paire, 4 points d'un coup ! Bilal passe à 3 points.", "Une Clé seule ne vaut rien. Deux, c'est un double des clés, et personne ne peut les voler.", { hi: [km, a6] });
+  const tb = h("B", "T"), lj = h("A", "L-J");
+  toHand("A", tb); toHand("B", lj);
+  beat(6, "Effet du Musée, pour la complice : Ana regarde la main de Bilal, lui prend son Traître et lui donne les diamants.", "Le Traître change de camp.", { hi: [tb, lj] });
+  const f6 = completer("B");
+  beat(6, f6.txt + " Bilal revient à six, grâce à la Banque. Ana mène au score avec 4 points.", "Fin de l'exemple. Maintenant, tout le monde surveille Ana.", { hi: f6.got });
+
+  // Géométrie du plateau (unités : % de la largeur du plateau). Chaque joueur tient sa main en éventail autour d'un pivot hors de la table.
+  const SEAT = { A: { px: 50, py: -2.5, R: 180 }, B: { px: 102.5, py: 50, R: -90 }, C: { px: 50, py: 102.5, R: 0 }, D: { px: -2.5, py: 50, R: 90 } };
+  const PLANQ = { A: [50, 26], B: [74, 50], C: [50, 76], D: [26, 50] };
+  const OFFER = { A: [50, 34.6], B: [64, 51.5], C: [50, 67.5], D: [36, 51.5] };
+  const H0 = 13.965, HAND_S = 1, HAND_R = 8, PILE_S = .58;
+  const rot = (x, y, deg) => { const t = deg * Math.PI / 180, c = Math.cos(t), s = Math.sin(t); return [x * c - y * s, x * s + y * c]; };
+  function layout(st) {
+    const L = { pts: [] };
+    for (const p in st.hands) {
+      const ids = st.hands[p], n = ids.length, step = n > 1 ? Math.min(11, 46 / (n - 1)) : 0, s = SEAT[p];
+      ids.forEach((id, i) => {
+        const a = (i - (n - 1) / 2) * step, [dx, dy] = rot(0, -(HAND_R + HAND_S * H0 / 2), s.R + a);
+        L[id] = { x: s.px + dx, y: s.py + dy, r: s.R + a, s: HAND_S, z: 10 + i, down: false, hand: true };
+      });
+    }
+    for (const p in st.planq) {
+      // une paire (ou une famille) occupe une seule place : ses cartes se chevauchent, décalées
+      const gs = groupes(st.planq[p]), n = gs.length, [lx, ly] = rot(1, 0, SEAT[p].R), [nx, ny] = rot(0, 1, SEAT[p].R), gap = PILE_S * 10 + .8;
+      let z = 4;
+      gs.forEach((g, i) => {
+        const o = (i - (n - 1) / 2) * gap - (g.ids.length - 1) * 1.3;
+        g.ids.forEach((id, j) => { const oj = o + j * 2.6; L[id] = { x: PLANQ[p][0] + lx * oj, y: PLANQ[p][1] + ly * oj, r: SEAT[p].R, s: PILE_S, z: z++, paire: g.ids.length > 1 }; });
+        // pastille des points, sur le bord de la carte tourné vers le centre de la table
+        const oc = o + (g.ids.length - 1) * 1.3, d = PILE_S * H0 / 2;
+        L.pts.push({ key: g.ids.join("+"), x: PLANQ[p][0] + lx * oc - nx * d, y: PLANQ[p][1] + ly * oc - ny * d, pts: g.pts, paire: g.ids.length === 2 });
+      });
+    }
+    for (const p in st.offers) L[st.offers[p].id] = { x: OFFER[p][0], y: OFFER[p][1], r: SEAT[p].R, s: .6, z: 12, down: true };
+    if (st.mid.m) L[st.mid.m] = { x: 45.2, y: 51.5, r: -4, s: .86, z: 14, down: !st.revealed };
+    if (st.mid.c) L[st.mid.c] = { x: 54.8, y: 51.5, r: 4, s: .86, z: 14, down: !st.revealed };
+    if (st.alarm) L[st.alarm] = { x: 50, y: 50.5, r: -12, s: .9, z: 16 };
+    st.discard.forEach((id, i) => { L[id] = { x: 73.5 + ((i * 37) % 5 - 2) * .25, y: 27.6 + ((i * 17) % 3 - 1) * .2, r: ((i * 53) % 11 - 5) * 1.6, s: PILE_S, z: 2 + i }; });
+    st.dossier.forEach((id, i) => { L[id] = { x: 26.5 + i * 1.4, y: 74.6, r: 0, s: PILE_S, z: 2 + i }; });
+    st.deck.forEach((id, i) => { L[id] = { x: 26.5 - i * .05, y: 27.6 - i * .08, r: 0, s: PILE_S, z: 3 + st.deck.length - i, down: true }; });
+    return L;
+  }
+
+  // Rendu
+  const board = $("#exBoard"), els = {}, pills = {};
+  const back13 = "cartes/13-dos-du-paquet.webp";
+  function cardEl(src, alt) {
+    const e = document.createElement("div"); e.className = "ex-card";
+    e.innerHTML = `<div class="lift"><div class="flip"><img class="fr" src="${src}" alt="${alt}" title="${alt}" loading="lazy"><img class="bk" src="${back13}" alt="" loading="lazy"></div></div>`;
+    board.appendChild(e); return e;
+  }
+  // Le fond de la pioche : deux dos fixes, pour qu'elle ne paraisse jamais vide
+  [0, 1].forEach(i => { const e = cardEl(back13, ""); e.classList.add("down"); e.style.cssText = `--x:${26.3 + i * .25}cqw;--y:${27.8 + i * .2}cqw;--r:${i ? 2 : -1}deg;--s:${PILE_S};--z:1`; });
+  for (const id in K) els[id] = cardEl(`cartes/${IMG[K[id]]}.webp`, cardName(K[id]));
+  let ei = 0, auto = 0;
+  function render(instant) {
+    const b = beats[ei], st = b.st, L = layout(st);
+    if (instant) board.classList.add("instant");
+    for (const id in els) {
+      const q = L[id], e = els[id];
+      e.style.cssText = `--x:${q.x.toFixed(2)}cqw;--y:${q.y.toFixed(2)}cqw;--r:${q.r.toFixed(1)}deg;--s:${q.s};--z:${q.z}`;
+      e.classList.toggle("down", !!q.down); e.classList.toggle("inhand", !!q.hand); e.classList.toggle("hi", b.hi.includes(id));
+      e.classList.toggle("paire", !!q.paire);
+    }
+    if (instant) { void board.offsetWidth; board.classList.remove("instant"); }
+    for (const p of ["A", "B", "C", "D"]) {
+      const role = st.roles[p] || "", pts = points(st.planq[p].map(id => K[id]));
+      const plate = board.querySelector(`.ex-plate[data-seat="${p}"]`);
+      plate.className = "ex-plate p-" + { A: "n", B: "e", C: "s", D: "w" }[p] + (role ? " " + role : "");
+      const label = role === "meneur" ? (p === "A" ? "mène le coup" : "mène le coup") : role === "complice" ? "complice" : role === "alarme" ? "joue l'Alarme" : st.hands[p].length + " cartes";
+      const say = b.says[p] ? `<span class="say${p === "A" && b.says[p] === "Alarme !" ? " al" : ""}">${b.says[p]}</span>` : "";
+      plate.innerHTML = `<span class="nm">${NOM[p]}</span><span class="pt">${pts} pt${pts > 1 ? "s" : ""}</span><span class="rl">${label}</span>${say}`;
+      board.querySelector(`.ex-planq[data-planq="${p}"]`).classList.toggle("full", st.planq[p].length > 0);
+    }
+    $("#exDef").classList.toggle("full", st.discard.length > 0);
+    $("#exDos").classList.toggle("full", st.dossier.length > 0);
+    $("#exSay").textContent = st.announce;
+    // Points de chaque carte ou groupe dans les Planques
+    const vus = new Set();
+    for (const q of L.pts) {
+      let e = pills[q.key];
+      if (!e) { e = pills[q.key] = document.createElement("span"); board.appendChild(e); }
+      e.className = "ex-pts" + (q.paire ? " paire" : q.pts === 0 ? " zero" : "");
+      e.textContent = (q.paire ? "paire · " : "") + q.pts + (q.pts > 1 ? " pts" : " pt");
+      e.style.setProperty("--x", q.x.toFixed(2) + "%"); e.style.setProperty("--y", q.y.toFixed(2) + "%");
+      vus.add(q.key);
+    }
+    for (const k in pills) if (!vus.has(k)) { pills[k].remove(); delete pills[k]; }
+    const res = $("#exRes"); res.className = "ex-res" + (st.res ? " " + st.res[0] : ""); res.textContent = st.res ? st.res[1] : "";
+    // Récit : les étapes du coup en cours jusqu'à celle-ci, la dernière en avant
+    const first = beats.findIndex(x => x.coup === b.coup), total = beats.filter(x => x.coup === b.coup).length;
+    $("#exWho").textContent = TITRES[b.coup];
+    $("#exStep").textContent = `étape ${ei - first + 1} / ${total}`;
+    $("#exLog").innerHTML = beats.slice(first, ei + 1).map((x, i, arr) => `<li${i === arr.length - 1 ? ' class="now"' : ""}>${x.cap}${x.joke ? `<br><span class="joke">${x.joke}</span>` : ""}</li>`).join("");
+    fitLog();
+    $$("#exChips button").forEach((c, i) => c.setAttribute("aria-current", i === b.coup ? "true" : "false"));
+    $("#exPrev").disabled = ei === 0; $("#exNext").disabled = ei === beats.length - 1;
+    if (ei === beats.length - 1) stopAuto();
+  }
+  function fitLog() {
+    const log = $("#exLog"), viewport = log.parentElement;
+    const desktop = matchMedia("(min-width: 921px)").matches;
+    const overflow = desktop ? Math.max(0, log.offsetHeight - viewport.clientHeight) : 0;
+    log.style.setProperty("--log-offset", -overflow + "px");
+    // Le dégradé ne touche jamais l'explication courante.
+    const current = log.querySelector(".now");
+    const historySpace = current ? viewport.clientHeight - current.offsetHeight : 0;
+    viewport.classList.toggle("has-history", overflow > 0 && historySpace >= 32);
+  }
+  const logObserver = new ResizeObserver(fitLog);
+  logObserver.observe($("#exLog").parentElement);
+  logObserver.observe($("#exLog"));
+  addEventListener("resize", fitLog);
+  document.fonts.ready.then(fitLog);
+  function go(k) { ei = Math.max(0, Math.min(beats.length - 1, k)); render(); }
+  // Lecture auto : une étape toutes les 2 à 5 secondes selon la longueur de la phrase
+  function stopAuto() { clearTimeout(auto); auto = 0; $("#exAuto").setAttribute("aria-pressed", "false"); $("#exAuto").textContent = "Lecture auto"; }
+  function tickAuto() { auto = setTimeout(() => { if (ei < beats.length - 1) { go(ei + 1); tickAuto(); } else stopAuto(); }, 1600 + 32 * beats[ei].cap.length); }
+  $("#exAuto").addEventListener("click", () => {
+    if (auto) return stopAuto();
+    if (ei === beats.length - 1) go(0);
+    $("#exAuto").setAttribute("aria-pressed", "true"); $("#exAuto").textContent = "Pause"; tickAuto();
+  });
+  $("#exPrev").addEventListener("click", () => { stopAuto(); go(ei - 1); });
+  $("#exNext").addEventListener("click", () => { stopAuto(); go(ei + 1); });
+  $("#exChips").innerHTML = TITRES.map((t, i) => `<button type="button" title="${t}" aria-label="${t}">${i || "Départ"}</button>`).join("");
+  $$("#exChips button").forEach((c, i) => c.addEventListener("click", () => { stopAuto(); go(beats.findIndex(x => x.coup === i)); }));
+  $("#exemple").addEventListener("keydown", e => {
+    if (e.target.closest("input, select, textarea")) return;
+    if (e.key === "ArrowRight") { stopAuto(); go(ei + 1); e.preventDefault(); }
+    if (e.key === "ArrowLeft") { stopAuto(); go(ei - 1); e.preventDefault(); }
+  });
+  render(true);
+})();
+</script>
