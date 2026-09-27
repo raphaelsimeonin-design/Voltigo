@@ -38,11 +38,12 @@
   .pill .ico { width: 15px; height: 15px; vertical-align: -3px; margin-right: 4px; }
   .mini .ico { width: 14px; height: 14px; position: absolute; right: 3px; bottom: 3px; opacity: .95; }
   .dossier .al .ico { width: 20px; height: 20px; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Comfortaa", "Nunito", Arial, sans-serif; font-size: 16.5px; line-height: 1.6; padding-inline: 20px; padding-block: 0 80px; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Comfortaa", "Nunito", Arial, sans-serif; font-size: 16.5px; line-height: 1.6; padding-inline: clamp(12px, 5vw, 20px); padding-block: 0 80px; }
   .wrap { max-width: 1120px; margin: 0 auto; }
   /* Barres pleine largeur : onglets, en-tête et sommaire s'étendent jusqu'aux bords de l'écran, leur contenu reste aligné sur la colonne centrale. */
   .topbar, #rules header, nav.toc { margin-inline: calc(50% - 50vw); padding-inline: calc(50vw - 50%); }
-  body { overflow-x: clip; }
+  html { overflow-x: hidden; overflow-x: clip; }
+  body { overflow-x: hidden; overflow-x: clip; }
 
   h1, h2, h3, .big, .n { font-family: "Baloo 2", "Comfortaa", Arial, sans-serif; font-weight: 800; line-height: 1.05; text-wrap: balance; margin: 0; }
   h1 { font-size: clamp(64px, 11vw, 132px); letter-spacing: -.02em; color: var(--green); }
@@ -61,7 +62,7 @@
   .tagline { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: clamp(18px, 2.4vw, 26px); color: var(--ink); max-width: 30ch; line-height: 1.2; }
   /* Logo-titre « lettre de rançon » : tracés générés par Logo/rancon.py, sous-titre compris (étiquette Dymo) */
   h1.logo { line-height: 0; margin-block: 10px 6px; }
-  h1.logo svg { display: block; width: clamp(280px, 62vw, 680px); height: auto; }
+  h1.logo svg { display: block; width: min(100%, clamp(280px, 62vw, 680px)); height: auto; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   [hidden] { display: none !important; }
   /* Barre du haut, collée en haut de l'écran : le logo et le sous-titre */
@@ -124,9 +125,9 @@
   .kcard.tint-mint .plaque { background: var(--banque); color: var(--creme); }
   .kcard.tint-muted .plaque { background: var(--surface-2); color: var(--ink); }
 
-  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
-  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
-  .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 22px; }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 22px; min-width: 0; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 22px; min-width: 0; }
+  .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 22px; min-width: 0; }
 
   /* Les quatre lieux */
   /* En-têtes des lieux à la même hauteur, quelle que soit la longueur des noms : chaque carte suit les deux rangées de la grille */
@@ -273,7 +274,7 @@
   
   /* Barème illustré : vraies cartes en éventail, pastille de points */
   .combos-title { margin: 26px 0 0; font-size: 24px; }
-  .combos { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 22px 18px; margin-top: 18px; }
+  .combos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 22px 18px; margin-top: 18px; min-width: 0; }
   .combo { position: relative; border-radius: 22px; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); padding: 14px 16px 14px; display: grid; gap: 6px; align-content: start; }
   .combo .fan { display: flex; justify-content: center; align-items: flex-end; height: 118px; margin-bottom: 4px; }
   .combo .fan img { width: 72px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, .22); margin: 0 -12px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 115%; }
@@ -385,7 +386,7 @@
   .sechead + .pop { margin: -4px 0 16px 60px; }
 
   /* Aide-mémoire */
-  .memo { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
+  .memo { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 22px; min-width: 0; }
   .memo ol, .memo ul { margin: 0; padding-left: 18px; font-size: 15px; }
   .memo li { margin-bottom: 6px; }
 
@@ -487,6 +488,13 @@
   .memo-finish strong { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-width: 62px; padding: 3px 7px; border-radius: 7px; background: var(--plaque); color: var(--plaque-ink); font: 800 18px/1.3 "Baloo 2", sans-serif; }
   .memo-visual .memo-tie { margin: 9px 0 0; font-size: 11.5px; }
   @media (max-width: 920px) { .memo-visual { grid-template-columns: 1fr; } .memo-visual .memo-scores { grid-template-columns: 1fr 1fr; gap: 12px 24px; } }
+  @media (max-width: 560px) {
+    .memo-visual .memo-scores { grid-template-columns: minmax(0, 1fr); }
+    .paire { display: grid; grid-template-columns: 48px 22px 48px; justify-content: center; gap: 8px; }
+    .paire img { width: 48px; }
+    .paire .op:nth-of-type(2) { grid-column: 1; grid-row: 2; justify-self: center; }
+    .paire .verdict-mini { grid-column: 2 / 4; grid-row: 2; justify-self: stretch; text-align: center; font-size: 14px; padding-inline: 8px; }
+  }
 
   /* Rythme plus doux sur petit écran : titres, cartes et sections respirent sans rallonger inutilement la page. */
   @media (max-width: 760px) {

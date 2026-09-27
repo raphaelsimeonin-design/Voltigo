@@ -65,3 +65,25 @@ a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{o
 @keyframes heist-reel-reverse{to{transform:rotate(-360deg)}}
 @media(max-width:760px){.sound-easter{width:calc(100% - 36px);grid-template-columns:1fr;gap:22px;margin-bottom:54px;padding:23px 20px}.sound-cassette{max-width:220px}.sound-copy{text-align:center}.sound-copy .sound-warning{margin-inline:auto}.sound-toggle{margin-inline:auto}}
 @media(prefers-reduced-motion:reduce){.sound-easter .cassette-spool{animation:none!important}}
+
+
+/* Garde les décors dans la fenêtre et donne aux étapes une vraie colonne de lecture sur téléphone. */
+html{overflow-x:hidden;overflow-x:clip}
+@media(min-width:761px) and (max-width:1050px){.step-art.card-pair img{height:clamp(112px,15vw,192px)}}
+@media(max-width:760px){
+  .scattered{width:clamp(58px,25vw,95px)}
+  .step{display:grid;grid-template-columns:minmax(0,1fr);gap:15px;padding:20px}
+  .step .number{position:static;z-index:auto;justify-self:start;margin:0;width:34px;height:34px;font-size:12px}
+  .step-art{grid-column:1;grid-row:auto;width:100%;height:175px;margin:0 0 4px;min-width:0}
+  .step-art img{height:146px;max-width:100%}
+  .step-art.card-pair img{height:146px}
+  .step h3,.step p{min-width:0}
+}
+@media(max-width:380px){
+  .topbar .shell{gap:10px}
+  .topnav .button.small{gap:6px;padding-inline:8px;font-size:14px}
+  .step{grid-template-columns:minmax(0,1fr);gap:13px;padding:18px}
+  .step .number{width:32px;height:32px}
+  .step-art{height:150px}
+  .step-art img,.step-art.card-pair img{height:122px}
+}
