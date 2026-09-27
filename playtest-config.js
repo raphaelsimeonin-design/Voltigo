@@ -57,10 +57,7 @@ const VOLTIGO_PLAYTEST = Object.freeze({
         return;
       }
       complete = true;
-      document.querySelector('#form-fields').hidden = true;
-      showStatus('Merci, complice ! On te recontacte bientôt par e-mail pour les détails du playtest.', 'success');
-      form.reset();
-      window.location.assign('merci.html');
+      window.location.replace('merci.html');
     } catch {
       // Une coupure réseau ne permet pas de savoir si le serveur a reçu le POST.
       // Ne pas annoncer un succès ni relancer automatiquement la requête.

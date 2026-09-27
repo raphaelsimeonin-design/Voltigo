@@ -45,3 +45,5 @@ body,.blueprint{background-image:linear-gradient(to right,var(--plan-gros) 1px,t
 .form-status[data-kind="error"]{background:#5a1f2a;color:var(--cream);border-color:#ff6b6b}
 .form-card button:disabled{background:var(--line);color:var(--cream);border-color:var(--line);box-shadow:none}
 a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline-color:var(--sky)}
+
+.button-arrow{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}

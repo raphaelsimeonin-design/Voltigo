@@ -15,15 +15,13 @@
     --plaque: #1D1B2A; --plaque-ink: #FFF6E1; --pas: #DEBF78; --plan-fin: rgba(138, 90, 0, .07); --plan-gros: rgba(138, 90, 0, .13); --mur: rgba(138, 90, 0, .22);
     --shadow: 0 10px 28px rgba(120, 80, 0, .12); color-scheme: light;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
+  :root {
       --bg: #1F3C88; --surface: #27489A; --surface-2: #2E54AB; --ink: #FFF6E1; --muted: #BBD0F2; --line: #3D63B8;
       --green: #00794E; --green-ink: #FFF6E1; --mint: #9CCC8F; --gold: #FBBB19; --gold-ink: #FBBB19; --gold-soft: #5A4612;
       --sky: #92D8FF; --sky-soft: #173B78; --danger: #FF6B6B; --danger-soft: #5A1F2A; --violet: #D9A6E0;
       --musee-soft: #173B78; --casino-soft: #4A1E2A; --bijou-soft: #3B2A5E; --banque-soft: #1B4E3A;
       --plaque: #13285E; --plaque-ink: #FFF6E1; --pas: #92D8FF; --plan-fin: rgba(146, 216, 255, .08); --plan-gros: rgba(146, 216, 255, .16); --mur: rgba(146, 216, 255, .38);
       --shadow: 0 10px 28px rgba(0, 0, 0, .35); color-scheme: dark;
-    }
   }
   :root[data-theme="dark"] {
     --bg: #1F3C88; --surface: #27489A; --surface-2: #2E54AB; --ink: #FFF6E1; --muted: #BBD0F2; --line: #3D63B8;
@@ -49,7 +47,7 @@
   h1, h2, h3, .big, .n { font-family: "Baloo 2", "Comfortaa", Arial, sans-serif; font-weight: 800; line-height: 1.05; text-wrap: balance; margin: 0; }
   h1 { font-size: clamp(64px, 11vw, 132px); letter-spacing: -.02em; color: var(--green); }
   :root[data-theme="dark"] h1 { color: var(--gold); }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) h1 { color: var(--gold); } }
+  :root h1 { color: var(--gold); }
   h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 6px; }
   h3 { font-size: 21px; margin-bottom: 8px; font-weight: 800; }
   p { margin: 0 0 12px; max-width: 64ch; }
@@ -147,7 +145,7 @@
   .lieu.casino .top { background: var(--casino); } .lieu.casino .effect { background: var(--casino-soft); color: #4A0A14; }
   .lieu.bijou .top { background: var(--bijou); } .lieu.bijou .effect { background: var(--bijou-soft); color: #2E0F33; }
   :root[data-theme="dark"] .lieu .effect, .dark .lieu .effect { color: var(--ink); }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lieu .effect { color: var(--ink); } }
+  :root .lieu .effect { color: var(--ink); }
 
   .pill { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .04em; padding: 5px 12px; border-radius: 999px; border: 2px solid var(--line); background: var(--surface); }
   .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
@@ -420,7 +418,7 @@
   .kcard.taped > .body { border-radius: 0 0 18px 18px; }
   .memo .taped:nth-child(even)::before { rotate: 5deg; }
   :root[data-theme="dark"] .kcard.taped::before { background: #92D8FF66; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .kcard.taped::before { background: #92D8FF66; } }
+  :root .kcard.taped::before { background: #92D8FF66; }
 
   /* Une fin pleine largeur, identique à l'accueil, hors du plan et de ses pas. */
   body { padding-bottom: 0; }
