@@ -38,7 +38,7 @@
   });
   audio.addEventListener('pause', () => {
     sync();
-    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. La preuve est à l’abri.';
+    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. Plus un bruit';
   });
   audio.addEventListener('ended', () => {
     ended = true;
