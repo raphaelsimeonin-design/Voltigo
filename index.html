@@ -9,7 +9,7 @@
 <meta property="og:title" content="Voltigo — Un coup se fait à deux."><meta property="og:description" content="La victoire, beaucoup moins. Découvre le jeu de bluff pour 3 à 6 joueurs et participe au playtest."><meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Comfortaa:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="landing.css"><script src="playtest-config.js" defer></script>
+<link rel="stylesheet" href="landing.css"><script src="playtest-config.js" defer></script><script src="landing-music.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#contenu">Aller au contenu</a>
@@ -30,5 +30,26 @@
 <section class="playtest" aria-labelledby="playtest-title"><div class="shell playtest-grid"><div><p class="eyebrow">On recrute des complices</p><h2 id="playtest-title">Le prochain coup<br>se prépare <span>avec toi.</span></h2><p>Voltigo est en cours de développement. Le playtest, c’est l’occasion de jouer, de mettre les règles à l’épreuve et de nous aider à rendre le jeu meilleur.</p><ul class="checklist"><li><svg class="checklist-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg>Découvre le jeu autour d’une vraie partie.</li><li><svg class="checklist-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg>Dis-nous ce qui te plaît. Et ce qui coince.</li><li><svg class="checklist-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg>Pas besoin d’être expert : ton regard compte.</li></ul></div><div class="invitation"><p class="eyebrow">Avis de recrutement · Voltigo</p><h3>Recherche complice.<br>Bonne foi facultative.</h3><p>À la table, tu peux bluffer.<br>Pour le retour sur le jeu, sois franc.</p><a class="button" data-playtest href="inscription.html">Participer au playtest <svg class="button-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a><p class="micro">Le seul prérequis : avoir envie de jouer.</p></div></div></section>
 <section class="questions shell" aria-labelledby="faq-title"><p class="eyebrow">Avant de monter dans la voiture</p><h2 id="faq-title">Deux ou trois questions ?</h2><details><summary>C’est quoi, un playtest ?</summary><p>C’est une partie d’un jeu encore en développement. Tu joues, tu réagis et tu partages ton avis. Tes retours aident à repérer ce qui fonctionne et ce qu’il faut améliorer.</p></details><details><summary>Il faut connaître les règles avant ?</summary><p>Non. Elles s’expliquent en environ trois minutes. Si tu aimes arriver avec un coup d’avance, <a href="voltigo.html">les règles et un exemple animé sont ici</a>.</p></details><details><summary>On joue à combien et pendant combien de temps ?</summary><p>Voltigo se joue de 3 à 6 joueurs. Une partie dure environ 15 à 20 minutes. Juste assez pour monter un beau coup… et réclamer une revanche.</p></details><details><summary>C’est un jeu en équipe ?</summary><p>Les coups se font à deux, mais chacun remplit sa propre Planque. Tu peux changer de complice à chaque tour. Les alliances durent parfois moins longtemps que les chips.</p></details></section>
 <div class="bottom-cta"><p>Alors, on peut compter sur toi ?</p><a class="button" data-playtest href="inscription.html">Participer au playtest <svg class="button-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></div>
+<section class="sound-easter" aria-labelledby="sound-title">
+<div class="sound-cassette" aria-hidden="true">
+  <div class="cassette-label">
+    <span class="cassette-label-top">Pièce à conviction · A-01</span>
+    <strong class="cassette-title">Fuite<br>en musique</strong>
+    <div class="cassette-window"><span class="cassette-reel"></span><span class="cassette-tape"></span><span class="cassette-reel"></span></div>
+    <span class="cassette-label-bottom">Face A · 1:32 · Ne pas rembobiner</span>
+  </div>
+</div>
+<div class="sound-copy">
+  <p class="eyebrow">Objet trouvé dans la Planque</p>
+  <h2 id="sound-title">La fuite a son petit refrain.</h2>
+  <p class="sound-warning">Appuie pour lancer la cassette : <strong>le son va démarrer.</strong> Si quelqu’un demande, le coffre s’est mis à chanter.</p>
+  <button class="button small sound-toggle" type="button" id="heist-toggle" aria-controls="heist-audio">
+    <svg class="sound-toggle-icon" viewBox="0 0 24 24" aria-hidden="true"><path data-heist-icon="play" d="M8 5v14l11-7z"/><path data-heist-icon="pause" d="M7 5h4v14H7zM15 5h4v14h-4z" hidden/></svg>
+    <span data-heist-label>Faire tourner la cassette</span>
+  </button>
+  <p class="sound-status" id="heist-status" role="status" aria-live="polite">La cassette attend son complice.</p>
+  <audio id="heist-audio" preload="none"><source src="song.mp3" type="audio/mpeg">Ton navigateur ne peut pas lire ce fichier audio.</audio>
+</div>
+</section>
 </main><footer class="footer"><div class="shell"><img src="voltigo-logo.svg" alt="Voltigo" width="125" height="24"><span>Un coup se fait à deux. Une revanche aussi.</span><a href="voltigo.html">Les règles du jeu</a></div></footer>
 </body></html>
