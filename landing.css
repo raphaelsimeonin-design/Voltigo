@@ -11,20 +11,31 @@
 .form-status[data-kind="error"]{background:#fadaDe;border-color:#dc1c2b;color:#651421}.form-status[data-kind="success"]{padding:24px;font-size:18px;margin-bottom:0}.form-card[aria-busy="true"] .button{cursor:wait}
 
 /* Remerciement après réception de la demande de playtest. */
-.thanks{max-width:780px;text-align:center;padding-block:40px 65px}
-.thanks-cards{height:160px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:25px}
-.thanks-cards img{width:100px;height:auto;border-radius:7px;box-shadow:0 10px 22px #1d1b2a25;transform:rotate(-15deg)}
-.thanks-cards img:last-child{transform:rotate(13deg);margin-left:18px}
-.thanks-check{position:absolute;left:calc(50% - 23px);top:65px;z-index:1;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--green);color:var(--cream);border:3px solid var(--cream);font-size:25px;font-weight:700}
-.thanks h1{font-size:clamp(39px,6vw,66px);letter-spacing:-.03em;margin:27px 0 22px}
+.thanks{max-width:1120px;text-align:center;padding-block:24px 36px}
+.thanks-summary{min-width:0}
+.thanks-listening{min-width:0}
+.thanks-cards{height:115px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:10px}
+.thanks-cards img{width:82px;height:auto;border-radius:7px;box-shadow:0 10px 22px #1d1b2a25;transform:rotate(-15deg)}
+.thanks-cards img:last-child{transform:rotate(13deg);margin-left:16px}
+.thanks-check{position:absolute;left:calc(50% - 21px);top:43px;z-index:1;display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--green);color:var(--cream);border:3px solid var(--cream);font-size:23px;font-weight:700}
+.thanks h1{font-size:clamp(38px,4.2vw,50px);letter-spacing:-.03em;margin:15px 0 12px}
 .thanks h1 span{color:var(--green)}
-.thanks-lead{margin:0 auto;font-size:17px;line-height:1.8;max-width:540px}
-.thanks-note{max-width:560px;margin:28px auto;background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:23px 27px}
+.thanks-lead{margin:0 auto;font-size:16px;line-height:1.7;max-width:540px}
+.thanks-note{max-width:560px;margin:17px auto;background:var(--paper);border:2px solid var(--line);border-radius:18px;padding:18px 22px}
 .thanks-note>p{font-size:14px;margin:auto}
-.thanks-note .thanks-joke{font-family:'Baloo 2',sans-serif;font-size:24px;line-height:1.2;color:var(--green);margin-top:17px;font-weight:700}
-.thanks>.micro{margin:20px auto 0;color:var(--muted);max-width:450px}
-.thanks>.signup-back{margin-top:24px}
-@media(max-width:760px){.thanks{padding-block:28px 45px}.thanks-cards{height:135px;margin-bottom:20px}.thanks-cards img{width:85px}.thanks-check{top:52px}.thanks-lead{font-size:15px}.thanks-note{padding:21px}.thanks>.button{font-size:22px;padding-inline:20px}}
+.thanks-note .thanks-joke{font-family:'Baloo 2',sans-serif;font-size:22px;line-height:1.2;color:var(--green);margin-top:14px;font-weight:700}
+.thanks-summary>.button{margin-top:2px}
+.thanks-summary>.micro{margin:14px auto 0;color:var(--muted);max-width:450px}
+.thanks-listen{max-width:38ch;margin:0 auto 22px;padding-top:8px}
+.thanks-listening .sound-easter{width:100%;max-width:none;margin:0;padding:24px;grid-template-columns:minmax(130px,.8fr) minmax(0,1.2fr);gap:22px}
+.thanks-listening .sound-cassette{max-width:200px}
+.thanks-listening .sound-copy h2{font-size:clamp(27px,3.4vw,35px)}
+.thanks-listening .sound-copy .sound-warning{font-size:13px;margin-bottom:14px}
+.thanks-listening .sound-toggle{font-size:15px;padding-inline:12px;gap:7px}
+.thanks>.signup-back{grid-column:1/-1;justify-self:center;margin-top:12px}
+@media(min-width:1000px){.thanks{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:42px;row-gap:0;align-items:center}}
+@media(max-width:999px){.thanks{padding-block:28px 45px}.thanks-summary{margin-bottom:25px}.thanks-listen{padding-top:0;margin-bottom:22px}.thanks-listening .sound-easter{width:min(100%,680px);margin-inline:auto}}
+@media(max-width:760px){.thanks-cards{height:135px;margin-bottom:20px}.thanks-cards img{width:85px}.thanks-check{top:52px}.thanks-lead{font-size:15px}.thanks-note{padding:21px}.thanks-summary>.button{font-size:22px;padding-inline:20px}.thanks-listen{margin-bottom:24px;padding-top:4px}.thanks-listening .sound-easter{width:min(100%,500px);grid-template-columns:1fr;gap:22px;margin:0 auto;padding:23px 20px}}
 
 /* Même palette bleue et même trame de plan que la page de règles. */
 body,.topbar,.skip,.hero .eyebrow{background-color:var(--bg)}
