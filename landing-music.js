@@ -34,11 +34,11 @@
   audio.addEventListener('play', () => {
     ended = false;
     sync();
-    status.textContent = 'Lecture en cours. La bande garde ses secrets.';
+    status.textContent = 'La cassette tourne. Garde ton air innocent.';
   });
   audio.addEventListener('pause', () => {
     sync();
-    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. Pas un mot.';
+    if (!audio.ended && audio.currentTime > 0) status.textContent = 'Pause. La preuve est à l’abri.';
   });
   audio.addEventListener('ended', () => {
     ended = true;
