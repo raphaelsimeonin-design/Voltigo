@@ -391,7 +391,6 @@
 
   /* Questions */
   /* Questions : cinq thèmes en cartes, chaque question se déplie ; réponse courte en gras, blague à part */
-  .faq-tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 16px; margin: 0 0 18px; }
   .faq-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
   .faq-group .plaque h3 { font-size: 19px; }
   .faq-group .plaque .nb { margin-left: auto; min-width: 26px; padding: 1px 8px; border-radius: 999px; background: rgba(255, 246, 225, .16); font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; text-align: center; }
@@ -406,8 +405,6 @@
   .faq-list details[open] summary { background: var(--surface-2); }
   .faq-list .a { padding: 8px 20px 22px; background: var(--surface-2); }
   .faq-list .a p { margin: 0; max-width: 62ch; padding-left: 14px; border-left: 3px solid var(--sky); font-size: 15px; line-height: 1.7; }
-  .faq-list .a p + p { margin-top: 8px; }
-  .faq-list .a .quip { border-left-color: transparent; font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 15px; color: var(--muted); }
   @media (prefers-reduced-motion: reduce) { .faq-list .chev, .faq-list summary { transition: none; } }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
@@ -741,39 +738,12 @@
 </section>
 
 <section id="faq">
-  <div class="sechead"><div class="pastille">?</div><div><h2>Questions fréquentes</h2><div class="sub">Celles qu'on pose la bouche pleine de chips.</div></div></div>
-  <div class="faq-tools"><span class="eyebrow">21 questions · 5 thèmes</span><button class="btn" type="button" id="faqAll" aria-pressed="false">Tout déplier</button></div>
+  <div class="sechead"><div class="pastille">?</div><div><h2>Questions fréquentes</h2><div class="sub">Trois cas qui méritent une précision.</div></div></div>
   <div class="faq-grid">
-    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-voleur"/></svg><h3>« Je l'ai ! » et le coup</h3><span class="nb">4</span></div><div class="faq-list">
-      <details><summary><span class="q">Qui peut dire « Je l'ai ! » ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tout le monde sauf le meneur</strong>, avec ou sans la carte. Le meneur choisit un volontaire ; les autres reprennent leur carte sans la montrer.</p><p class="quip">Bluffer et être choisi : le coup rate, et toute la table l'a vu.</p></div></details>
-      <details><summary><span class="q">La pioche plutôt qu'un volontaire ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Obligatoire sans volontaire</strong>, sinon au choix. Si ça réussit : ta carte en Planque, l'autre à la défausse, pas d'effet. Une Alarme retournée sonne.</p></div></details>
-      <details><summary><span class="q">Qui garde le Butin quand le meneur annonce « Butin » ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le meneur</strong> : chaque carte va à son poseur. Poser le Butin : un point, exposé au Traître. Poser la Clé : vers une paire, à l'abri. L'effet va au complice dans les deux cas.</p></div></details>
-      <details><summary><span class="q">Pourquoi l'effet va-t-il au complice ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le meneur choisit la couleur, le complice touche l'effet.</strong> Répondre juste rapporte toujours, et le meneur choisit qui il arme.</p></div></details>
-    </div></div>
-    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Planque et points</h3><span class="nb">4</span></div><div class="faq-list">
-      <details><summary><span class="q">Comment compter ma Planque ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Regroupe au mieux</strong>, chaque carte dans un seul groupe : famille 7, paire 4, Butin restant 1, Clé restante 0. Le Pactole complète une famille, le Passe-partout une paire.</p></div></details>
-      <details><summary><span class="q">Combien valent le Passe-partout et le Pactole ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Seuls : Passe-partout 0, Pactole 1</strong>, comme une Clé et un Butin. En joker : le Passe-partout complète n'importe quelle paire (4 points), le Pactole une famille, dans le lieu de ton choix (7 points).</p></div></details>
-      <details><summary><span class="q">Passe-partout contre Pactole ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Réussi, sans effet</strong> : aucun lieu n'est en jeu.</p></div></details>
-      <details><summary><span class="q">À 12 points, c'est gagné tout de suite ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Oui, à la fin du coup</strong>, quel que soit le nombre de joueurs. Une Alarme peut encore annuler le coup qui t'y mène ; un vol au Traître compte aussi. Deux joueurs passent 12 dans le même coup : le plus de points l'emporte, puis le plus de Clés.</p><p class="quip">Le casse du siècle se fête ailleurs.</p></div></details>
-    </div></div>
-    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L'Alarme</h3><span class="nb">4</span></div><div class="faq-list">
-      <details><summary><span class="q">Quand jouer une Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>À tout moment, sur un coup réussi dont tu n'es pas</strong>, volontaire ou pioche. La quatrième finit la partie : réfléchis si tu n'as pas le plus de points. Et garde-la pour celui qui approche de 12.</p></div></details>
-      <details><summary><span class="q">J'ai déjà une Alarme et j'en reçois une autre ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>La deuxième part à la défausse</strong>, d'où qu'elle vienne.</p><p class="quip">Une sirène par voleur.</p></div></details>
-      <details><summary><span class="q">L'Alarme peut-elle arrêter une trahison ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Non</strong> : une trahison n'est pas un coup réussi.</p></div></details>
-      <details><summary><span class="q">Bijouterie : où prendre l'Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Partout sauf dans une main</strong> : au dossier (la police recule), dans la défausse, ou dans la pioche, remélangée ensuite. Aucune dehors : effet perdu. Déjà une en main : la nouvelle part à la défausse.</p></div></details>
-    </div></div>
-    <div class="kcard faq-group"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3><span class="nb">5</span></div><div class="faq-list">
-      <details><summary><span class="q">Puis-je répondre avec un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Oui, mais il ne vole rien</strong> : il ne vole que si tu mènes avec. Posé en réponse, il fait juste rater le coup et part à la défausse. Pratique pour s'en débarrasser, comme d'une Alarme.</p><p class="quip">Un Traître qui répond, c'est un Traître qui démissionne.</p></div></details>
-      <details><summary><span class="q">Qui a les Traîtres ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Personne ne sait</strong> : ils sont dans la pioche et changent de main au fil des pioches. Chaque Traître joué part à la défausse, face visible : un de moins dans la nature.</p></div></details>
-      <details><summary><span class="q">La carte de la pioche est un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Coup raté</strong> : défaussé, sans vol.</p><p class="quip">La pioche ne trahit pas, elle déçoit.</p></div></details>
-      <details><summary><span class="q">Que vole un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Le Butin posé</strong>, Pactole compris, ou à la place un Butin de la Planque du complice (le posé est défaussé). Jamais une Clé. Face à la pioche : perdu.</p></div></details>
-      <details><summary><span class="q">Mon Traître joué, je ne peux plus trahir ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Si</strong> : reprends-en un au Casino, au vu de tous, ou repioche-le quand la défausse est remélangée.</p></div></details>
-    </div></div>
-    <div class="kcard faq-group"><div class="plaque"><svg class="ico" viewBox="0 0 48 48" aria-hidden="true"><rect x="13" y="7" width="22" height="30" rx="4" transform="rotate(-10 24 22)" fill="none" stroke="currentColor" stroke-width="4"/><rect x="15" y="12" width="22" height="30" rx="4" fill="currentColor"/></svg><h3>Main et pioche</h3><span class="nb">4</span></div><div class="faq-list">
-      <details><summary><span class="q">Qui pioche à la fin du coup ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tout le monde</strong>, une fois les effets appliqués : le meneur d'abord, puis dans le sens horaire, chacun jusqu'à cinq cartes (plus avec la Banque). Complice, joueur volé, joueur qui a sonné l'Alarme : personne ne garde une main courte.</p></div></details>
-      <details><summary><span class="q">Plus de cinq cartes en main ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Tu ne défausses jamais</strong> : tu ne complètes pas, c'est tout. La Banque agrandit ta main pour la partie : six, puis sept.</p></div></details>
-      <details><summary><span class="q">Au Casino, la défausse est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Effet perdu.</strong></p><p class="quip">La maison ne fait pas crédit.</p></div></details>
-      <details><summary><span class="q">La pioche est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p><strong>Remélange la défausse.</strong> La partie ne finit qu'à 12 points ou à la police.</p></div></details>
+    <div class="kcard faq-group"><div class="plaque"><h3>Cas particuliers</h3><span class="nb">3</span></div><div class="faq-list">
+      <details><summary><span class="q">Que faire si la pioche est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>Mélange la défausse pour former une nouvelle pioche. La partie continue jusqu'à 12 points ou à la quatrième Alarme.</p></div></details>
+      <details><summary><span class="q">Et si la pioche révèle un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>Le coup rate : défausse le Traître. Il ne vole rien.</p></div></details>
+      <details><summary><span class="q">Et si la Bijouterie ne trouve aucune Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>L'effet est perdu si aucune Alarme ne se trouve au dossier, dans la défausse ou dans la pioche.</p></div></details>
     </div></div>
   </div>
 </section>
@@ -788,15 +758,6 @@
 (function () {
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => Array.from(document.querySelectorAll(s));
-  // Questions : tout déplier / tout replier
-  (function () {
-    const btn = $("#faqAll"); if (!btn) return;
-    const items = $$("#faq details");
-    const maj = () => { const tout = items.every(d => d.open); btn.textContent = tout ? "Tout replier" : "Tout déplier"; btn.setAttribute("aria-pressed", String(tout)); };
-    btn.addEventListener("click", () => { const ouvrir = !items.every(d => d.open); items.forEach(d => { d.open = ouvrir; }); maj(); });
-    items.forEach(d => d.addEventListener("toggle", maj));
-  })();
-
   // Ancres du sommaire : le titre d'une section doit arriver juste sous la barre et le sommaire, qui restent collés en haut
   (function () {
     const barre = $(".topbar"), toc = $("nav.toc"), sec = $("#rules > section");
