@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voltigo en une minute</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Voltigo en une minute : une bande de voleurs, des casses à monter à deux, du bluff et des trahisons. Le premier à 12 points gagne.">
+<meta name="theme-color" content="#1f3c88">
+<meta property="og:title" content="Voltigo · Les règles en une minute">
+<meta property="og:description" content="Une bande de voleurs, des casses à monter à deux, du bluff et des trahisons : Voltigo en une minute.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://raphaelsimeonin-design.github.io/Voltigo/regles.html">
+<meta property="og:image" content="https://raphaelsimeonin-design.github.io/Voltigo/og-voltigo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Comfortaa:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="landing.css"><script src="playtest-config.js" defer></script>
+<style>
+  /* Les règles en une minute : mêmes couleurs et boutons que la page d'accueil (landing.css) */
+  .ess { padding-block: 56px 72px; display: grid; gap: 56px; }
+  .ess-head { text-align: center; display: grid; justify-items: center; }
+  .ess-head h1 { font-size: clamp(42px, 6vw, 68px); letter-spacing: -.03em; margin: 0 0 16px; }
+  .ess-head h1 span { color: var(--gold); display: block; }
+  .ess-head p { margin: 0; max-width: 46ch; color: var(--muted); font-size: 16px; }
+  .ess-bloc { display: grid; gap: 18px; }
+  .ess-bloc > h2 { margin: 0; font-size: clamp(28px, 3.6vw, 38px); display: flex; align-items: center; gap: 14px; }
+  .ess-num { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--plaque); color: var(--cream); box-shadow: 0 0 0 3px var(--cream); font: 800 22px/1 'Baloo 2', sans-serif; }
+  .ess-carte { background: var(--paper); border: 2px solid var(--line); border-radius: 20px; padding: 22px 24px; }
+  .ess-carte p { margin: 0; font-size: 15.5px; line-height: 1.65; color: #e1e8fa; }
+  .ess-carte p + p { margin-top: 10px; }
+  .ess-carte strong { color: var(--cream); }
+  .ess-joke { font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 17px; color: var(--gold) !important; }
+
+  /* 1. Le but */
+  .ess-but { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 22px; align-items: center; }
+  .ess-12 { display: grid; place-items: center; width: 124px; height: 124px; border-radius: 50%; background: var(--gold); color: #1d1b2a; box-shadow: 0 0 0 4px var(--cream), 0 8px 0 4px #13285e; text-align: center; line-height: 1; }
+  .ess-12 b { display: block; font: 800 54px/1 'Baloo 2', sans-serif; }
+  .ess-12 small { font: 700 13px 'Comfortaa', sans-serif; }
+
+  /* 2. Un coup à deux */
+  .ess-paire { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .ess-paire img { width: 116px; height: auto; border-radius: 10px; box-shadow: 0 8px 18px rgba(0, 0, 0, .35); }
+  .ess-paire img:first-child { rotate: -5deg; } .ess-paire img:nth-child(3) { rotate: 5deg; }
+  .ess-op { font: 800 34px/1 'Baloo 2', sans-serif; color: var(--muted); }
+  .ess-ok { padding: 8px 16px; border-radius: 999px; background: var(--green); color: var(--cream); font: 800 19px/1.2 'Baloo 2', sans-serif; }
+
+  /* 3. Ton tour */
+  .ess-tour { list-style: none; counter-reset: t; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ess-tour li { counter-increment: t; background: var(--paper); border: 2px solid var(--line); border-radius: 20px; padding: 20px 20px 22px; display: grid; gap: 8px; align-content: start; }
+  .ess-tour li::before { content: counter(t); display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--plaque); color: var(--cream); box-shadow: 0 0 0 3px var(--cream); font: 800 20px/1 'Baloo 2', sans-serif; margin-bottom: 4px; }
+  .ess-tour h3 { margin: 0; font-size: 23px; }
+  .ess-tour p { margin: 0; font-size: 14.5px; line-height: 1.6; color: #e1e8fa; }
+  .ess-dit { font-family: 'Baloo 2', sans-serif; font-weight: 700; font-size: 16px; color: var(--sky) !important; }
+  .ess-apres { margin: 2px 0 0; text-align: center; font-size: 14.5px; color: var(--muted); }
+  .ess-apres strong { color: var(--cream); }
+
+  /* 4. Le bluff */
+  .ess-trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ess-trio article { background: var(--paper); border: 2px solid var(--line); border-radius: 20px; padding: 18px 18px 20px; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 14px; align-items: start; }
+  .ess-trio img { width: 74px; height: auto; border-radius: 7px; box-shadow: 0 6px 14px rgba(0, 0, 0, .3); }
+  .ess-trio .dos { width: 74px; aspect-ratio: 512 / 715; border-radius: 7px; background: url(cartes/13-dos-du-paquet.webp) center / cover; box-shadow: 0 6px 14px rgba(0, 0, 0, .3); }
+  .ess-trio h3 { margin: 2px 0 6px; font-size: 21px; }
+  .ess-trio p { margin: 0; font-size: 14px; line-height: 1.55; color: #e1e8fa; }
+
+  /* 5. Les points */
+  .ess-points { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .ess-points div { background: var(--paper); border: 2px solid var(--line); border-radius: 18px; padding: 16px 12px 14px; text-align: center; display: grid; gap: 4px; justify-items: center; }
+  .ess-points b { display: grid; place-items: center; min-width: 58px; padding: 2px 10px; border-radius: 12px; background: var(--gold); color: #1d1b2a; font: 800 32px/1.15 'Baloo 2', sans-serif; }
+  .ess-points div.zero b { background: var(--plaque); color: var(--cream); }
+  .ess-points strong { font-family: 'Baloo 2', sans-serif; font-size: 19px; margin-top: 4px; }
+  .ess-points span { font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+
+  /* 1. Le principe : trois idées, chacune avec sa petite image */
+  .ess-principe { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ess-principe li { background: var(--paper); border: 2px solid var(--line); border-radius: 20px; padding: 20px; display: grid; gap: 14px; align-content: start; }
+  .ess-principe p { margin: 0; font-size: 15px; line-height: 1.6; color: #e1e8fa; }
+  .ess-principe strong, .ess-bd strong, .ess-trio strong { color: var(--cream); }
+  .ess-mini { display: flex; align-items: center; gap: 8px; min-height: 92px; }
+  .ess-mini img, .ess-mini .dos { width: 62px; height: auto; aspect-ratio: 512 / 715; border-radius: 6px; box-shadow: 0 5px 12px rgba(0, 0, 0, .3); }
+  .ess-mini img:first-child { rotate: -5deg; } .ess-mini > :nth-child(2) { rotate: 5deg; }
+  .dos { display: inline-block; background: url(cartes/13-dos-du-paquet.webp) center / cover; }
+  .ess-12.petit { width: 84px; height: 84px; box-shadow: 0 0 0 3px var(--cream), 0 5px 0 3px #13285e; }
+  .ess-12.petit b { font-size: 38px; }
+
+  /* 2. Un coup, en vrai : quatre cases de BD */
+  .ess-bd { list-style: none; counter-reset: bd; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .ess-bd li { counter-increment: bd; display: grid; gap: 10px; align-content: start; }
+  .ess-bd .case { position: relative; height: 190px; display: flex; align-items: center; justify-content: center; gap: 8px; background: #0b7a4e; background: radial-gradient(circle at 50% 40%, #1e9a66, #0b7a4e 60%, #055536); border: 3px solid var(--cream); border-radius: 16px; box-shadow: 0 6px 0 #13285e; overflow: hidden; }
+  .ess-bd .case::before { content: counter(bd); position: absolute; left: 8px; top: 8px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--plaque); color: var(--cream); font: 800 15px/1 'Baloo 2', sans-serif; }
+  .ess-bd .case img, .ess-bd .case .dos { width: 64px; height: auto; aspect-ratio: 512 / 715; border-radius: 6px; box-shadow: 0 5px 12px rgba(0, 0, 0, .35); }
+  .ess-bd .case img:first-child { rotate: -4deg; } .ess-bd .case img:nth-child(2) { rotate: 4deg; }
+  .ess-bd .case .dos.grand { width: 60px; rotate: -3deg; }
+  .ess-bd .bulle { position: absolute; left: 50%; bottom: 12px; translate: -50% 0; max-width: 88%; padding: 5px 10px; border-radius: 12px 12px 12px 3px; background: var(--cream); color: #1d1b2a; font: 700 13px/1.25 'Baloo 2', sans-serif; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, .3); }
+  .ess-bd .bulle.droite { border-radius: 12px 12px 3px 12px; }
+  .ess-bd .case:has(.bulle) { align-items: flex-start; padding-top: 16px; }
+  .ess-bd .case .ess-ok { font-size: 21px; }
+  .ess-bd p { margin: 0; font-size: 14px; line-height: 1.55; color: #e1e8fa; }
+
+  /* Mise en page centrée : colonne resserrée, titres et contenus des cartes au centre */
+  .ess { max-width: 1000px; }
+  .ess-bloc > h2 { justify-content: center; text-align: center; }
+  .ess-principe li { justify-items: center; text-align: center; padding: 24px 22px 26px; }
+  .ess-mini { justify-content: center; }
+  .ess-bd p { text-align: center; padding-inline: 4px; }
+  .ess-trio article { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 12px; padding: 24px 20px 26px; }
+  .ess-trio img, .ess-trio .dos { width: 82px; }
+  .ess-trio h3 { margin: 0 0 6px; }
+  .ess-but { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; gap: 18px; padding: 28px 28px 30px; }
+  .ess-but p { max-width: 54ch; margin-inline: auto; }
+
+  /* La suite */
+  .ess-fin { text-align: center; display: grid; justify-items: center; gap: 14px; padding-top: 8px; }
+  .ess-fin p { margin: 0; color: var(--muted); max-width: 44ch; }
+  .ess-fin .second { font-size: 14px; font-weight: 700; text-underline-offset: 5px; color: var(--cream); }
+
+  @media (max-width: 960px) { .ess-bd { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 860px) {
+    .ess-tour, .ess-trio, .ess-principe { grid-template-columns: minmax(0, 1fr); }
+
+    .ess-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .ess { padding-block: 36px 56px; gap: 44px; }
+    .ess-but { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
+    .ess-paire img { width: 92px; }
+    .ess-bd { grid-template-columns: minmax(0, 1fr); }
+    .ess-bd .case { height: 170px; }
+    .ess-principe li { grid-template-columns: minmax(0, 1fr); }
+    .ess-fin .button { font-size: 21px; padding: 15px 20px; gap: 10px; min-height: 58px; }
+  }
+</style>
+</head>
+<body class="blueprint">
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="shell"><a class="brand" href="index.html" aria-label="Voltigo — accueil"><img src="voltigo-logo.svg" alt="Voltigo" width="170" height="32"></a><nav class="topnav" aria-label="Navigation principale"><a class="quiet-link" href="index.html">← Accueil</a><a class="button small" data-playtest href="inscription.html">Tester le jeu <svg class="button-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a></nav></div></header>
+
+<main id="contenu" class="shell ess">
+  <header class="ess-head">
+    <p class="eyebrow">Voltigo en une minute</p>
+    <h1>Chacun pour soi.<span>Mais personne ne vole seul.</span></h1>
+    <p>Vous êtes une bande de voleurs autour d'une table. Chacun veut devenir le plus riche… et chacun a besoin des autres pour y arriver.</p>
+  </header>
+
+  <section class="ess-bloc" aria-labelledby="t-principe">
+    <h2 id="t-principe"><span class="ess-num" aria-hidden="true">1</span>Le principe</h2>
+    <ol class="ess-principe">
+      <li><div class="ess-mini"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="" width="512" height="715"><img src="cartes/06-la-caisse.webp" alt="" width="512" height="715"></div><p><strong>Un casse, c'est deux cartes</strong> : la <strong>Clé</strong> d'un lieu, et son <strong>Butin</strong>. Quatre lieux à dévaliser : Banque, Musée, Casino, Bijouterie.</p></li>
+      <li><div class="ess-mini"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="" width="512" height="715"><span class="dos"></span></div><p><strong>Tu n'as que ta moitié.</strong> L'autre est peut-être dans la main d'un autre joueur : il te faut <strong>un complice</strong>.</p></li>
+      <li><div class="ess-mini"><span class="ess-12 petit"><b>12</b></span></div><p><strong>Chaque casse réussi enrichit les deux complices.</strong> Les cartes gagnées font des points. Le premier à <strong>12 points</strong> gagne.</p></li>
+    </ol>
+  </section>
+
+  <section class="ess-bloc" aria-labelledby="t-coup">
+    <h2 id="t-coup"><span class="ess-num" aria-hidden="true">2</span>Un coup, en vrai</h2>
+    <ol class="ess-bd">
+      <li><div class="case"><span class="dos grand" role="img" aria-label="Une carte posée face cachée"></span><span class="bulle">« Clé du Casino : qui a le butin ? »</span></div><p><strong>Ana</strong> a la Clé du Casino. Elle la pose <strong>face cachée</strong> et lance l'appel à toute la table.</p></li>
+      <li><div class="case"><span class="dos"></span><span class="dos"></span><span class="bulle droite">« Je l'ai ! »</span></div><p><strong>Bilal et Chloé</strong> disent « Je l'ai ! » et posent chacun une carte face cachée. L'un des deux ment peut-être.</p></li>
+      <li><div class="case"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="La Clé du Casino" width="512" height="715"><img src="cartes/06-la-caisse.webp" alt="Le Butin du Casino" width="512" height="715"></div><p>Ana choisit <strong>Bilal</strong>, sans voir les cartes. On retourne : la Clé et le Butin du même lieu !</p></li>
+      <li><div class="case"><span class="ess-ok">Coup réussi</span></div><p>Chacun garde sa carte : <strong>ça fait des points</strong>. Bilal, le complice, profite en prime d'un avantage du Casino.</p></li>
+    </ol>
+  </section>
+
+  <section class="ess-bloc" aria-labelledby="t-tension">
+    <h2 id="t-tension"><span class="ess-num" aria-hidden="true">3</span>Pourquoi ça se tend</h2>
+    <div class="ess-trio">
+      <article><span class="dos" role="img" aria-label="Une carte face cachée"></span><div><h3>Tout le monde peut mentir</h3><p>On dit « Je l'ai ! » même sans la bonne carte : pour faire rater ton coup, ou juste pour voir ta tête.</p></div></article>
+      <article><img src="cartes/09-traitre.webp" alt="Le Traître" width="512" height="715"><div><h3>Les Traîtres</h3><p>Cachés dans la pioche. Celui qui en tient un monte un faux coup… et <strong>vole le Butin</strong> de son complice.</p></div></article>
+      <article><img src="cartes/10-alarme.webp" alt="L'Alarme" width="512" height="715"><div><h3>Les Alarmes</h3><p>Elles annulent le coup des autres. À la <strong>quatrième</strong>, la police débarque et la partie s'arrête.</p></div></article>
+    </div>
+  </section>
+
+  <section class="ess-bloc" aria-labelledby="t-gagner">
+    <h2 id="t-gagner"><span class="ess-num" aria-hidden="true">4</span>Comment on gagne</h2>
+    <div class="ess-carte ess-but">
+      <div class="ess-12" aria-hidden="true"><div><b>12</b><small>points</small></div></div>
+      <div>
+        <p><strong>Le premier à 12 points gagne.</strong> Plus tu combines tes cartes, plus elles rapportent : des Butins de lieux différents, des Clés du même lieu…</p>
+        <p>Si la police débarque avant, <strong>le plus riche l'emporte</strong>. Une partie dure une vingtaine de minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ess-fin" aria-label="La suite">
+    <p>Le détail du tour, les avantages des lieux, les points et une partie illustrée pas à pas : tout est dans les règles complètes.</p>
+    <a class="button" href="voltigo.html">Voir les règles complètes <svg class="button-arrow" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+    <a class="second" href="voltigo.html#exemple">Ou regarder directement la partie illustrée →</a>
+  </section>
+</main>
+
+<footer class="footer"><div class="shell"><img src="voltigo-logo.svg" alt="Voltigo" width="125" height="24"><span>Un coup se fait à deux. Une revanche aussi.</span><a href="index.html">Retour à l’accueil</a></div></footer>
+</body>
+</html>
