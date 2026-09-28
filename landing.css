@@ -110,3 +110,12 @@ html{overflow-x:hidden;overflow-x:clip}
 .howto-merci{max-width:430px;margin:20px auto 6px;text-align:left}
 .howto-merci li.done::before{content:'✓';background:var(--green);color:var(--cream)}
 @media(max-width:760px){.hero .what{font-size:14px;margin-inline:auto}.howto li strong{font-size:17px}}
+/* « Je m'inscris pour tester le jeu » : libellé long, plus compact sur téléphone */
+@media(max-width:760px){.hero .button,.invitation .button,.bottom-cta .button,.ess-fin .button{font-size:19px;padding-inline:16px;gap:10px;text-wrap:balance}}
+@media(max-width:380px){.hero .button,.invitation .button,.bottom-cta .button,.ess-fin .button{font-size:17px}}
+/* Boutons toujours sur une seule ligne */
+.button{white-space:nowrap}
+@media(max-width:760px){.hero .button,.invitation .button,.bottom-cta .button,.ess-fin .button{text-wrap:nowrap}}
+@media(max-width:340px){.hero .button,.invitation .button,.bottom-cta .button,.ess-fin .button{font-size:15.5px;padding-inline:12px;gap:8px}.topnav .button.small{font-size:13px;padding-inline:7px;gap:5px}}
+/* Les décors (traces de pas, cartes éparpillées) ne doivent jamais créer de défilement horizontal */
+body{overflow-x:clip}
