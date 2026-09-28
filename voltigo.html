@@ -581,7 +581,7 @@
   <div class="gallery" aria-label="Aperçu des cartes">
     <img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre · Clé de la Banque" loading="lazy" width="512" height="715">
     <img src="cartes/02-les-lingots.webp" alt="Les lingots · Butin de la Banque" loading="lazy" width="512" height="715">
-    <img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien de nuit · Clé du Musée" loading="lazy" width="512" height="715">
+    <img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien · Clé du Musée" loading="lazy" width="512" height="715">
     <img src="cartes/04-le-tableau.webp" alt="Le tableau · Butin du Musée" loading="lazy" width="512" height="715">
     <img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée · Clé du Casino" loading="lazy" width="512" height="715">
     <img src="cartes/06-la-caisse.webp" alt="La caisse · Butin du Casino" loading="lazy" width="512" height="715">
@@ -696,7 +696,7 @@
   <div class="grid4">
     <div class="lieu banque"><div class="top"><div><h3>Banque</h3><div class="names"><span>Clé · La combinaison du coffre</span><span>Butin · Les lingots</span></div></div><div class="initial">B</div></div>
       <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Pioche une carte : ta main gagne une place pour le reste de la partie.</div><div class="why">Les bonus s’additionnent : une Banque, six cartes en main ; deux Banques, sept.</div></div></div>
-    <div class="lieu musee"><div class="top"><div><h3>Musée</h3><div class="names"><span>Clé · Le badge du gardien de nuit</span><span>Butin · Le tableau</span></div></div><div class="initial">M</div></div>
+    <div class="lieu musee"><div class="top"><div><h3>Musée</h3><div class="names"><span>Clé · Le badge du gardien</span><span>Butin · Le tableau</span></div></div><div class="initial">M</div></div>
       <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Regarde la main d’un autre joueur et prends la carte de ton choix.</div><div class="why">Donne-lui ensuite une carte de ta main en échange. Le nombre de cartes de chacun reste le même.</div></div></div>
     <div class="lieu casino"><div class="top"><div><h3>Casino</h3><div class="names"><span>Clé · Le passe de la salle privée</span><span>Butin · La caisse</span></div></div><div class="initial">C</div></div>
       <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">Les cartes défaussées sont visibles : à toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div></div>
@@ -727,7 +727,7 @@
     <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés.</p><p class="punch">Le tour des grands magasins.</p></div>
     <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><h4>La paire</h4><p>Deux Clés du même lieu.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
     <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/08-les-diamants.webp" alt="Les diamants" width="512" height="715" style="--r:0deg"></div><h4>Le Butin seul</h4><p>Un Butin hors d'une famille.</p><p class="punch">Petit, mais ça brille.</p></div>
-    <div class="combo zero"><div class="pts">0</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien de nuit" width="512" height="715" style="--r:0deg"></div><h4>La Clé seule</h4><p>Une Clé hors d'une paire. Elle ne se vole jamais et elle départage les égalités.</p><p class="punch">Zéro pointé.</p></div>
+    <div class="combo zero"><div class="pts">0</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:0deg"></div><h4>La Clé seule</h4><p>Une Clé hors d'une paire. Elle ne se vole jamais et elle départage les égalités.</p><p class="punch">Zéro pointé.</p></div>
   </div>
   <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux : six Butins de quatre lieux font deux familles, 14 points : de quoi gagner.</p>
 </section>
@@ -1099,7 +1099,7 @@
 
   const lieux = {
     Banque: { de: "de la Banque", ouv: "la combinaison du coffre", emp: "les lingots", eff: "il pioche une carte et sa main compte désormais une carte de plus" },
-    Musée: { de: "du Musée", ouv: "le badge du gardien de nuit", emp: "le tableau", eff: "il regarde la main d'un joueur, y prend la carte de son choix et lui en donne une" },
+    Musée: { de: "du Musée", ouv: "le badge du gardien", emp: "le tableau", eff: "il regarde la main d'un joueur, y prend la carte de son choix et lui en donne une" },
     Casino: { de: "du Casino", ouv: "le passe de la salle privée", emp: "la caisse", eff: "il échange une carte de sa main contre une carte de son choix dans la défausse" },
     Bijouterie: { de: "de la Bijouterie", ouv: "le code de l'alarme", emp: "les diamants", eff: "il prend une Alarme, où qu'elle soit, sauf en main" }
   };
@@ -1208,7 +1208,7 @@
   // ---- Exemple : un début de partie joué pas à pas (v9 : « Je l'ai ! », pioche, Traîtres cachés, universelles jokers).
   // Le script ci-dessous rejoue les six coups sur une table ; chaque étape en garde un instantané complet.
   // Afficher une étape, c'est poser chaque carte à sa place : les transitions CSS font glisser et retourner les cartes, dans les deux sens.
-  const LIEU = { B: ["banque", "Banque", "la combinaison du coffre", "les lingots"], M: ["musee", "Musée", "le badge du gardien de nuit", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
+  const LIEU = { B: ["banque", "Banque", "la combinaison du coffre", "les lingots"], M: ["musee", "Musée", "le badge du gardien", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
   const NOM = { A: "Ana", B: "Bilal", C: "Chloé", D: "Dov" };
   const IMG = { "K-B": "01-la-combinaison-du-coffre", "L-B": "02-les-lingots", "K-M": "03-le-badge-du-gardien-de-nuit", "L-M": "04-le-tableau", "K-C": "05-le-passe-de-la-salle-privee", "L-C": "06-la-caisse", "K-J": "07-le-code-de-l-alarme", "L-J": "08-les-diamants", "T": "09-traitre", "A": "10-alarme", "K-U": "15-passe-partout", "L-U": "16-pactole" };
   function cardName(code) {
@@ -1316,7 +1316,7 @@
   // Coup 1 : trois « Je l'ai ! » dont un bluff, puis l'effet du Musée
   newCoup("A");
   const km = h("A", "K-M");
-  beat(1, "Au tour d'Ana. Elle a le badge du gardien de nuit, une Clé du Musée. Il lui faut le tableau, le Butin du Musée.", null, { hi: [km] });
+  beat(1, "Au tour d'Ana. Elle a le badge du gardien, une Clé du Musée. Il lui faut le tableau, le Butin du Musée.", null, { hi: [km] });
   toMid("m", km); S.announce = "« Clé du Musée, qui a le butin ? »";
   beat(1, "Elle pose le badge face cachée et annonce le coup à toute la table.");
   const b1 = h("B", "L-M"), d1 = h("D", "L-M"), c1 = h("C", "K-C");
@@ -1406,12 +1406,12 @@
   MAX.B = 6; const b6 = draw("B");
   beat(5, "Effet de la Banque, pour le complice : Bilal pioche une carte. Sa main compte une carte de plus pour toute la partie.", null, { hi: b6 });
   const f5 = completer("A");
-  beat(5, f5.txt + " Ana tombe sur un deuxième badge du gardien de nuit. Au tour de Bilal.", "Tout le monde surveille Bilal. Personne ne surveille Ana.", { hi: f5.got });
+  beat(5, f5.txt + " Ana tombe sur un deuxième badge du gardien. Au tour de Bilal.", "Tout le monde surveille Bilal. Personne ne surveille Ana.", { hi: f5.got });
 
   // Coup 6 : Ana répond avec son deuxième badge et fait une paire de Clés en Planque
   newCoup("B");
   const lm6 = h("B", "L-M");
-  beat(6, "Bilal a le tableau, le Butin du Musée. Il lui faut le badge du gardien de nuit.", null, { hi: [lm6] });
+  beat(6, "Bilal a le tableau, le Butin du Musée. Il lui faut le badge du gardien.", null, { hi: [lm6] });
   toMid("m", lm6); S.announce = "« Butin du Musée, qui a la clé ? »";
   beat(6, "Il pose le tableau face cachée et annonce.");
   const a6 = h("A", "K-M"), c6 = h("C", "K-M");
