@@ -98,3 +98,15 @@ html{overflow-x:hidden;overflow-x:clip}
   .step-art{height:150px}
   .step-art img,.step-art.card-pair img{height:122px}
 }
+
+/* Ce qu'est le jeu, dit simplement (sous l'accroche) */
+.hero .what{max-width:480px;margin:-6px auto 26px;padding:12px 18px;border:2px dashed var(--line);border-radius:14px;font-size:15px;line-height:1.55;font-weight:700;color:var(--cream)}
+/* Comment ça se passe : trois étapes numérotées */
+.howto-title{margin:28px 0 0;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#a7d8ff!important}
+.howto{list-style:none;counter-reset:etape;padding:0;margin:14px 0 0;display:grid;gap:14px}
+.howto li{counter-increment:etape;display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;font-size:14px;line-height:1.45;color:#e1e8fa}
+.howto li::before{content:counter(etape);grid-row:span 2;align-self:start;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--cream);color:var(--button-ink);font:800 18px/1 'Baloo 2',sans-serif}
+.howto li strong{font-family:'Baloo 2',sans-serif;font-size:18px;line-height:1.25;color:var(--cream)}
+.howto-merci{max-width:430px;margin:20px auto 6px;text-align:left}
+.howto-merci li.done::before{content:'✓';background:var(--green);color:var(--cream)}
+@media(max-width:760px){.hero .what{font-size:14px;margin-inline:auto}.howto li strong{font-size:17px}}
