@@ -102,7 +102,7 @@
   nav.toc a:hover { color: var(--ink); }
 
   section { padding-block: 80px 56px; border-bottom: 7px double var(--line); }
-  #rules > #idee { padding-top: 56px; }
+  #rules > #materiel { padding-top: 56px; }
   .sechead { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
   .sechead .sub { color: var(--muted); font-weight: 500; font-size: 17px; max-width: 60ch; }
   /* Traces de pas reprises du dos « plan du casse » : une seule piste descend la page dans les gouttières et traverse entre deux sections */
@@ -516,7 +516,7 @@
   /* Rythme plus doux sur petit écran : titres, cartes et sections respirent sans rallonger inutilement la page. */
   @media (max-width: 760px) {
     section { padding-block: 54px 40px; }
-    #rules > #idee { padding-top: 36px; }
+    #rules > #materiel { padding-top: 36px; }
     .sechead { margin-bottom: 20px; }
     .grid2, .grid3, .grid4, .memo, .faq-grid { gap: 18px; }
     .kcard .body { padding: 16px 16px 14px; }
@@ -548,32 +548,8 @@
 </header>
 
 <nav class="toc" aria-label="Sommaire">
-  <a href="#idee">L'idée</a><a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a><a href="#memo">Aide-mémoire</a><a href="#faq">Questions</a>
+  <a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a><a href="#memo">Aide-mémoire</a><a href="#faq">Questions</a>
 </nav>
-
-<section id="idee">
-  <div class="two">
-    <div>
-      <h2>Le jeu en une minute</h2>
-      <p class="lead">Un jeu de bluff pour <strong>3 à 6 voleurs</strong>. Monte des coups à deux, mais remplis ta propre <strong>Planque</strong> pour gagner.</p>
-      <p>Pour réussir un coup, il faut une <strong>Clé</strong> et un <strong>Butin du même lieu</strong>.</p>
-      <figure class="paires" aria-label="Exemples de paires">
-        <div class="paire ok"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Clé du Casino" width="512" height="715"><span class="op">+</span><img src="cartes/06-la-caisse.webp" alt="Butin du Casino" width="512" height="715"><span class="op">=</span><span class="verdict-mini">Coup réussi</span></div>
-        <div class="paire ko"><img src="cartes/01-la-combinaison-du-coffre.webp" alt="Clé de la Banque" width="512" height="715"><span class="op">+</span><img src="cartes/04-le-tableau.webp" alt="Butin du Musée" width="512" height="715"><span class="op">=</span><span class="verdict-mini">Coup raté</span></div>
-      </figure>
-      <p>À ton tour, pose une carte <strong>face cachée</strong> et annonce ton coup : « Clé du Casino, qui a le butin ? » Choisis un <strong>complice</strong> parmi les volontaires, ou tente la pioche. <strong>Tout le monde peut mentir.</strong></p>
-      <p>Révélez les deux cartes. Coup réussi : chacun garde sa carte dans sa <strong>Planque</strong>, devant lui, pour marquer des points. Coup raté : les deux cartes vont à la défausse.</p>
-      <span class="pop">Un jeu de voleurs, pas de notaires.</span>
-      <p>Le premier à <strong>12 points</strong> gagne. Si la <strong>quatrième Alarme</strong> arrive au dossier de police avant, la partie s’arrête : le plus de points gagne.</p>
-    </div>
-    <div class="grid2" style="gap:14px">
-      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><h3>La Clé</h3></div><div class="body"><p>Elle ouvre le lieu. Associe-la au Butin correspondant.</p><span class="pop">L'épargne du voleur prudent.</span></div></div>
-      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Le Butin</h3></div><div class="body"><p>Il remplit ta Planque… mais peut attirer les Traîtres.</p><span class="pop r">Ça brille, ça se fauche.</span></div></div>
-      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3></div><div class="body"><p>Mène avec lui face à un Butin : tu peux voler un Butin à ton complice.</p><span class="pop">Personne ne sait qui en a un.</span></div></div>
-      <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L'Alarme</h3></div><div class="body"><p>Elle annule un coup réussi auquel tu ne participes pas, puis rejoint le dossier de police.</p><span class="pop r">Personne n'aime les sirènes.</span></div></div>
-    </div>
-  </div>
-</section>
 
 <section id="materiel">
   <div class="sechead"><div class="pastille">70</div><div><h2>Les cartes</h2><div class="sub">Tout tient dans un paquet. Le reste, c'est du bluff.</div></div></div>
