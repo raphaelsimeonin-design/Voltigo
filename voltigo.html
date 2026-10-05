@@ -643,7 +643,7 @@
       <span class="pop r">Tout le monde les veut, personne n’avoue les avoir.</span>
     </div></div>
     <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3></div><div class="body">
-      <p><strong>Mène avec lui en annonçant une Clé.</strong> Si ton complice révèle un Butin (Pactole compris), vole ce Butin ou un Butin de sa Planque.</p>
+      <p><strong>Mène avec lui, en annonçant ce que tu veux.</strong> Si ton complice révèle un Butin (Pactole compris), vole ce Butin ou un Butin de sa Planque.</p>
       <p>Range le Butin volé dans ta Planque. Si tu as choisi celui de sa Planque, défausse celui qu’il a posé.</p>
       <p class="note">En réponse, pioché, face à une Clé ou face à la pioche : <strong>aucun vol</strong>. Le Traître joué finit toujours à la défausse. Une trahison ne déclenche ni effet de lieu ni Alarme.</p>
       <span class="pop">Tu tends la main, tu reprends le sac.</span>
@@ -1318,7 +1318,7 @@
   // Coup 3 : le Traître de Chloé
   newCoup("C");
   const tc = h("C", "T");
-  beat(3, "Chloé a un Traître. Pour voler, il faut mener avec, en annonçant une Clé.", null, { hi: [tc] });
+  beat(3, "Chloé a un Traître. Pour voler, il faut mener avec.", null, { hi: [tc] });
   toMid("m", tc); S.announce = "« Clé du Casino, qui a le butin ? »";
   beat(3, "Elle le pose face cachée et ment : elle annonce une Clé du Casino.");
   const a3 = h("A", "L-C"), b3 = h("B", "L-C");
