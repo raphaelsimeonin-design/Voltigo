@@ -296,7 +296,6 @@
   .combo .fan { display: flex; justify-content: center; align-items: flex-end; height: 118px; margin-bottom: 4px; }
   .combo .fan img { width: 72px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, .22); margin: 0 -12px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 115%; }
   .combo .pts { position: absolute; top: -14px; right: -10px; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #2A1B00; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 28px; box-shadow: 0 0 0 4px var(--creme); z-index: 1; }
-  .combo.zero .pts { background: var(--line); color: var(--ink); }
   .combo h4 { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 19px; margin: 0; }
   .combo p { margin: 0; font-size: 14.5px; }
   .combo .punch { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 16px; color: var(--gold-ink); }
@@ -341,7 +340,6 @@
   /* Planques : une paire de Clés se range en deux cartes qui se chevauchent, cerclées de vert ; chaque carte ou groupe porte ses points */
   .ex-card.paire img.fr { box-shadow: 0 0 0 .45cqw #9CCC8F, 0 .8cqw 1.8cqw rgba(0, 0, 0, .4); }
   .ex-pts { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); z-index: 13; padding: .1cqw .8cqw .15cqw; border-radius: 999px; background: #FFF6E1; color: #1D1B2A; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: max(8.5px, 1.35cqw); line-height: 1.35; white-space: nowrap; box-shadow: 0 .25cqw .7cqw rgba(0, 0, 0, .35); transition: left .7s cubic-bezier(.3, .75, .25, 1), top .7s cubic-bezier(.3, .75, .25, 1); animation: exPop .35s ease-out; pointer-events: none; }
-  .ex-pts.zero { background: #3D4A6B; color: #D6DEF0; }
   .ex-pts.paire { background: #9CCC8F; color: #0B3A26; }
   .ex-board.instant .ex-pts { transition: none; }
   .ex-board.instant .ex-card, .ex-board.instant .ex-card * { transition: none !important; }
@@ -687,7 +685,7 @@
       <div class="big">12 points</div>
       <div class="dossier" role="img" aria-label="Exemple : une famille (7), une paire (4) et un Butin seul (1) font 12 points"><div class="al n">7</div><span class="arrow">+</span><div class="al n">4</div><span class="arrow">+</span><div class="al n">1</div><span class="arrow">=</span><div class="al n last">12</div></div>
       <p class="note" style="margin:0 0 8px">Par exemple : une famille, une paire et un Butin seul.</p>
-      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> De 3 à 6 joueurs, c'est toujours 12. Plusieurs à la fois : le plus de points, puis le plus de Clés, puis victoire partagée.</p>
+      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> Plusieurs à la fois : le plus de points, puis le plus de Clés, puis victoire partagée.</p>
       <span class="pop">Rangé des voitures.</span>
     </div></div>
     <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>La police débarque</h3></div><div class="body">
@@ -700,8 +698,7 @@
   <div class="combos">
     <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés.</p><p class="punch">Le tour des grands magasins.</p></div>
     <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><h4>La paire</h4><p>Deux Clés du même lieu.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
-    <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/08-les-diamants.webp" alt="Les diamants" width="512" height="715" style="--r:0deg"></div><h4>Le Butin seul</h4><p>Un Butin hors d'une famille.</p><p class="punch">Petit, mais ça brille.</p></div>
-    <div class="combo zero"><div class="pts">0</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:0deg"></div><h4>La Clé seule</h4><p>Une Clé hors d'une paire. Elle départage les égalités.</p><p class="punch">Zéro pointé.</p></div>
+    <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/08-les-diamants.webp" alt="Les diamants" width="512" height="715" style="--r:-8deg"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:8deg"></div><h4>La carte seule</h4><p>Un Butin hors d'une famille, ou une Clé hors d'une paire.</p><p class="punch">Petit, mais ça compte.</p></div>
   </div>
   <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux : six Butins de quatre lieux font deux familles, 14 points : de quoi gagner.</p>
 </section>
@@ -1181,17 +1178,17 @@
     if (code === "K-U") return "Passe-partout · Clé de tous les lieux"; if (code === "L-U") return "Pactole · Butin de tous les lieux";
     const [k, l] = code.split("-"); return (k === "K" ? "Clé " : "Butin ") + (l === "B" ? "de la Banque" : l === "M" ? "du Musée" : l === "C" ? "du Casino" : "de la Bijouterie") + " · " + LIEU[l][k === "K" ? 2 : 3];
   }
-  // Points d'une Planque v9 : famille de 3 Butins différents 7, paire de Clés du même lieu 4, Butin seul 1, Clé seule 0.
+  // Points d'une Planque v9 : famille de 3 Butins différents 7, paire de Clés du même lieu 4, Butin seul 1, Clé seule 1 (0 jusqu'au 6 oct. 2026).
   // Passe-partout et Pactole prennent le lieu le plus avantageux (on essaie tous les lieux).
   function points(codes) {
     const unis = codes.filter(c => c.endsWith("-U")), rest = codes.filter(c => !c.endsWith("-U"));
     function score(list) {
       const b = {}, c = {};
       list.forEach(x => { const [k, l] = x.split("-"); if (k === "K") c[l] = (c[l] || 0) + 1; else b[l] = (b[l] || 0) + 1; });
-      let pts = 0; for (const l in c) pts += Math.floor(c[l] / 2) * 4;
+      let pts = 0, loose = 0; for (const l in c) { pts += Math.floor(c[l] / 2) * 4; loose += c[l] % 2; }
       const cnt = Object.values(b), tot = cnt.reduce((x, y) => x + y, 0); let fam = 0;
       for (;;) { cnt.sort((x, y) => y - x); if (cnt.length >= 3 && cnt[2] > 0) { cnt[0]--; cnt[1]--; cnt[2]--; fam++; } else break; }
-      return pts + fam * 7 + (tot - 3 * fam);
+      return pts + fam * 7 + (tot - 3 * fam) + loose;
     }
     let best = 0;
     (function tryAll(i, acc) {
@@ -1202,7 +1199,7 @@
   }
 
   // Décompte d'une Planque, groupe par groupe (même barème que points()) : paires de Clés du même lieu (4, le Passe-partout
-  // complète une Clé seule), familles de trois Butins de lieux différents (7, le Pactole en joker), puis Butin seul 1, Clé seule 0.
+  // complète une Clé seule), familles de trois Butins de lieux différents (7, le Pactole en joker), puis Butin seul 1, Clé seule 1.
   function groupes(ids) {
     const code = id => K[id], used = new Set(), out = [];
     const cles = ids.filter(id => code(id)[0] === "K" && code(id) !== "K-U");
@@ -1222,7 +1219,7 @@
       if (fam.length < 3) break;
       fam.slice(0, 3).forEach(id => used.add(id)); out.push({ ids: fam.slice(0, 3), pts: 7 });
     }
-    for (const id of ids) if (!used.has(id)) out.push({ ids: [id], pts: code(id)[0] === "L" ? 1 : 0 });
+    for (const id of ids) if (!used.has(id)) out.push({ ids: [id], pts: 1 });
     return out.sort((a, b) => ids.indexOf(a.ids[0]) - ids.indexOf(b.ids[0]));
   }
 
@@ -1292,7 +1289,7 @@
   S.revealed = true; S.res = ["ok", "Coup réussi"];
   beat(1, "On retourne : badge et tableau, même lieu. Coup réussi !");
   toPlanq("A", km); toPlanq("B", b1); S.res = null; S.revealed = false;
-  beat(1, "Chaque carte va dans la Planque de celui qui l'a posée. Le tableau vaut 1 point à Bilal.");
+  beat(1, "Chaque carte va dans la Planque de celui qui l'a posée. Le tableau vaut 1 point à Bilal, le badge 1 point à Ana.");
   const pu = h("D", "L-U"), kj = h("B", "K-J");
   toHand("B", pu); toHand("D", kj);
   beat(1, "Effet du Musée, pour le complice : Bilal regarde la main de Dov, lui prend le Pactole et lui donne une Clé.", "Dov s'est fait faire les poches.", { hi: [pu, kj] });
@@ -1367,7 +1364,7 @@
   S.revealed = true; S.res = ["ok", "Coup réussi"];
   beat(5, "Combinaison et Pactole : coup réussi, dans le lieu de la vraie carte, la Banque.");
   toPlanq("A", kb); toPlanq("B", b5); S.res = null; S.revealed = false;
-  beat(5, "Chacun range sa carte. Bilal : 2 points. Ana : deux Clés de lieux différents, 0 point.");
+  beat(5, "Chacun range sa carte. Bilal : 2 points. Ana : deux Clés de lieux différents, 2 points.");
   MAX.B = 6; const b6 = draw("B");
   beat(5, "Effet de la Banque, pour le complice : Bilal pioche une carte. Sa main compte une carte de plus pour toute la partie.", null, { hi: b6 });
   const f5 = completer("A");
@@ -1387,12 +1384,12 @@
   S.revealed = true; S.res = ["ok", "Coup réussi"];
   beat(6, "Tableau et badge : coup réussi.");
   toPlanq("B", lm6); toPlanq("A", a6); S.res = null; S.revealed = false;
-  beat(6, "Ana range son badge contre celui du coup 1. Deux Clés du même lieu : c'est une paire, 4 points d'un coup ! Bilal passe à 3 points.", "Une Clé seule ne vaut rien. Deux, c'est un double des clés, et personne ne peut les voler.", { hi: [km, a6] });
+  beat(6, "Ana range son badge contre celui du coup 1. Deux Clés du même lieu : c'est une paire, 4 points au lieu de 2. Ana passe à 5 points, Bilal à 3.", "Une Clé seule, c'est 1 point. Deux, c'est un double des clés, et personne ne peut les voler.", { hi: [km, a6] });
   const tb = h("B", "T"), lj = h("A", "L-J");
   toHand("A", tb); toHand("B", lj);
   beat(6, "Effet du Musée, pour la complice : Ana regarde la main de Bilal, lui prend son Traître et lui donne les diamants.", "Le Traître change de camp.", { hi: [tb, lj] });
   const f6 = completer("B");
-  beat(6, f6.txt + " Bilal revient à six, grâce à la Banque. Ana mène au score avec 4 points.", "Fin de l'exemple. Maintenant, tout le monde surveille Ana.", { hi: f6.got });
+  beat(6, f6.txt + " Bilal revient à six, grâce à la Banque. Ana mène au score avec 5 points.", "Fin de l'exemple. Maintenant, tout le monde surveille Ana.", { hi: f6.got });
 
   // Géométrie du plateau (unités : % de la largeur du plateau). Chaque joueur tient sa main en éventail autour d'un pivot hors de la table.
   const SEAT = { A: { px: 50, py: -2.5, R: 180 }, B: { px: 102.5, py: 50, R: -90 }, C: { px: 50, py: 102.5, R: 0 }, D: { px: -2.5, py: 50, R: 90 } };
@@ -1470,7 +1467,7 @@
     for (const q of L.pts) {
       let e = pills[q.key];
       if (!e) { e = pills[q.key] = document.createElement("span"); board.appendChild(e); }
-      e.className = "ex-pts" + (q.paire ? " paire" : q.pts === 0 ? " zero" : "");
+      e.className = "ex-pts" + (q.paire ? " paire" : "");
       e.textContent = (q.paire ? "paire · " : "") + q.pts + (q.pts > 1 ? " pts" : " pt");
       e.style.setProperty("--x", q.x.toFixed(2) + "%"); e.style.setProperty("--y", q.y.toFixed(2) + "%");
       vus.add(q.key);
