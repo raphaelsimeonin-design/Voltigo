@@ -589,9 +589,9 @@
     <img src="cartes/06-la-caisse.webp" alt="La caisse · Butin du Casino" loading="lazy" width="512" height="715">
     <img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l'alarme · Clé de la Bijouterie" loading="lazy" width="512" height="715">
     <img src="cartes/08-les-diamants.webp" alt="Les diamants · Butin de la Bijouterie" loading="lazy" width="512" height="715">
-    <img src="cartes/15-passe-partout.webp" alt="Passe-partout · Clé de tous les lieux" loading="lazy" width="512" height="715">
-    <img src="cartes/16-pactole.webp" alt="Pactole · Butin de tous les lieux" loading="lazy" width="512" height="715">
-    <img src="cartes/09-traitre.webp" alt="Traître" loading="lazy" width="512" height="715">
+    <img src="cartes/15-passe-partout.webp" alt="Le passe-partout · Clé de tous les lieux" loading="lazy" width="512" height="715">
+    <img src="cartes/16-pactole.webp" alt="Le pactole · Butin de tous les lieux" loading="lazy" width="512" height="715">
+    <img src="cartes/09-traitre.webp" alt="Le traître" loading="lazy" width="512" height="715">
     <img src="cartes/10-alarme.webp" alt="Alarme" loading="lazy" width="512" height="715">
     <img src="cartes/14-aide-memoire.webp" alt="Aide-mémoire" loading="lazy" width="512" height="715">
   </div>
@@ -654,7 +654,7 @@
             <span class="suite">↓ Question 2</span>
           </div>
           <div class="branche vol">
-            <div class="duo"><img src="cartes/09-traitre.webp" alt="Traître" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div>
+            <div class="duo"><img src="cartes/09-traitre.webp" alt="Le traître" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div>
             <span class="issue">Trahison</span>
             <p><strong>Traître du meneur + Butin.</strong> Le meneur range ce Butin dans sa Planque, ou en vole un dans celle du complice (le Butin posé va alors à la défausse).</p>
             <p class="note">Pactole compris. Le Traître finit à la défausse. Ni effet, ni Alarme.</p>
@@ -707,11 +707,11 @@
             <div class="casse-effet"><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">À toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div>
           </div>
           <div class="casse bijou">
-            <div class="casse-id"><div class="duo"><img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l’alarme" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div><div><h4>Bijouterie</h4><span>Le code de l’alarme<br>Les diamants</span></div></div>
+            <div class="casse-id"><div class="duo"><img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l'alarme" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div><div><h4>Bijouterie</h4><span>Le code de l'alarme<br>Les diamants</span></div></div>
             <div class="casse-effet"><div class="txt">Prends dans ta main une Alarme du dossier, de la défausse ou de la pioche.</div><div class="why">Au dossier, tu éloignes la police ; ailleurs, tu t’en gardes une pour annuler un coup ou faire venir la police plus vite. Pioche fouillée ? Remélange-la. Aucune Alarme ? Effet perdu.</div></div>
           </div>
           <div class="casse joker">
-            <div class="casse-id"><div class="duo"><img src="cartes/15-passe-partout.webp" alt="Passe-partout" loading="lazy" width="512" height="715"><img src="cartes/16-pactole.webp" alt="Pactole" loading="lazy" width="512" height="715"></div><div><h4>Passe-partout, Pactole</h4><span>Clé et Butin de tous les lieux</span></div></div>
+            <div class="casse-id"><div class="duo"><img src="cartes/15-passe-partout.webp" alt="Le passe-partout" loading="lazy" width="512" height="715"><img src="cartes/16-pactole.webp" alt="Le pactole" loading="lazy" width="512" height="715"></div><div><h4>Tous les lieux</h4><span>Le passe-partout<br>Le pactole</span></div></div>
             <div class="casse-effet"><div class="txt">Le lieu et l’effet viennent de l’autre carte.</div><div class="why">Passe-partout + Pactole : aucun effet.</div></div>
           </div>
         </div>
@@ -1109,8 +1109,8 @@
   const NOM = { A: "Ana", B: "Bilal", C: "Chloé", D: "Dov" };
   const IMG = { "K-B": "01-la-combinaison-du-coffre", "L-B": "02-les-lingots", "K-M": "03-le-badge-du-gardien-de-nuit", "L-M": "04-le-tableau", "K-C": "05-le-passe-de-la-salle-privee", "L-C": "06-la-caisse", "K-J": "07-le-code-de-l-alarme", "L-J": "08-les-diamants", "T": "09-traitre", "A": "10-alarme", "K-U": "15-passe-partout", "L-U": "16-pactole" };
   function cardName(code) {
-    if (code === "T") return "Traître"; if (code === "A") return "Alarme";
-    if (code === "K-U") return "Passe-partout · Clé de tous les lieux"; if (code === "L-U") return "Pactole · Butin de tous les lieux";
+    if (code === "T") return "Le traître"; if (code === "A") return "Alarme";
+    if (code === "K-U") return "Le passe-partout · Clé de tous les lieux"; if (code === "L-U") return "Le pactole · Butin de tous les lieux";
     const [k, l] = code.split("-"); return (k === "K" ? "Clé " : "Butin ") + (l === "B" ? "de la Banque" : l === "M" ? "du Musée" : l === "C" ? "du Casino" : "de la Bijouterie") + " · " + LIEU[l][k === "K" ? 2 : 3];
   }
   // Points d'une Planque v9 : famille de 3 Butins différents 7, paire de Clés du même lieu 4, Butin seul 1, Clé seule 1 (0 jusqu'au 6 oct. 2026).
