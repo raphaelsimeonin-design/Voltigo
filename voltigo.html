@@ -70,7 +70,7 @@
   /* Appels à tester le jeu : même bouton que la page d'accueil (landing.css, .button / .button.small) */
   .button { display: inline-flex; align-items: center; justify-content: center; gap: 16px; min-height: 64px; padding: 17px 30px; background: #FBBB19; color: #1D1B2A; border: 2px solid #1D1B2A; border-radius: 12px; box-shadow: 0 6px 0 #1D1B2A;
     font-family: "Baloo 2", Arial, sans-serif; font-weight: 800; font-size: 25px; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer; transition: transform .18s, box-shadow .18s; flex-shrink: 0; }
-  .button { white-space: nowrap; }
+  .button { white-space: nowrap; -webkit-tap-highlight-color: transparent; } /* au toucher, pas de rectangle bleu : l'enfoncement suffit */
   @media (max-width: 340px) { .rules-cta .button { font-size: 15.5px; padding-inline: 12px; gap: 8px; } .topbar .button.small { font-size: 13px; padding-inline: 7px; gap: 5px; } }
   .button:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #1D1B2A; background: #FFC936; }
   .button:active { transform: translateY(4px); box-shadow: 0 2px 0 #1D1B2A; }
@@ -630,9 +630,8 @@
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">4</span><h3>Complétez vos mains</h3></div><div class="body">
       <div class="say">Mains pleines.</div>
-      <p>Après les effets, <strong>tout le monde</strong> pioche pour remplir sa main (<strong>cinq cartes</strong> au départ).</p>
-      <p>Le meneur commence, puis son <strong>voisin de gauche</strong>, et ainsi de suite. Déjà assez de cartes ? Ne pioche pas.</p>
-      <p class="note">Pioche vide ? Mélange la défausse pour en former une nouvelle.</p>
+      <p>Après les effets, chacun pioche jusqu’à <strong>main pleine</strong> (<strong>cinq cartes</strong> au départ).</p>
+      <p class="note">Pioche vide ? Mélange la défausse : c’est la nouvelle pioche.</p>
       <span class="pop r">Un voleur n’a jamais les mains vides.</span>
     </div></div>
   </div>
@@ -1197,7 +1196,7 @@
       if (n > 0) { got.push(...draw(p, n)); parts.push(parts.length ? NOM[p] + " " + mots(n) : NOM[p] + " pioche " + mots(n) + " carte" + (n > 1 ? "s" : "")); }
     }
     const liste = parts.length > 1 ? parts.slice(0, -1).join(", ") + " et " + parts[parts.length - 1] : parts[0];
-    return { got, txt: (premier ? "Fin du coup : tout le monde complète sa main, en commençant par le meneur. " : "Fin du coup : ") + liste + "." };
+    return { got, txt: (premier ? "Fin du coup : tout le monde complète sa main. " : "Fin du coup : ") + liste + "." };
   }
   function newCoup(m) { S.roles = { [m]: "meneur" }; S.announce = ""; S.res = null; S.revealed = false; }
 

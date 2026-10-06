@@ -119,3 +119,5 @@ html{overflow-x:hidden;overflow-x:clip}
 @media(max-width:340px){.hero .button,.invitation .button,.bottom-cta .button,.ess-fin .button,.form-card .button{font-size:15.5px;padding-inline:12px;gap:8px}.topnav .button.small{font-size:13px;padding-inline:7px;gap:5px}}
 /* Les décors (traces de pas, cartes éparpillées) ne doivent jamais créer de défilement horizontal */
 body{overflow-x:clip}
+/* Au toucher sur téléphone, pas de rectangle bleu du navigateur autour du bouton : son enfoncement (:active) suffit comme retour */
+.button{-webkit-tap-highlight-color:transparent}
