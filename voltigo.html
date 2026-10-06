@@ -147,37 +147,12 @@
   .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 22px; min-width: 0; }
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 22px; min-width: 0; }
 
-  /* Les quatre lieux */
-  /* En-têtes des lieux à la même hauteur, quelle que soit la longueur des noms : chaque carte suit les deux rangées de la grille */
-  #lieux .grid4 { grid-auto-rows: auto auto; }
-  #lieux .lieu { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
-  .lieu { border-radius: 22px; border: 3px solid var(--creme); box-shadow: var(--shadow); overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
-  .lieu .top { padding: 16px 18px 12px; display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: start; color: var(--creme); }
-  .lieu .top h3 { color: inherit; margin: 0; font-size: 26px; }
-  .lieu .top .names { font-size: 13px; opacity: .92; font-weight: 500; display: grid; gap: 2px; }
-  .lieu .effect { padding: 14px 18px 16px; display: grid; gap: 6px; }
-  .lieu .effect .eyebrow { color: inherit; opacity: .8; }
-  .lieu .effect .txt { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 19px; line-height: 1.25; }
-  .lieu .effect .why { font-size: 14px; opacity: .85; }
-  .lieu.banque .top { background: var(--banque); } .lieu.banque .effect { background: var(--banque-soft); color: #0B3A26; }
-  .lieu.musee .top { background: var(--musee); } .lieu.musee .effect { background: var(--musee-soft); color: #0A2E4A; }
-  .lieu.casino .top { background: var(--casino); } .lieu.casino .effect { background: var(--casino-soft); color: #4A0A14; }
-  .lieu.bijou .top { background: var(--bijou); } .lieu.bijou .effect { background: var(--bijou-soft); color: #2E0F33; }
-  :root[data-theme="dark"] .lieu .effect, .dark .lieu .effect { color: var(--ink); }
-  :root .lieu .effect { color: var(--ink); }
-
   .pill { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .04em; padding: 5px 12px; border-radius: 999px; border: 2px solid var(--line); background: var(--surface); }
   .toggle-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
 
   .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
   .gallery img { display: block; width: 100%; height: auto; aspect-ratio: 1024 / 1430; border-radius: 12px; box-shadow: var(--shadow); }
 
-  table { border-collapse: collapse; width: 100%; font-size: 15px; }
-  .tablewrap { overflow-x: auto; border-radius: 18px; border: 3px solid var(--line); background: var(--surface); }
-  th, td { text-align: left; padding: 10px 14px; border-bottom: 2px solid var(--line); vertical-align: top; }
-  tr:last-child td { border-bottom: 0; }
-  th { font-family: "Comfortaa", sans-serif; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
-  td.num { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; white-space: nowrap; }
 
   .btn { appearance: none; border: 3px solid var(--line); background: var(--surface); color: var(--ink); font: inherit; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 14px; padding: 9px 18px; border-radius: 999px; cursor: pointer; }
   .btn.solid { background: var(--gold); border-color: var(--gold); color: #2A1B00; }
@@ -185,33 +160,91 @@
 
   .say { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 22px; color: var(--gold-ink); margin-bottom: 8px; }
   .kcard .say { color: var(--gold-ink); }
+  /* Ton tour : les accroches occupent toutes deux lignes, pour que les textes des quatre gestes commencent à la même hauteur */
+  @media (min-width: 560px) { #tour .say { min-height: 3.2em; min-height: 2lh; } }
+  /* Ton tour : bandeaux sombres à la même hauteur, même quand un titre passe sur deux lignes (chaque geste suit les deux rangées de la grille) */
+  #tour .grid4 { grid-auto-rows: auto auto; }
+  #tour .kcard { grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; }
 
   /* Révélation */
-  .outcome .plaque .n { font-size: 26px; }
-  .sim { margin-top: 24px; border: 3px solid var(--line); border-radius: 22px; padding: 20px; background: var(--surface-2); display: grid; gap: 14px; }
-  /* Simulateur : deux roues de cartes (défilement aimanté), la carte au centre est jouée ; le verdict suit */
-  .sim-duel { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; }
-  .sim .vs { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; text-align: center; color: var(--muted); }
-  .roue { --card-width: 108px; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "lab lab lab" "prev piste next" "nom nom nom"; align-items: center; gap: 4px; }
-  .roue-lab { grid-area: lab; text-align: center; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-  .roue-piste { grid-area: piste; position: relative; display: flex; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; padding: 10px max(0px, calc(50% - var(--card-width) / 2)); perspective: 700px; outline: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%); }
-  .roue-piste::-webkit-scrollbar { display: none; }
-  .roue-piste:focus-visible .roue-carte.on img { box-shadow: 0 0 0 3px var(--sky), 0 0 0 7px var(--sky-soft), 0 8px 18px rgba(0, 0, 0, .3); }
-  .roue-carte { flex: none; width: var(--card-width); aspect-ratio: 512 / 715; padding: 0; border: 0; background: none; border-radius: 9px; scroll-snap-align: center; cursor: pointer; will-change: transform, opacity; }
-  .roue-carte img { display: block; width: 100%; height: 100%; border-radius: 9px; box-shadow: 0 5px 12px rgba(0, 0, 0, .25); pointer-events: none; transition: box-shadow .2s; }
-  .roue-carte.on img { box-shadow: 0 0 0 3px var(--sky), 0 8px 18px rgba(0, 0, 0, .3); }
-  .roue-fl { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); color: var(--ink); font: 800 22px/1 "Baloo 2", sans-serif; cursor: pointer; display: grid; place-items: center; padding: 0 0 3px; }
-  .roue-fl.prev { grid-area: prev; } .roue-fl.next { grid-area: next; }
-  .roue-fl:hover { border-color: var(--sky); }
-  .roue-nom { grid-area: nom; text-align: center; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px; line-height: 1.25; min-height: 2.5em; text-wrap: balance; }
-  .verdict.flash { animation: verdictIn .3s ease-out; }
-  @keyframes verdictIn { from { opacity: .35; transform: translateY(4px); } }
-  @media (prefers-reduced-motion: reduce) { .verdict.flash { animation: none; } }
-  .verdict { border-radius: 14px; padding: 14px 18px; background: var(--surface); border-left: 8px solid var(--line); }
-  .verdict[data-kind="ok"] { border-left-color: var(--mint); } .verdict[data-kind="vol"] { border-left-color: var(--danger); } .verdict[data-kind="ko"] { border-left-color: var(--line); }
-  .verdict .k { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; display: block; margin-bottom: 2px; }
-  .verdict p { margin: 0; font-size: 15px; }
+
+  /* Révélation : un fil de trois questions, relié par une piste en pointillés ; les lieux sont la réponse à la troisième */
+  .fil { list-style: none; margin: 0; padding: 0; display: grid; gap: 34px; position: relative; }
+  .fil::before { content: ""; position: absolute; left: 21px; top: 46px; bottom: 46px; border-left: 4px dashed var(--pas); opacity: .55; }
+  .etape { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 18px; position: relative; }
+  .etape-n { position: relative; z-index: 1; background: var(--gold); color: #1D1B2A; }
+  .etape-corps { min-width: 0; }
+  .etape { scroll-margin-top: var(--ancre, 0px); }
+  .apercu { margin: 0 0 8px; padding-left: 22px; display: grid; gap: 4px; }
+  .apercu a { color: inherit; text-underline-offset: 3px; font-weight: 700; }
+  .etape-corps > h3 { font-size: clamp(24px, 3vw, 30px); margin: 6px 0 14px; }
+  .etape-lead { font-size: 17px; max-width: 70ch; }
+  #revelation .duo { display: flex; justify-content: center; padding: 4px 0 2px; }
+  #revelation .duo img { width: 64px; height: auto; aspect-ratio: 512 / 715; border-radius: 7px; box-shadow: 0 4px 10px rgba(0, 0, 0, .3); }
+  #revelation .duo img:first-child { transform: rotate(-7deg) translateX(6px); }
+  #revelation .duo img:last-child { transform: rotate(7deg) translateX(-6px); }
+
+  /* Question 1 : trois issues côte à côte */
+  .fourche { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; align-items: stretch; }
+  .branche { border-radius: 18px; border: 3px solid var(--line); background: var(--surface); box-shadow: var(--shadow); padding: 14px 18px 16px; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+  .branche .suite { margin-top: auto; padding-top: 4px; }
+  .branche .duo { align-self: center; margin-bottom: 4px; }
+  .branche p { margin: 0 0 4px; }
+  .branche .pop { margin: 2px 0 4px; }
+  .issue { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; padding: 3px 14px; border-radius: 999px; }
+  .branche.ok { border-color: var(--mint); } .branche.ok .issue { background: var(--mint); color: #0B3A26; }
+  .branche.vol { border-color: var(--danger); } .branche.vol .issue { background: var(--traitre); color: var(--creme); }
+  .branche.ko .issue { background: var(--line); color: var(--ink); }
+  .suite { font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--mint); margin-top: 4px; }
+  .suite.fin { color: var(--muted); }
+  .suite.fin::before { content: "■ "; }
+
+  /* Question 2 : l'Alarme */
+  .alarme-bloc { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 18px; align-items: start; border-radius: 18px; border: 3px solid var(--alarme); background: var(--surface); box-shadow: var(--shadow); padding: 16px 20px 12px; max-width: 760px; }
+  .alarme-bloc img { width: 84px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; transform: rotate(-4deg); box-shadow: 0 4px 10px rgba(0, 0, 0, .3); }
+  .alarme-bloc p { margin-bottom: 8px; }
+
+  /* Question 3 : une ligne par lieu, cartes et nom dans la couleur du lieu, effet à droite */
+  .casses { display: grid; gap: 12px; margin-bottom: 14px; }
+  .casse { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); border-radius: 18px; border: 3px solid var(--creme); overflow: hidden; box-shadow: var(--shadow); }
+  .casse-id { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 16px 10px 8px; color: var(--creme); }
+  .casse-id .duo img { width: 54px; }
+  .casse-id h4 { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 25px; line-height: 1.05; margin: 0 0 4px; }
+  .casse-id span { font-size: 12.5px; line-height: 1.4; opacity: .92; display: block; }
+  .casse-effet { padding: 14px 20px; display: grid; gap: 4px; align-content: center; color: var(--ink); }
+  .casse-effet .txt { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 19px; line-height: 1.25; }
+  .casse-effet .why { font-size: 14px; opacity: .85; }
+  .casse.banque .casse-id { background: var(--banque); } .casse.banque .casse-effet { background: var(--banque-soft); }
+  .casse.musee .casse-id { background: var(--musee); } .casse.musee .casse-effet { background: var(--musee-soft); }
+  .casse.casino .casse-id { background: var(--casino); } .casse.casino .casse-effet { background: var(--casino-soft); }
+  .casse.bijou .casse-id { background: var(--bijou); } .casse.bijou .casse-effet { background: var(--bijou-soft); }
+  .casse.joker { border-style: dashed; } .casse.joker .casse-id { background: var(--plaque); } .casse.joker .casse-effet { background: var(--surface); }
+  .casse.joker h4 { font-size: 21px; }
+
+  /* Le cas de la pioche, en bas de fil */
+  .pioche-bloc { margin-top: 30px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 28px; align-items: center; border-radius: 18px; border: 3px dashed var(--line); padding: 16px 22px; }
+  .pioche-titre { display: flex; align-items: center; gap: 14px; }
+  .pioche-titre img { width: 46px; height: auto; aspect-ratio: 512 / 715; border-radius: 6px; transform: rotate(-6deg); box-shadow: 0 3px 8px rgba(0, 0, 0, .3); }
+  .pioche-titre h3 { margin: 0; font-size: 21px; max-width: 14ch; }
+  .pioche-bloc ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 15px; }
+
+  @media (max-width: 760px) {
+    .fil { gap: 28px; }
+    .fil::before { left: 17px; }
+    .etape { grid-template-columns: 38px minmax(0, 1fr); gap: 12px; }
+    .etape-n { width: 38px; height: 38px; font-size: 20px; }
+    .casse { grid-template-columns: minmax(0, 1fr); }
+    .alarme-bloc { grid-template-columns: 60px minmax(0, 1fr); gap: 14px; padding: 14px 16px 10px; }
+    .alarme-bloc img { width: 60px; }
+    .pioche-bloc { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
+  }
+  @media (max-width: 420px) {
+    .etape { grid-template-columns: minmax(0, 1fr); }
+    .fil::before { display: none; }
+    .etape-n { position: absolute; top: 0; left: 0; }
+    .etape-corps > h3 { padding-left: 50px; min-height: 38px; }
+  }
+
 
   /* Gagner */
   .win .big { font-size: 30px; line-height: 1.1; margin-bottom: 8px; }
@@ -223,7 +256,18 @@
     .dossier { display: flex; gap: 10px; align-items: center; margin: 4px 0 10px; }
   .dossier .al { width: 40px; height: 56px; border-radius: 8px; border: 3px solid var(--creme); background: var(--plaque); display: grid; place-items: center; color: var(--creme); box-shadow: 0 2px 8px rgba(0,0,0,.15); }
   .dossier .al.last { outline: 3px solid var(--gold); outline-offset: 2px; }
-  .dossier .al.n { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; }
+  /* Les deux fins, mêmes tuiles : des lots de cartes pour les points, les Alarmes du dossier pour la police */
+  .win .dossier { gap: 6px; flex-wrap: wrap; }
+  .win .dossier .al { width: 32px; height: 45px; border-width: 2px; border-radius: 6px; }
+  .win .dossier .al .ico { width: 16px; height: 16px; }
+  .win .dossier .al.n { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; }
+  .lots .lot { display: grid; justify-items: center; gap: 3px; }
+  .lots .pile { display: flex; }
+  .lots .pile .al + .al { margin-left: -10px; }
+  .lots .pile .al:nth-child(1):not(:only-child) { transform: rotate(-6deg); } .lots .pile .al:nth-child(3) { transform: rotate(6deg); }
+  .lots .lot b { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 14px; line-height: 1; padding: 2px 8px; border-radius: 999px; background: var(--gold); color: #2A1B00; }
+  .lots .arrow { margin-bottom: 20px; }
+  .lots > .al.n { margin-bottom: 20px; margin-left: 8px; }
   .dossier .arrow { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; color: var(--gold-ink); }
 
   /* Variantes */
@@ -296,6 +340,8 @@
   .combo .fan { display: flex; justify-content: center; align-items: flex-end; height: 118px; margin-bottom: 4px; }
   .combo .fan img { width: 72px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, .22); margin: 0 -12px; transform: rotate(var(--r, 0deg)); transform-origin: 50% 115%; }
   .combo .pts { position: absolute; top: -14px; right: -10px; width: 54px; height: 54px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #2A1B00; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 28px; box-shadow: 0 0 0 4px var(--creme); z-index: 1; }
+  .bareme-lead { margin: 10px 0 0; font-size: 17px; }
+  .combo .tag { justify-self: center; font-family: "Comfortaa", sans-serif; font-weight: 700; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink); }
   .combo h4 { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 19px; margin: 0; }
   .combo p { margin: 0; font-size: 14.5px; }
   .combo .punch { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 16px; color: var(--gold-ink); }
@@ -436,7 +482,7 @@
 
   /* Une fin pleine largeur, identique à l'accueil, hors du plan et de ses pas. */
   body { padding-bottom: 0; }
-  #rules > #faq { border-bottom: 0; padding-bottom: 24px; }
+  #rules > #exemple { border-bottom: 0; padding-bottom: 24px; }
   .footer { display: block; position: relative; z-index: 1; margin: 0 -20px; border: 0; border-top: 2px solid var(--line); padding: 27px 0; background: var(--bg); color: var(--muted); }
   .footer .shell { width: min(1160px, calc(100% - 48px)); margin-inline: auto; display: flex; justify-content: space-between; align-items: center; gap: 25px; font-family: "Comfortaa", Arial, sans-serif; font-size: 12px; line-height: 1.65; }
   .footer img { display: block; width: 125px; height: auto; }
@@ -455,23 +501,6 @@
   }
 
 
-  /* Duel compact : cartes toujours côte à côte, commandes tactiles accessibles. */
-  .sim { padding: 12px; gap: 10px; border-radius: 18px; }
-  .roue-fl:disabled { opacity: .3; cursor: default; }
-  .verdict { padding: 10px 14px; border-radius: 12px; }
-  .verdict p { max-width: none; line-height: 1.5; }
-  @media (max-width: 760px) {
-    .sim { padding: 10px; gap: 8px; }
-    .sim-duel { gap: 4px; align-items: start; }
-    .sim .vs { align-self: start; margin-top: 94px; font-size: 18px; }
-    .roue { --card-width: clamp(88px, 25vw, 108px); grid-template-columns: 1fr 1fr; grid-template-areas: "lab lab" "piste piste" "nom nom" "prev next"; gap: 2px 6px; }
-    .roue-lab { font-size: 11px; letter-spacing: .04em; }
-    .roue-nom { font-size: 14px; min-height: 2.5em; }
-    .roue-fl.prev { justify-self: end; }
-    .roue-fl.next { justify-self: start; }
-    .roue-piste { -webkit-mask-image: linear-gradient(90deg, transparent, #000 5px, #000 calc(100% - 5px), transparent); mask-image: linear-gradient(90deg, transparent, #000 5px, #000 calc(100% - 5px), transparent); }
-    .verdict { padding: 10px 12px; border-left-width: 5px; }
-  }
 
 
   /* Mémo visuel : symboles du jeu, actions courtes et combinaisons illustrées. */
@@ -540,17 +569,17 @@
     <div class="tagline sr-only">Un coup se fait à deux.</div>
   </div>
   <div class="meta">
-    <span class="eyebrow">15 à 20 minutes · expliqué en 3 minutes</span>
+    <span class="eyebrow">3 à 6 joueurs · 15 à 20 minutes</span>
   </div>
 </header>
 
 <nav class="toc" aria-label="Sommaire">
-  <a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a><a href="#faq">Questions</a>
+  <a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a>
 </nav>
 
 <section id="materiel">
   <div class="sechead"><div class="pastille">70</div><div><h2>Les cartes</h2><div class="sub">Tout tient dans un paquet. Le reste, c'est du bluff.</div></div></div>
-  <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>6 Traîtres</span><span class="pill">6 Aide-mémoire</span></div>
+  <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins, 6 + 6 par lieu</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>6 Traîtres</span><span class="pill">6 Aide-mémoire</span></div>
   <div class="gallery" aria-label="Aperçu des cartes">
     <img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre · Clé de la Banque" loading="lazy" width="512" height="715">
     <img src="cartes/02-les-lingots.webp" alt="Les lingots · Butin de la Banque" loading="lazy" width="512" height="715">
@@ -566,16 +595,6 @@
     <img src="cartes/10-alarme.webp" alt="Alarme" loading="lazy" width="512" height="715">
     <img src="cartes/14-aide-memoire.webp" alt="Aide-mémoire" loading="lazy" width="512" height="715">
   </div>
-  <div class="tablewrap" style="margin-top:22px"><table>
-    <thead><tr><th>Cartes</th><th>Combien</th><th>Rôle</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Clés et Butins</strong></td><td class="num">48</td><td>6 Clés et 6 Butins par lieu.</td></tr>
-      <tr><td><strong>Passe-partout</strong></td><td class="num">2</td><td>« Ouvre tous les lieux » : une Clé qui va avec n'importe quel Butin.</td></tr>
-      <tr><td><strong>Pactole</strong></td><td class="num">2</td><td>« Va avec toutes les Clés » : un Butin qui va avec n'importe quelle Clé.</td></tr>
-      <tr><td><strong>Alarmes</strong></td><td class="num">6</td><td>Annulent un coup réussi. La cinquième au dossier finit la partie.</td></tr>
-      <tr><td><strong>Traîtres</strong></td><td class="num">6</td><td>Volent un Butin, puis vont à la défausse.</td></tr>
-      <tr><td><strong>Aide-mémoire</strong></td><td class="num">6</td><td>Une par joueur.</td></tr>
-    </tbody></table></div>
 </section>
 
 <section id="mise">
@@ -584,10 +603,10 @@
     <ol>
       <li>Mets les <strong>aide-mémoire</strong> à part et mélange les <strong>64 autres cartes</strong>, Traîtres compris.</li>
       <li>Distribue <strong>cinq cartes à chacun</strong>. Pose le reste au centre, face cachée : c’est la <strong>pioche</strong>.</li>
-      <li>Garde une place devant chacun pour sa <strong>Planque</strong>, et au centre pour la <strong>défausse</strong> et le <strong>dossier de police</strong>. Ces trois espaces sont vides au départ.</li>
-      <li>Le dernier à avoir prêté quelque chose <strong>commence</strong>. Puis jouez dans le <strong>sens horaire</strong>.</li>
+      <li>Garde une place devant chacun pour sa <strong>Planque</strong>, et au centre pour la <strong>défausse</strong> et le <strong>dossier de police</strong>. Ces trois espaces sont vides au départ. Planques et défausse restent <strong>face visible</strong> : tout le monde peut les regarder.</li>
+      <li>Le dernier à avoir prêté quelque chose <strong>commence</strong>.</li>
     </ol>
-    <span class="pop r">Les Traîtres se cachent parmi les honnêtes cartes. Comme dans la vie.</span>
+    <span class="pop r">Distribue avec le sourire. Tu trahiras plus tard.</span>
   </div></div>
 </section>
 
@@ -595,112 +614,149 @@
   <div class="sechead"><div class="pastille">2</div><div><h2>Ton tour, en quatre gestes</h2><div class="sub">Mène un coup, puis passe la main à ton voisin de gauche.</div></div></div>
   <div class="grid4">
     <div class="kcard"><div class="plaque"><span class="n">1</span><h3>Mène</h3></div><div class="body">
-      <div class="say">« Clé du Casino, qui a le butin ? »</div>
-      <p>Pose une carte <strong>face cachée</strong> au centre. Annonce à tous ce qu’elle est censée être et la moitié qui te manque. <strong>Tu peux mentir.</strong></p>
-      <p class="note">Passe-partout ou Pactole : annonce le lieu de ton choix.</p>
+      <div class="say">« Clé du Casino, qui a le Butin ? »</div>
+      <p>Un coup, c’est une <strong>Clé</strong> et un <strong>Butin</strong> du même lieu. Pose une carte <strong>face cachée</strong> au centre. Annonce à tous ce qu’elle est censée être et la moitié qui te manque. <strong>Tu peux mentir.</strong></p>
       <span class="pop">Voleur, pas témoin sous serment.</span>
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">2</span><h3>Choisis ton complice</h3></div><div class="body">
       <div class="say">« Je l’ai ! » Ou silence radio.</div>
       <p>Les volontaires posent chacun <strong>une carte face cachée</strong>, sincère ou bluffée. Choisis ton <strong>complice</strong> sans regarder les cartes ; les autres reprennent la leur.</p>
-      <p>Tu peux préférer le <strong>dessus de la pioche</strong>. Sans volontaire, c’est obligatoire.</p>
+      <p>Tu peux préférer prendre la <strong>carte du dessus de la pioche</strong>. Sans volontaire, c’est obligatoire.</p>
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">3</span><h3>Révélez</h3></div><div class="body">
-      <div class="say">Clé + Butin du même lieu ?</div>
-      <p><strong>Coup réussi :</strong> chacun range sa carte dans sa Planque, puis le complice applique l’effet du lieu.</p>
-      <p><strong>Coup raté :</strong> les deux cartes vont à la défausse, face visible.</p>
-      <p class="note">Cartes spéciales, Alarmes et coups avec la pioche : les cas particuliers sont <a href="#revelation" style="color:inherit;text-underline-offset:3px">juste en dessous</a>.</p>
+      <div class="say">Trois questions.</div>
+      <p>Le meneur et son complice retournent leurs cartes, puis&nbsp;:</p>
+      <ol class="apercu"><li><a href="#q1">Qu’est-ce qui sort&nbsp;?</a></li><li><a href="#q2">Quelqu’un sonne l’Alarme&nbsp;?</a></li><li><a href="#lieux">Où a eu lieu le casse&nbsp;?</a></li></ol>
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">4</span><h3>Complétez vos mains</h3></div><div class="body">
-      <div class="say">Retour à cinq.</div>
-      <p>Après les effets, <strong>tout le monde</strong> pioche pour revenir à <strong>cinq cartes</strong>, +1 par effet de Banque reçu.</p>
-      <p>Le meneur commence, puis on suit le <strong>sens horaire</strong>. Déjà assez de cartes ? Ne pioche pas.</p>
+      <div class="say">Mains pleines.</div>
+      <p>Après les effets, <strong>tout le monde</strong> pioche pour remplir sa main (<strong>cinq cartes</strong> au départ).</p>
+      <p>Le meneur commence, puis son <strong>voisin de gauche</strong>, et ainsi de suite. Déjà assez de cartes ? Ne pioche pas.</p>
+      <p class="note">Pioche vide ? Mélange la défausse pour en former une nouvelle.</p>
       <span class="pop r">Un voleur n’a jamais les mains vides.</span>
     </div></div>
   </div>
 </section>
 
 <section id="revelation">
-  <div class="sechead"><div class="pastille">3</div><div><h2>La révélation</h2><div class="sub">Le moment où l'on découvre qui a menti.</div></div></div>
-  <div class="grid2">
-    <div class="kcard outcome"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Coup réussi</h3></div><div class="body">
-      <p><strong>Clé + Butin du même lieu :</strong> chacun range sa carte dans sa Planque. Le <strong>complice</strong> applique l’effet du lieu, qu’il ait posé la Clé ou le Butin.</p>
-      <p class="note">Avec la pioche : garde ta carte, défausse celle piochée. Aucun effet.</p>
-      <span class="pop">Du travail d’orfèvre.</span>
-    </div></div>
-    <div class="kcard outcome"><div class="plaque"><h3>Coup raté</h3></div><div class="body">
-      <p><strong>Les cartes ne vont pas ensemble ?</strong> Défausse les deux, face visible. Les cartes spéciales sont détaillées ci-dessous.</p>
-      <span class="pop r">Rien n’entre en Planque, à part un peu de honte.</span>
-    </div></div>
-  </div>
-  <div class="grid3" style="margin-top:18px">
-    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Passe-partout et Pactole</h3></div><div class="body">
-      <p><strong>Passe-partout :</strong> remplace n’importe quelle Clé. <strong>Pactole :</strong> remplace n’importe quel Butin.</p>
-      <p>Le lieu et l’effet viennent de l’autre carte. Les deux ensemble : <strong>coup réussi, sans effet</strong>.</p>
-      <p class="note">En Planque : le Passe-partout complète une paire ; le Pactole, une famille. Lieu au choix.</p>
-      <span class="pop r">Elles vont avec tout. Surtout dans ta Planque.</span>
-    </div></div>
-    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg><h3>Le Traître</h3></div><div class="body">
-      <p><strong>Mène avec lui, en annonçant ce que tu veux.</strong> Si ton complice révèle un Butin (Pactole compris), vole ce Butin ou un Butin de sa Planque.</p>
-      <p>Range le Butin volé dans ta Planque. Si tu as choisi celui de sa Planque, défausse celui qu’il a posé.</p>
-      <p class="note">En réponse, pioché, face à une Clé ou face à la pioche : <strong>aucun vol</strong>. Le Traître joué finit toujours à la défausse. Une trahison ne déclenche ni effet de lieu ni Alarme.</p>
-      <span class="pop">Merci pour le coup de main. Et pour le Butin.</span>
-    </div></div>
-    <div class="kcard"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>L’Alarme</h3></div><div class="body">
-      <p><strong>Tu es hors du coup ?</strong> Dès qu’il réussit, avant son effet, joue une Alarme : les deux cartes sont défaussées, sans effet. L’Alarme rejoint le <strong>dossier de police</strong>.</p>
-      <p>Posée face cachée dans un coup : elle ne sonne pas, le coup rate. <strong>Retournée de la pioche :</strong> elle sonne et rejoint le dossier.</p>
-      <span class="pop">Rien de personnel.</span>
-    </div></div>
-  </div>
+  <div class="sechead"><div class="pastille">3</div><div><h2>La révélation</h2><div class="sub">Les deux cartes se retournent. Trois questions, dans l’ordre, disent qui a menti et qui repart avec quoi.</div></div></div>
 
-  <div class="sim" aria-label="Simulateur de révélation">
-    <div class="sim-duel">
-      <div class="roue" id="roueA"><span class="roue-lab">Meneur</span><button type="button" class="roue-fl prev" aria-label="Carte précédente">‹</button><div class="roue-piste" tabindex="0" role="listbox" aria-label="Carte du meneur"></div><button type="button" class="roue-fl next" aria-label="Carte suivante">›</button><span class="roue-nom"></span></div>
-      <div class="vs" aria-hidden="true">×</div>
-      <div class="roue" id="roueB"><span class="roue-lab">Complice</span><button type="button" class="roue-fl prev" aria-label="Carte précédente">‹</button><div class="roue-piste" tabindex="0" role="listbox" aria-label="Carte du complice"></div><button type="button" class="roue-fl next" aria-label="Carte suivante">›</button><span class="roue-nom"></span></div>
-    </div>
-    <div class="verdict" id="verdict" data-kind="ok" role="status" aria-live="polite" aria-atomic="true"><span class="k"></span><p></p></div>
-  </div>
-</section>
+  <ol class="fil">
+    <li class="etape" id="q1">
+      <div class="pastille etape-n">1</div>
+      <div class="etape-corps">
+        <h3>Qu’est-ce qui sort ?</h3>
+        <div class="fourche">
+          <div class="branche ok">
+            <div class="duo"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" loading="lazy" width="512" height="715"><img src="cartes/06-la-caisse.webp" alt="La caisse" loading="lazy" width="512" height="715"></div>
+            <span class="issue">Coup réussi</span>
+            <p><strong>Clé + Butin du même lieu.</strong> Le Passe-partout remplace n’importe quelle Clé, le Pactole n’importe quel Butin, même l’un avec l’autre.</p>
+            <span class="pop">Du travail d’orfèvre.</span>
+            <span class="suite">↓ Question 2</span>
+          </div>
+          <div class="branche vol">
+            <div class="duo"><img src="cartes/09-traitre.webp" alt="Traître" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div>
+            <span class="issue">Trahison</span>
+            <p><strong>Traître du meneur + Butin.</strong> Le meneur range ce Butin dans sa Planque, ou en vole un dans celle du complice (le Butin posé va alors à la défausse).</p>
+            <p class="note">Pactole compris. Le Traître finit à la défausse. Ni effet, ni Alarme.</p>
+            <span class="pop">Merci pour le Butin.</span>
+            <span class="suite fin">Fin du coup</span>
+          </div>
+          <div class="branche ko">
+            <div class="duo"><img src="cartes/02-les-lingots.webp" alt="Les lingots" loading="lazy" width="512" height="715"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" loading="lazy" width="512" height="715"></div>
+            <span class="issue">Coup raté</span>
+            <p><strong>Tout le reste.</strong> Les deux cartes vont à la défausse.</p>
+            <p class="note">Une Alarme posée face cachée dans un coup ne sonne pas : le coup rate.</p>
+            <span class="pop r">Beaucoup de bruit pour rien.</span>
+            <span class="suite fin">Fin du coup</span>
+          </div>
+        </div>
+      </div>
+    </li>
 
-<section id="lieux">
-  <div class="sechead"><div class="pastille">4</div><div><h2>Les quatre lieux</h2><div class="sub">Coup réussi : <strong>le complice</strong> profite du lieu, qu’il ait posé la Clé ou le Butin.</div></div></div>
-  <div class="grid4">
-    <div class="lieu banque"><div class="top"><div><h3>Banque</h3><div class="names"><span>Clé · La combinaison du coffre</span><span>Butin · Les lingots</span></div></div></div>
-      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Pioche une carte : ta main gagne une place pour le reste de la partie.</div><div class="why">Les bonus s’additionnent : une Banque, six cartes en main ; deux Banques, sept.</div></div></div>
-    <div class="lieu musee"><div class="top"><div><h3>Musée</h3><div class="names"><span>Clé · Le badge du gardien</span><span>Butin · Le tableau</span></div></div></div>
-      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Regarde la main d’un autre joueur et prends la carte de ton choix.</div><div class="why">Donne-lui ensuite une carte de ta main en échange. Le nombre de cartes de chacun reste le même.</div></div></div>
-    <div class="lieu casino"><div class="top"><div><h3>Casino</h3><div class="names"><span>Clé · Le passe de la salle privée</span><span>Butin · La caisse</span></div></div></div>
-      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">Les cartes défaussées sont visibles : à toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div></div>
-    <div class="lieu bijou"><div class="top"><div><h3>Bijouterie</h3><div class="names"><span>Clé · Le code de l'alarme</span><span>Butin · Les diamants</span></div></div></div>
-      <div class="effect"><div class="eyebrow">Pour le complice</div><div class="txt">Prends une Alarme au dossier, dans la défausse ou dans la pioche.</div><div class="why">Si tu cherches dans la pioche, remélange-la.</div></div></div>
+    <li class="etape" id="q2">
+      <div class="pastille etape-n">2</div>
+      <div class="etape-corps">
+        <h3>Quelqu’un sonne l’Alarme ?</h3>
+        <div class="alarme-bloc">
+          <img src="cartes/10-alarme.webp" alt="Alarme" loading="lazy" width="512" height="715">
+          <div>
+            <p><strong>Tu es hors du coup</strong>, ni meneur ni complice ? Dès qu’il réussit, avant son effet, joue une Alarme : les deux cartes sont défaussées, sans effet. L’Alarme rejoint le <strong>dossier de police</strong> (<a href="#gagner" style="color:inherit;text-underline-offset:3px">voir Gagner</a>).</p>
+            <p class="note">Personne ne sonne ? On passe à la question 3.</p>
+            <span class="pop">Rien de personnel.</span>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="etape" id="lieux">
+      <div class="pastille etape-n">3</div>
+      <div class="etape-corps">
+        <h3>Où a eu lieu le casse ?</h3>
+        <p class="etape-lead">Chacun range sa carte dans sa Planque. Puis <strong>le complice</strong> applique l’effet du lieu, qu’il ait posé la Clé ou le Butin.</p>
+        <div class="casses">
+          <div class="casse banque">
+            <div class="casse-id"><div class="duo"><img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre" loading="lazy" width="512" height="715"><img src="cartes/02-les-lingots.webp" alt="Les lingots" loading="lazy" width="512" height="715"></div><div><h4>Banque</h4><span>La combinaison du coffre<br>Les lingots</span></div></div>
+            <div class="casse-effet"><div class="txt">Pioche une carte : ta main gagne une place pour le reste de la partie.</div><div class="why">Les bonus s’additionnent : une Banque, six cartes en main ; deux Banques, sept.</div></div>
+          </div>
+          <div class="casse musee">
+            <div class="casse-id"><div class="duo"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" loading="lazy" width="512" height="715"><img src="cartes/04-le-tableau.webp" alt="Le tableau" loading="lazy" width="512" height="715"></div><div><h4>Musée</h4><span>Le badge du gardien<br>Le tableau</span></div></div>
+            <div class="casse-effet"><div class="txt">Regarde la main d’un autre joueur et prends la carte de ton choix.</div><div class="why">Donne-lui ensuite une carte de ta main en échange. Le nombre de cartes de chacun reste le même.</div></div>
+          </div>
+          <div class="casse casino">
+            <div class="casse-id"><div class="duo"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" loading="lazy" width="512" height="715"><img src="cartes/06-la-caisse.webp" alt="La caisse" loading="lazy" width="512" height="715"></div><div><h4>Casino</h4><span>Le passe de la salle privée<br>La caisse</span></div></div>
+            <div class="casse-effet"><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">À toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div>
+          </div>
+          <div class="casse bijou">
+            <div class="casse-id"><div class="duo"><img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l’alarme" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div><div><h4>Bijouterie</h4><span>Le code de l’alarme<br>Les diamants</span></div></div>
+            <div class="casse-effet"><div class="txt">Prends dans ta main une Alarme du dossier, de la défausse ou de la pioche.</div><div class="why">Au dossier, tu éloignes la police ; ailleurs, tu t’en gardes une pour annuler un coup ou faire venir la police plus vite. Pioche fouillée ? Remélange-la. Aucune Alarme ? Effet perdu.</div></div>
+          </div>
+          <div class="casse joker">
+            <div class="casse-id"><div class="duo"><img src="cartes/15-passe-partout.webp" alt="Passe-partout" loading="lazy" width="512" height="715"><img src="cartes/16-pactole.webp" alt="Pactole" loading="lazy" width="512" height="715"></div><div><h4>Passe-partout, Pactole</h4><span>Clé et Butin de tous les lieux</span></div></div>
+            <div class="casse-effet"><div class="txt">Le lieu et l’effet viennent de l’autre carte.</div><div class="why">Passe-partout + Pactole : aucun effet.</div></div>
+          </div>
+        </div>
+        <span class="pop r">Le meneur monte le coup, le complice fait ses emplettes.</span>
+      </div>
+    </li>
+  </ol>
+
+  <div class="pioche-bloc">
+    <div class="pioche-titre"><img src="cartes/13-dos-du-paquet.webp" alt="" loading="lazy" width="512" height="715"><h3>Le complice, c’est la pioche ?</h3></div>
+    <ul>
+      <li><strong>Coup réussi :</strong> range ta carte dans ta Planque, défausse celle piochée. Aucun effet.</li>
+      <li><strong>Alarme retournée :</strong> elle sonne et rejoint le dossier ; ta carte va à la défausse.</li>
+      <li><strong>Traître :</strong> aucun vol, qu’il soit pioché ou posé par le meneur. Le coup rate.</li>
+    </ul>
   </div>
-  <span class="pop r">Le meneur monte le coup, le complice fait ses emplettes.</span>
 </section>
 
 <section id="gagner">
-  <div class="sechead"><div class="pastille">5</div><div><h2>Gagner</h2><div class="sub">Deux fins : 12 points, ou la police. La première arrivée arrête tout.</div></div></div>
-  <div class="grid2">
+  <div class="sechead"><div class="pastille">4</div><div><h2>Gagner</h2><div class="sub">Des points dans ta Planque, et deux façons d’arrêter la partie.</div></div></div>
+  <h3 class="combos-title" style="margin-top:0">Le barème, en images</h3>
+  <p class="bareme-lead">Chaque Clé ou Butin de ta Planque vaut <strong>1 point</strong>. Une paire ou une famille rapporte plus.</p>
+  <div class="combos">
+    <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:0deg"></div><span class="tag">1 carte</span><h4>La carte seule</h4><p>Une Clé ou un Butin hors d’un groupe.</p><p class="punch">Petit, mais ça compte.</p></div>
+    <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><span class="tag">2 Clés · même lieu</span><h4>La paire</h4><p>Deux Clés du même lieu : 4 points au lieu de 2.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
+    <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><span class="tag">3 Butins · lieux différents</span><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés : 7 points au lieu de 3.</p><p class="punch">Le tour des grands magasins.</p></div>
+  </div>
+  <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux. Le Passe-partout complète une paire, le Pactole une famille, au lieu de ton choix.</p>
+  <div class="grid2" style="margin-top:26px">
     <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Fortune faite</h3></div><div class="body">
       <div class="big">12 points</div>
-      <div class="dossier" role="img" aria-label="Exemple : une famille (7), une paire (4) et un Butin seul (1) font 12 points"><div class="al n">7</div><span class="arrow">+</span><div class="al n">4</div><span class="arrow">+</span><div class="al n">1</div><span class="arrow">=</span><div class="al n last">12</div></div>
-      <p class="note" style="margin:0 0 8px">Par exemple : une famille, une paire et un Butin seul.</p>
-      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> Plusieurs à la fois : le plus de points, puis le plus de Clés, puis victoire partagée.</p>
+      <div class="dossier lots" role="img" aria-label="Par exemple : une famille (7 points), une paire (4) et une carte seule (1) font 12 points"><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>7</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div></span><b>4</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>1</b></span><span class="arrow">=</span><div class="al n last">12</div></div>
+      <p class="note" style="margin:0 0 8px">Par exemple : une famille, une paire et une carte seule. Toute combinaison qui atteint 12 points gagne.</p>
+      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> Plusieurs à la fois : le plus de points gagne.</p>
       <span class="pop">Rangé des voitures.</span>
     </div></div>
     <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>La police débarque</h3></div><div class="body">
       <div class="big">Cinquième Alarme</div>
       <div class="dossier" aria-hidden="true"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al last"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div></div>
-      <p>Personne n'a encore 12 points ? La cinquième Alarme au dossier arrête la partie aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong> Égalité : le plus de Clés, puis victoire partagée.</p>
+      <p>Personne n'a encore 12 points ? La cinquième Alarme au dossier arrête la partie aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong></p>
     </div></div>
   </div>
-  <h3 class="combos-title">Le barème, en images</h3>
-  <div class="combos">
-    <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés.</p><p class="punch">Le tour des grands magasins.</p></div>
-    <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><h4>La paire</h4><p>Deux Clés du même lieu.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
-    <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/08-les-diamants.webp" alt="Les diamants" width="512" height="715" style="--r:-8deg"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:8deg"></div><h4>La carte seule</h4><p>Un Butin hors d'une famille, ou une Clé hors d'une paire.</p><p class="punch">Petit, mais ça compte.</p></div>
-  </div>
-  <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux : six Butins de quatre lieux font deux familles, 14 points : de quoi gagner.</p>
+
+  <p class="note" style="margin-top:14px">Égalité, dans les deux cas : le plus de Clés en Planque gagne, puis victoire partagée.</p>
 </section>
 
 <section id="exemple">
@@ -724,18 +780,6 @@
     </div>
   </div>
 </section>
-
-<section id="faq">
-  <div class="sechead"><div class="pastille">?</div><div><h2>Questions fréquentes</h2><div class="sub">Trois cas qui méritent une précision.</div></div></div>
-  <div class="faq-grid">
-    <div class="kcard faq-group"><div class="plaque"><h3>Cas particuliers</h3><span class="nb">3</span></div><div class="faq-list">
-      <details><summary><span class="q">Que faire si la pioche est vide ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>Mélange la défausse pour former une nouvelle pioche. La partie continue jusqu'à 12 points ou à la cinquième Alarme.</p></div></details>
-      <details><summary><span class="q">Et si la pioche révèle un Traître ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>Le coup rate : défausse le Traître. Il ne vole rien.</p></div></details>
-      <details><summary><span class="q">Et si la Bijouterie ne trouve aucune Alarme ?</span><span class="chev" aria-hidden="true"></span></summary><div class="a"><p>L'effet est perdu si aucune Alarme ne se trouve au dossier, dans la défausse ou dans la pioche.</p></div></details>
-    </div></div>
-  </div>
-</section>
-
 <div class="rules-cta">
   <p class="rules-cta-titre">Alors, on peut compter sur toi ?</p>
   <p class="note">En vrai, autour d’une table.</p>
@@ -1059,114 +1103,6 @@
     build();
   })();
 
-  const lieux = {
-    Banque: { de: "de la Banque", ouv: "la combinaison du coffre", emp: "les lingots", eff: "il pioche une carte et sa main compte désormais une carte de plus" },
-    Musée: { de: "du Musée", ouv: "le badge du gardien", emp: "le tableau", eff: "il regarde la main d'un joueur, y prend la carte de son choix et lui en donne une" },
-    Casino: { de: "du Casino", ouv: "le passe de la salle privée", emp: "la caisse", eff: "il échange une carte de sa main contre une carte de son choix dans la défausse" },
-    Bijouterie: { de: "de la Bijouterie", ouv: "le code de l'alarme", emp: "les diamants", eff: "il prend une Alarme, où qu'elle soit, sauf en main" }
-  };
-  const opts = [];
-  Object.keys(lieux).forEach(c => { opts.push({ v: "ouv:" + c, l: "Clé " + lieux[c].de + " · " + lieux[c].ouv }); opts.push({ v: "emp:" + c, l: "Butin " + lieux[c].de + " · " + lieux[c].emp }); });
-  opts.push({ v: "ouv:*", l: "Passe-partout · ouvre tous les lieux" }); opts.push({ v: "emp:*", l: "Pactole · va avec toutes les Clés" });
-  opts.push({ v: "traitre", l: "Traître" }); opts.push({ v: "alarme", l: "Alarme" });
-  // Roues du simulateur : la carte au centre est celle qui est jouée ; les autres pivotent et s'estompent vers les bords
-  const IMG_SIM = { "ouv:Banque": "01-la-combinaison-du-coffre", "emp:Banque": "02-les-lingots", "ouv:Musée": "03-le-badge-du-gardien-de-nuit", "emp:Musée": "04-le-tableau",
-    "ouv:Casino": "05-le-passe-de-la-salle-privee", "emp:Casino": "06-la-caisse", "ouv:Bijouterie": "07-le-code-de-l-alarme", "emp:Bijouterie": "08-les-diamants",
-    "ouv:*": "15-passe-partout", "emp:*": "16-pactole", "traitre": "09-traitre", "alarme": "10-alarme" };
-  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const roues = {};
-  function roue(id, list, def) {
-    const r = $("#" + id), piste = r.querySelector(".roue-piste"), nom = r.querySelector(".roue-nom");
-    piste.innerHTML = list.map((o, i) => `<button type="button" id="${id}-card-${i}" tabindex="-1" class="roue-carte" role="option" aria-label="${o.l}"><img src="cartes/${IMG_SIM[o.v]}.webp" alt="" width="512" height="715"></button>`).join("");
-    const cartes = [...piste.children];
-    let cur = -1, dernier = 0, paintFrame = 0;
-    function peindre() {
-      const width = piste.clientWidth, scroll = piste.scrollLeft;
-      let best = 0, bd = Infinity;
-      // Regrouper les mesures avant de modifier les styles.
-      const distances = cartes.map(e => (e.offsetLeft + e.offsetWidth / 2 - scroll - width / 2) / (e.offsetWidth + 6));
-      cartes.forEach((e, i) => {
-        const d = distances[i], a = Math.min(Math.abs(d), 2.6);
-        if (Math.abs(d) < bd) { bd = Math.abs(d); best = i; }
-        e.style.transform = `rotateY(${Math.max(-55, Math.min(55, -d * 30)).toFixed(1)}deg) scale(${(1 - a * .13).toFixed(3)})`;
-        e.style.opacity = Math.max(.1, 1 - a * .36).toFixed(2);
-      });
-      if (best !== cur) {
-        cur = best;
-        cartes.forEach((e, i) => { e.classList.toggle("on", i === cur); e.setAttribute("aria-selected", String(i === cur)); });
-        nom.textContent = list[cur].l;
-        piste.setAttribute("aria-activedescendant", cartes[cur].id);
-        r.querySelector(".prev").disabled = cur === 0;
-        r.querySelector(".next").disabled = cur === cartes.length - 1;
-        verdict();
-      }
-    }
-    const aller = (i, doux = true) => {
-      i = Math.max(0, Math.min(cartes.length - 1, i)); const e = cartes[i];
-      piste.scrollTo({ left: e.offsetLeft - (piste.clientWidth - e.offsetWidth) / 2, behavior: doux && !reduit ? "smooth" : "auto" });
-    };
-    piste.addEventListener("scroll", () => {
-      if (!paintFrame) paintFrame = requestAnimationFrame(() => { paintFrame = 0; peindre(); });
-    }, { passive: true });
-    cartes.forEach((e, i) => e.addEventListener("click", () => aller(i)));
-    r.querySelector(".prev").addEventListener("click", () => aller(cur - 1));
-    r.querySelector(".next").addEventListener("click", () => aller(cur + 1));
-    piste.addEventListener("keydown", e => {
-      if (e.key === "ArrowLeft") { aller(cur - 1); e.preventDefault(); }
-      if (e.key === "ArrowRight") { aller(cur + 1); e.preventDefault(); }
-      if (e.key === "Home") { aller(0); e.preventDefault(); }
-      if (e.key === "End") { aller(cartes.length - 1); e.preventDefault(); }
-    });
-    // Molette verticale : une carte par cran ; aux extrémités, la page reprend la main
-    piste.addEventListener("wheel", e => {
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      const s = Math.sign(e.deltaY);
-      if ((s < 0 && cur === 0) || (s > 0 && cur === cartes.length - 1)) return;
-      e.preventDefault();
-      const now = performance.now(); if (now - dernier < 160) return; dernier = now;
-      aller(cur + s);
-    }, { passive: false });
-    addEventListener("resize", () => { const i = cur; cur = -1; aller(i, false); peindre(); });
-    roues[id] = { get v() { return list[Math.max(cur, 0)].v; } };
-    aller(Math.max(0, list.findIndex(o => o.v === def)), false); peindre();
-  }
-  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-  const nameOf = (half, lieu) => lieu === "*" ? (half === "ouv" ? "le Passe-partout" : "le Pactole") : lieux[lieu][half];
-  function verdict() {
-    if (!roues.roueA || !roues.roueB) return;
-    const a = roues.roueA.v, b = roues.roueB.v; const v = $("#verdict");
-    const parse = x => x.includes(":") ? x.split(":") : [x, null];
-    const [ta, ca] = parse(a), [tb, cb] = parse(b);
-    const k = v.querySelector(".k"), p = v.querySelector("p");
-    if (ca && cb && ta !== tb && (ca === cb || ca === "*" || cb === "*")) {
-      v.dataset.kind = "ok"; k.textContent = "Coup réussi";
-      const lieu = ca !== "*" ? ca : cb !== "*" ? cb : null;
-      const mCard = nameOf(ta, ca), cCard = nameOf(tb, cb);
-      const eff = lieu ? "Puis le complice applique l'effet " + lieux[lieu].de + " : " + lieux[lieu].eff + "." : "Aucun lieu n'est en jeu : pas d'effet.";
-      p.textContent = cap(mCard) + " entre dans la Planque du meneur, " + cCard + " dans celle du complice. " + eff;
-      return;
-    }
-    if (ta === "traitre") {
-      if (tb === "emp") {
-        v.dataset.kind = "vol"; k.textContent = "Trahison · vol";
-        const n = nameOf("emp", cb);
-        p.textContent = "Le Traître du meneur vole " + n + ", qui entre dans sa Planque, ou à la place un Butin de la Planque du complice ; " + n + " va alors à la défausse. Le Traître va à la défausse, face visible : un de moins dans la nature.";
-      } else {
-        v.dataset.kind = "ko"; k.textContent = "Trahison ratée";
-        p.textContent = "Un Traître ne vole qu'un Butin. Il va à la défausse sans rien voler, avec la carte du complice. Le meneur a perdu son Traître pour rien.";
-      }
-      return;
-    }
-    v.dataset.kind = "ko"; k.textContent = "Coup raté";
-    let why = "Les deux cartes sont défaussées. ";
-    if (tb === "traitre") { p.textContent = why + "Un Traître posé en réponse ne vole rien : il fait juste rater le coup. Au moins, le complice s'en est débarrassé."; return; }
-    if (ca && cb && ta === tb) why += (ta === "ouv" ? "Deux Clés" : "Deux Butins") + " : il manque l'autre moitié.";
-    else if (ca && cb) why += "Deux lieux différents : l'un des deux a menti, ou n'avait pas la bonne carte.";
-    else why += "Une Alarme n'est pas une moitié de coup : posée dans un coup, elle le fait rater. Retournée du dessus de la pioche, elle sonne et va au dossier.";
-    p.textContent = why;
-  }
-  roue("roueA", opts, "ouv:Casino"); roue("roueB", opts, "emp:Casino");
-
   // ---- Exemple : un début de partie joué pas à pas (v9 : « Je l'ai ! », pioche, Traîtres cachés, universelles jokers).
   // Le script ci-dessous rejoue les six coups sur une table ; chaque étape en garde un instantané complet.
   // Afficher une étape, c'est poser chaque carte à sa place : les transitions CSS font glisser et retourner les cartes, dans les deux sens.
@@ -1272,14 +1208,13 @@
 
   // Mise en place
   beat(0, "Cinq cartes chacun, piochées au hasard. Ici, toutes les mains sont visibles : on triche pour toi.");
-  beat(0, "Bilal et Chloé ont chacun un Traître. Personne d'autre ne le sait.", null, { hi: [h("B", "T"), h("C", "T")] });
   beat(0, "Planques et dossier de police vides. Ana commence.", "Elle a prêté sa voiture à Dov.");
 
   // Coup 1 : trois « Je l'ai ! » dont un bluff, puis l'effet du Musée
   newCoup("A");
   const km = h("A", "K-M");
   beat(1, "Au tour d'Ana. Elle a le badge du gardien, une Clé du Musée. Il lui faut le tableau, le Butin du Musée.", null, { hi: [km] });
-  toMid("m", km); S.announce = "« Clé du Musée, qui a le butin ? »";
+  toMid("m", km); S.announce = "« Clé du Musée, qui a le Butin ? »";
   beat(1, "Elle pose le badge face cachée et annonce le coup à toute la table.");
   const b1 = h("B", "L-M"), d1 = h("D", "L-M"), c1 = h("C", "K-C");
   offer("B", b1); offer("D", d1); offer("C", c1);
@@ -1316,7 +1251,7 @@
   newCoup("C");
   const tc = h("C", "T");
   beat(3, "Chloé a un Traître. Pour voler, il faut mener avec.", null, { hi: [tc] });
-  toMid("m", tc); S.announce = "« Clé du Casino, qui a le butin ? »";
+  toMid("m", tc); S.announce = "« Clé du Casino, qui a le Butin ? »";
   beat(3, "Elle le pose face cachée et ment : elle annonce une Clé du Casino.");
   const a3 = h("A", "L-C"), b3 = h("B", "L-C");
   offer("A", a3); offer("B", b3);
@@ -1334,7 +1269,7 @@
   newCoup("D");
   const kd = h("D", "K-J");
   beat(4, "Dov a deux codes de l'alarme, la Clé de la Bijouterie. Il lui faut les diamants.", null, { hi: S.hands.D.filter(id => K[id] === "K-J") });
-  toMid("m", kd); S.announce = "« Clé de la Bijouterie, qui a le butin ? »";
+  toMid("m", kd); S.announce = "« Clé de la Bijouterie, qui a le Butin ? »";
   beat(4, "Il en pose un face cachée et annonce.");
   const c4 = h("C", "L-J"), b4 = h("B", "L-J");
   offer("C", c4); offer("B", b4);
@@ -1354,7 +1289,7 @@
   newCoup("A");
   const kb = h("A", "K-B");
   beat(5, "Ana a la combinaison du coffre, la Clé de la Banque. Il lui faut les lingots.", null, { hi: [kb] });
-  toMid("m", kb); S.announce = "« Clé de la Banque, qui a le butin ? »";
+  toMid("m", kb); S.announce = "« Clé de la Banque, qui a le Butin ? »";
   beat(5, "Elle la pose face cachée et annonce.");
   const d5 = h("D", "L-B"), c5 = h("C", "L-B"), b5 = h("B", "L-U");
   offer("D", d5); offer("C", c5); offer("B", b5);
