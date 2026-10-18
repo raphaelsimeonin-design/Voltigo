@@ -144,6 +144,7 @@
   .kcard.tint-muted .plaque { background: var(--surface-2); color: var(--ink); }
 
   .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 22px; min-width: 0; }
+  .grid2.fin-seule { max-width: 560px; }
   .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 22px; min-width: 0; }
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 22px; min-width: 0; }
 
@@ -168,7 +169,7 @@
 
   /* Révélation */
 
-  /* Révélation : un fil de trois questions, relié par une piste en pointillés ; les lieux sont la réponse à la troisième */
+  /* Révélation : un fil de deux questions, relié par une piste en pointillés */
   .fil { list-style: none; margin: 0; padding: 0; display: grid; gap: 34px; position: relative; }
   .fil::before { content: ""; position: absolute; left: 21px; top: 46px; bottom: 46px; border-left: 4px dashed var(--pas); opacity: .55; }
   .etape { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 18px; position: relative; }
@@ -204,23 +205,6 @@
   .alarme-bloc img { width: 84px; height: auto; aspect-ratio: 512 / 715; border-radius: 8px; transform: rotate(-4deg); box-shadow: 0 4px 10px rgba(0, 0, 0, .3); }
   .alarme-bloc p { margin-bottom: 8px; }
 
-  /* Question 3 : une ligne par lieu, cartes et nom dans la couleur du lieu, effet à droite */
-  .casses { display: grid; gap: 12px; margin-bottom: 14px; }
-  .casse { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); border-radius: 18px; border: 3px solid var(--creme); overflow: hidden; box-shadow: var(--shadow); }
-  .casse-id { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; align-items: center; padding: 10px 16px 10px 8px; color: var(--creme); }
-  .casse-id .duo img { width: 54px; }
-  .casse-id h4 { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 25px; line-height: 1.05; margin: 0 0 4px; }
-  .casse-id span { font-size: 12.5px; line-height: 1.4; opacity: .92; display: block; }
-  .casse-effet { padding: 14px 20px; display: grid; gap: 4px; align-content: center; color: var(--ink); }
-  .casse-effet .txt { font-family: "Baloo 2", sans-serif; font-weight: 700; font-size: 19px; line-height: 1.25; }
-  .casse-effet .why { font-size: 14px; opacity: .85; }
-  .casse.banque .casse-id { background: var(--banque); } .casse.banque .casse-effet { background: var(--banque-soft); }
-  .casse.musee .casse-id { background: var(--musee); } .casse.musee .casse-effet { background: var(--musee-soft); }
-  .casse.casino .casse-id { background: var(--casino); } .casse.casino .casse-effet { background: var(--casino-soft); }
-  .casse.bijou .casse-id { background: var(--bijou); } .casse.bijou .casse-effet { background: var(--bijou-soft); }
-  .casse.joker { border-style: dashed; } .casse.joker .casse-id { background: var(--plaque); } .casse.joker .casse-effet { background: var(--surface); }
-  .casse.joker h4 { font-size: 21px; }
-
   /* Le cas de la pioche, en bas de fil */
   .pioche-bloc { margin-top: 30px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px 28px; align-items: center; border-radius: 18px; border: 3px dashed var(--line); padding: 16px 22px; }
   .pioche-titre { display: flex; align-items: center; gap: 14px; }
@@ -233,7 +217,6 @@
     .fil::before { left: 17px; }
     .etape { grid-template-columns: 38px minmax(0, 1fr); gap: 12px; }
     .etape-n { width: 38px; height: 38px; font-size: 20px; }
-    .casse { grid-template-columns: minmax(0, 1fr); }
     .alarme-bloc { grid-template-columns: 60px minmax(0, 1fr); gap: 14px; padding: 14px 16px 10px; }
     .alarme-bloc img { width: 60px; }
     .pioche-bloc { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
@@ -261,13 +244,6 @@
   .win .dossier .al { width: 32px; height: 45px; border-width: 2px; border-radius: 6px; }
   .win .dossier .al .ico { width: 16px; height: 16px; }
   .win .dossier .al.n { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; }
-  .lots .lot { display: grid; justify-items: center; gap: 3px; }
-  .lots .pile { display: flex; }
-  .lots .pile .al + .al { margin-left: -10px; }
-  .lots .pile .al:nth-child(1):not(:only-child) { transform: rotate(-6deg); } .lots .pile .al:nth-child(3) { transform: rotate(6deg); }
-  .lots .lot b { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 14px; line-height: 1; padding: 2px 8px; border-radius: 999px; background: var(--gold); color: #2A1B00; }
-  .lots .arrow { margin-bottom: 20px; }
-  .lots > .al.n { margin-bottom: 20px; margin-left: 8px; }
   .dossier .arrow { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; color: var(--gold-ink); }
 
   /* Variantes */
@@ -574,12 +550,12 @@
 </header>
 
 <nav class="toc" aria-label="Sommaire">
-  <a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#lieux">Les lieux</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a>
+  <a href="#materiel">Les cartes</a><a href="#mise">Mise en place</a><a href="#tour">Ton tour</a><a href="#revelation">Révélation</a><a href="#gagner">Gagner</a><a href="#exemple">Exemple</a>
 </nav>
 
 <section id="materiel">
-  <div class="sechead"><div class="pastille">70</div><div><h2>Les cartes</h2><div class="sub">Tout tient dans un paquet. Le reste, c'est du bluff.</div></div></div>
-  <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins, 6 + 6 par lieu</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>6 Traîtres</span><span class="pill">6 Aide-mémoire</span></div>
+  <div class="sechead"><div class="pastille">66</div><div><h2>Les cartes</h2><div class="sub">Tout tient dans un paquet. Le reste, c'est du bluff.</div></div></div>
+  <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins, 6 + 6 par lieu</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>2 Traîtres</span><span class="pill">6 Aide-mémoire</span></div>
   <div class="gallery" aria-label="Aperçu des cartes">
     <img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre · Clé de la Banque" loading="lazy" width="512" height="715">
     <img src="cartes/02-les-lingots.webp" alt="Les lingots · Butin de la Banque" loading="lazy" width="512" height="715">
@@ -601,7 +577,7 @@
   <div class="sechead"><div class="pastille">1</div><div><h2>Mise en place</h2><div class="sub">Une minute. Gants noirs en option.</div></div></div>
   <div class="kcard taped setup-card"><div class="plaque"><h3>Avant de commencer</h3></div><div class="body">
     <ol>
-      <li>Mets les <strong>aide-mémoire</strong> à part et mélange les <strong>64 autres cartes</strong>, Traîtres compris.</li>
+      <li>Garde <strong>autant d’Alarmes que de joueurs</strong> et range les autres dans la boîte. Mets les <strong>aide-mémoire</strong> à part et mélange toutes les autres cartes, Traîtres compris.</li>
       <li>Distribue <strong>cinq cartes à chacun</strong>. Pose le reste au centre, face cachée : c’est la <strong>pioche</strong>.</li>
       <li>Garde une place devant chacun pour sa <strong>Planque</strong>, et au centre pour la <strong>défausse</strong> et le <strong>dossier de police</strong>. Ces trois espaces sont vides au départ. Planques et défausse restent <strong>face visible</strong> : tout le monde peut les regarder.</li>
       <li>Le dernier à avoir prêté quelque chose <strong>commence</strong>.</li>
@@ -624,13 +600,13 @@
       <p>Tu peux préférer prendre la <strong>carte du dessus de la pioche</strong>. Sans volontaire, c’est obligatoire.</p>
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">3</span><h3>Révélez</h3></div><div class="body">
-      <div class="say">Trois questions.</div>
+      <div class="say">Deux questions.</div>
       <p>Le meneur et son complice retournent leurs cartes, puis&nbsp;:</p>
-      <ol class="apercu"><li><a href="#q1">Qu’est-ce qui sort&nbsp;?</a></li><li><a href="#q2">Quelqu’un sonne l’Alarme&nbsp;?</a></li><li><a href="#lieux">Où a eu lieu le casse&nbsp;?</a></li></ol>
+      <ol class="apercu"><li><a href="#q1">Qu’est-ce qui sort&nbsp;?</a></li><li><a href="#q2">Quelqu’un sonne l’Alarme&nbsp;?</a></li></ol>
     </div></div>
     <div class="kcard"><div class="plaque"><span class="n">4</span><h3>Complétez vos mains</h3></div><div class="body">
       <div class="say">Mains pleines.</div>
-      <p>Après les effets, chacun pioche jusqu’à <strong>main pleine</strong> (<strong>cinq cartes</strong> au départ).</p>
+      <p>Chacun pioche jusqu’à avoir <strong>cinq cartes</strong> en main.</p>
       <p class="note">Pioche vide ? Mélange la défausse : c’est la nouvelle pioche.</p>
       <span class="pop r">Un voleur n’a jamais les mains vides.</span>
     </div></div>
@@ -638,7 +614,7 @@
 </section>
 
 <section id="revelation">
-  <div class="sechead"><div class="pastille">3</div><div><h2>La révélation</h2><div class="sub">Les deux cartes se retournent. Trois questions, dans l’ordre, disent qui a menti et qui repart avec quoi.</div></div></div>
+  <div class="sechead"><div class="pastille">3</div><div><h2>La révélation</h2><div class="sub">Les deux cartes se retournent. Deux questions, dans l’ordre, disent qui a menti et qui repart avec quoi.</div></div></div>
 
   <ol class="fil">
     <li class="etape" id="q1">
@@ -656,8 +632,8 @@
           <div class="branche vol">
             <div class="duo"><img src="cartes/09-traitre.webp" alt="Le traître" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div>
             <span class="issue">Trahison</span>
-            <p><strong>Traître du meneur + Butin.</strong> Le meneur range ce Butin dans sa Planque, ou en vole un dans celle du complice (le Butin posé va alors à la défausse).</p>
-            <p class="note">Pactole compris. Le Traître finit à la défausse. Ni effet, ni Alarme.</p>
+            <p><strong>Traître d’un côté, Butin de l’autre.</strong> Celui qui a posé le Traître range ce Butin dans sa Planque, ou en vole un dans celle de l’autre (le Butin posé va alors à la défausse).</p>
+            <p class="note">Meneur ou complice, peu importe. Pactole compris. Le Traître finit à la défausse. Pas d’Alarme.</p>
             <span class="pop">Merci pour le Butin.</span>
             <span class="suite fin">Fin du coup</span>
           </div>
@@ -680,42 +656,11 @@
         <div class="alarme-bloc">
           <img src="cartes/10-alarme.webp" alt="Alarme" loading="lazy" width="512" height="715">
           <div>
-            <p><strong>Tu es hors du coup</strong>, ni meneur ni complice ? Dès qu’il réussit, avant son effet, joue une Alarme : les deux cartes sont défaussées, sans effet. L’Alarme rejoint le <strong>dossier de police</strong> (<a href="#gagner" style="color:inherit;text-underline-offset:3px">voir Gagner</a>).</p>
-            <p class="note">Personne ne sonne ? On passe à la question 3.</p>
+            <p><strong>Tu es hors du coup</strong>, ni meneur ni complice ? Dès qu’il réussit, joue une Alarme : les deux cartes sont défaussées. L’Alarme rejoint le <strong>dossier de police</strong> (<a href="#gagner" style="color:inherit;text-underline-offset:3px">voir Gagner</a>).</p>
+            <p>Personne ne sonne ? <strong>Le coup est fait</strong> : chacun range sa carte dans sa Planque.</p>
             <span class="pop">Rien de personnel.</span>
           </div>
         </div>
-      </div>
-    </li>
-
-    <li class="etape" id="lieux">
-      <div class="pastille etape-n">3</div>
-      <div class="etape-corps">
-        <h3>Où a eu lieu le casse ?</h3>
-        <p class="etape-lead">Chacun range sa carte dans sa Planque. Puis <strong>le complice</strong> applique l’effet du lieu, qu’il ait posé la Clé ou le Butin.</p>
-        <div class="casses">
-          <div class="casse banque">
-            <div class="casse-id"><div class="duo"><img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre" loading="lazy" width="512" height="715"><img src="cartes/02-les-lingots.webp" alt="Les lingots" loading="lazy" width="512" height="715"></div><div><h4>Banque</h4><span>La combinaison du coffre<br>Les lingots</span></div></div>
-            <div class="casse-effet"><div class="txt">Pioche une carte : ta main gagne une place pour le reste de la partie.</div><div class="why">Les bonus s’additionnent : une Banque, six cartes en main ; deux Banques, sept.</div></div>
-          </div>
-          <div class="casse musee">
-            <div class="casse-id"><div class="duo"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" loading="lazy" width="512" height="715"><img src="cartes/04-le-tableau.webp" alt="Le tableau" loading="lazy" width="512" height="715"></div><div><h4>Musée</h4><span>Le badge du gardien<br>Le tableau</span></div></div>
-            <div class="casse-effet"><div class="txt">Regarde la main d’un autre joueur et prends la carte de ton choix.</div><div class="why">Donne-lui ensuite une carte de ta main en échange. Le nombre de cartes de chacun reste le même.</div></div>
-          </div>
-          <div class="casse casino">
-            <div class="casse-id"><div class="duo"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" loading="lazy" width="512" height="715"><img src="cartes/06-la-caisse.webp" alt="La caisse" loading="lazy" width="512" height="715"></div><div><h4>Casino</h4><span>Le passe de la salle privée<br>La caisse</span></div></div>
-            <div class="casse-effet"><div class="txt">Choisis une carte dans la défausse et échange-la contre une carte de ta main.</div><div class="why">À toi de repérer la bonne. Défausse vide ? Effet perdu.</div></div>
-          </div>
-          <div class="casse bijou">
-            <div class="casse-id"><div class="duo"><img src="cartes/07-le-code-de-l-alarme.webp" alt="Le code de l'alarme" loading="lazy" width="512" height="715"><img src="cartes/08-les-diamants.webp" alt="Les diamants" loading="lazy" width="512" height="715"></div><div><h4>Bijouterie</h4><span>Le code de l'alarme<br>Les diamants</span></div></div>
-            <div class="casse-effet"><div class="txt">Prends dans ta main une Alarme du dossier, de la défausse ou de la pioche.</div><div class="why">Au dossier, tu éloignes la police ; ailleurs, tu t’en gardes une pour annuler un coup ou faire venir la police plus vite. Pioche fouillée ? Remélange-la. Aucune Alarme ? Effet perdu.</div></div>
-          </div>
-          <div class="casse joker">
-            <div class="casse-id"><div class="duo"><img src="cartes/15-passe-partout.webp" alt="Le passe-partout" loading="lazy" width="512" height="715"><img src="cartes/16-pactole.webp" alt="Le pactole" loading="lazy" width="512" height="715"></div><div><h4>Tous les lieux</h4><span>Le passe-partout<br>Le pactole</span></div></div>
-            <div class="casse-effet"><div class="txt">Le lieu et l’effet viennent de l’autre carte.</div><div class="why">Passe-partout + Pactole : aucun effet.</div></div>
-          </div>
-        </div>
-        <span class="pop r">Le meneur monte le coup, le complice fait ses emplettes.</span>
       </div>
     </li>
   </ol>
@@ -723,7 +668,7 @@
   <div class="pioche-bloc">
     <div class="pioche-titre"><img src="cartes/13-dos-du-paquet.webp" alt="" loading="lazy" width="512" height="715"><h3>Le complice, c’est la pioche ?</h3></div>
     <ul>
-      <li><strong>Coup réussi :</strong> range ta carte dans ta Planque, défausse celle piochée. Aucun effet.</li>
+      <li><strong>Coup réussi :</strong> range ta carte dans ta Planque, défausse celle piochée.</li>
       <li><strong>Alarme retournée :</strong> elle sonne et rejoint le dossier ; ta carte va à la défausse.</li>
       <li><strong>Traître :</strong> aucun vol, qu’il soit pioché ou posé par le meneur. Le coup rate.</li>
     </ul>
@@ -731,7 +676,7 @@
 </section>
 
 <section id="gagner">
-  <div class="sechead"><div class="pastille">4</div><div><h2>Gagner</h2><div class="sub">Des points dans ta Planque, et deux façons d’arrêter la partie.</div></div></div>
+  <div class="sechead"><div class="pastille">4</div><div><h2>Gagner</h2><div class="sub">Des points dans ta Planque. Seule la police arrête la partie.</div></div></div>
   <h3 class="combos-title" style="margin-top:0">Le barème, en images</h3>
   <p class="bareme-lead">Chaque Clé ou Butin de ta Planque vaut <strong>1 point</strong>. Une paire ou une famille rapporte plus.</p>
   <div class="combos">
@@ -740,22 +685,17 @@
     <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><span class="tag">3 Butins · lieux différents</span><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés : 7 points au lieu de 3.</p><p class="punch">Le tour des grands magasins.</p></div>
   </div>
   <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux. Le Passe-partout complète une paire, le Pactole une famille, au lieu de ton choix.</p>
-  <div class="grid2" style="margin-top:26px">
-    <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Fortune faite</h3></div><div class="body">
-      <div class="big">12 points</div>
-      <div class="dossier lots" role="img" aria-label="Par exemple : une famille (7 points), une paire (4) et une carte seule (1) font 12 points"><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>7</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div></span><b>4</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>1</b></span><span class="arrow">=</span><div class="al n last">12</div></div>
-      <p class="note" style="margin:0 0 8px">Par exemple : une famille, une paire et une carte seule. Toute combinaison qui atteint 12 points gagne.</p>
-      <p>À la fin d'un coup, dès qu'un joueur a <strong>12 points ou plus</strong> dans sa Planque, la partie s'arrête aussitôt : <strong>il gagne.</strong> Plusieurs à la fois : le plus de points gagne.</p>
-      <span class="pop">Rangé des voitures.</span>
-    </div></div>
+  <div class="grid2 fin-seule" style="margin-top:26px">
     <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>La police débarque</h3></div><div class="body">
-      <div class="big">Cinquième Alarme</div>
-      <div class="dossier" aria-hidden="true"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al last"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div></div>
-      <p>Personne n'a encore 12 points ? La cinquième Alarme au dossier arrête la partie aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong></p>
+      <div class="big">Dernière Alarme</div>
+      <div class="dossier" aria-hidden="true"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al last"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div></div>
+      <p>Quand la <strong>dernière Alarme</strong> du paquet rejoint le dossier, la partie s’arrête aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong></p>
+      <p class="note">Les deux dernières ne se gardent pas. Quand il ne reste plus que deux Alarmes hors du dossier, si tu en as une en main au début de ton tour, elle sonne d’elle-même et rejoint le dossier.</p>
+      <span class="pop">Rangé des voitures.</span>
     </div></div>
   </div>
 
-  <p class="note" style="margin-top:14px">Égalité, dans les deux cas : le plus de Clés en Planque gagne, puis victoire partagée.</p>
+  <p class="note" style="margin-top:14px">Égalité : le plus de Clés en Planque gagne, puis victoire partagée.</p>
 </section>
 
 <section id="exemple">
@@ -1102,7 +1042,7 @@
     build();
   })();
 
-  // ---- Exemple : un début de partie joué pas à pas (v9 : « Je l'ai ! », pioche, Traîtres cachés, universelles jokers).
+  // ---- Exemple : un début de partie joué pas à pas (18 oct. 2026 : sans effets de lieu, Traître des deux côtés ; « Je l'ai ! », pioche, universelles jokers).
   // Le script ci-dessous rejoue les six coups sur une table ; chaque étape en garde un instantané complet.
   // Afficher une étape, c'est poser chaque carte à sa place : les transitions CSS font glisser et retourner les cartes, dans les deux sens.
   const LIEU = { B: ["banque", "Banque", "la combinaison du coffre", "les lingots"], M: ["musee", "Musée", "le badge du gardien", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
@@ -1163,11 +1103,11 @@
   const mk = code => { const id = "x" + nid++; K[id] = code; return id; };
   const S = { hands: { A: [], B: [], C: [], D: [] }, planq: { A: [], B: [], C: [], D: [] }, offers: {}, mid: {}, alarm: null, discard: [], dossier: [], deck: [],
               revealed: false, roles: {}, announce: "", res: null };
-  // Mains de départ : cinq cartes chacun, au hasard. Bilal et Chloé ont un Traître, et personne ne le sait.
+  // Mains de départ : cinq cartes chacun, au hasard. Bilal et Chloé ont les deux Traîtres du paquet, et personne ne le sait.
   const start = { A: ["K-M", "K-B", "L-C", "K-C", "A"], B: ["L-M", "T", "L-B", "K-J", "L-J"], C: ["T", "L-J", "K-M", "L-B", "K-C"], D: ["L-M", "L-U", "K-J", "A", "L-B"] };
   for (const p in start) S.hands[p] = start[p].map(mk);
   // Pioche, dans l'ordre où les cartes en sortiront
-  S.deck = ["L-J", "K-M", "T", "L-C", "K-J", "K-U", "L-C", "A", "L-M", "L-M", "K-M", "L-B", "K-C", "L-J"].map(mk);
+  S.deck = ["L-J", "K-M", "L-M", "K-J", "L-C", "K-U", "L-C", "A", "L-M", "K-M", "L-B", "K-C", "L-J", "K-B"].map(mk);
   const h = (p, code) => S.hands[p].find(id => K[id] === code);
   function take(id) {
     for (const p in S.hands) { const i = S.hands[p].indexOf(id); if (i >= 0) { S.hands[p].splice(i, 1); return; } }
@@ -1187,7 +1127,7 @@
   const offer = (p, id) => { const i = S.hands[p].indexOf(id); take(id); S.offers[p] = { id, i }; };
   const back = p => { const o = S.offers[p]; delete S.offers[p]; S.hands[p].splice(o.i, 0, o.id); };
   const draw = (p, n = 1) => { const got = S.deck.slice(0, n); got.forEach(id => toHand(p, id)); return got; };
-  // Fin du coup : effets appliqués, tout le monde complète sa main, meneur d'abord puis dans le sens horaire
+  // Fin du coup : tout le monde complète sa main à cinq, meneur d'abord puis dans le sens horaire
   const MAX = { A: 5, B: 5, C: 5, D: 5 }, mots = n => ["", "une", "deux", "trois", "quatre", "cinq"][n];
   function completer(m, premier) {
     const ordre = ["A", "B", "C", "D"], i0 = ordre.indexOf(m), got = [], parts = [];
@@ -1209,7 +1149,7 @@
   beat(0, "Cinq cartes chacun, piochées au hasard. Ici, toutes les mains sont visibles : on triche pour toi.");
   beat(0, "Planques et dossier de police vides. Ana commence.", "Elle a prêté sa voiture à Dov.");
 
-  // Coup 1 : trois « Je l'ai ! » dont un bluff, puis l'effet du Musée
+  // Coup 1 : trois « Je l'ai ! » dont un bluff
   newCoup("A");
   const km = h("A", "K-M");
   beat(1, "Au tour d'Ana. Elle a le badge du gardien, une Clé du Musée. Il lui faut le tableau, le Butin du Musée.", null, { hi: [km] });
@@ -1223,107 +1163,99 @@
   S.revealed = true; S.res = ["ok", "Coup réussi"];
   beat(1, "On retourne : badge et tableau, même lieu. Coup réussi !");
   toPlanq("A", km); toPlanq("B", b1); S.res = null; S.revealed = false;
-  beat(1, "Chaque carte va dans la Planque de celui qui l'a posée. Le tableau vaut 1 point à Bilal, le badge 1 point à Ana.");
-  const pu = h("D", "L-U"), kj = h("B", "K-J");
-  toHand("B", pu); toHand("D", kj);
-  beat(1, "Effet du Musée, pour le complice : Bilal regarde la main de Dov, lui prend le Pactole et lui donne une Clé.", "Dov s'est fait faire les poches.", { hi: [pu, kj] });
+  beat(1, "Chaque carte va dans la Planque de celui qui l'a posée. Le tableau vaut 1 point à Bilal, le badge 1 point à Ana.", "Un coup se fait à deux : les deux complices avancent.");
   const f1 = completer("A", true);
   beat(1, f1.txt + " Au tour de Bilal.", "Pas seulement le meneur : le complice aussi revient à cinq.", { hi: f1.got });
 
-  // Coup 2 : personne ne répond, la pioche joue le complice
+  // Coup 2 : Bilal annonce un Butin, et un Traître se cache parmi les volontaires
   newCoup("B");
   const lb = h("B", "L-B");
   beat(2, "Bilal a les lingots, un Butin de la Banque. Il lui faut la combinaison du coffre, la Clé de la Banque.", null, { hi: [lb] });
   toMid("m", lb); S.announce = "« Butin de la Banque, qui a la clé ? »";
   beat(2, "Il pose les lingots face cachée et annonce.");
-  beat(2, "Ana a la combinaison… mais se tait : elle la garde pour faire une paire de Clés.", null, { hi: [h("A", "K-B")], says: { A: "…" } });
-  const t2 = S.deck[0]; toMid("c", t2);
-  beat(2, "Personne ne dit « Je l'ai ! ». Bilal prend donc la carte du dessus de la pioche.", "Sans volontaire, la pioche joue le complice.");
-  S.revealed = true; S.res = ["ko", "Coup raté"];
-  beat(2, "C'est un Traître. Lingots contre Traître : coup raté. Sorti de la pioche, un Traître ne vole rien.", "La pioche ne trahit pas, elle déçoit.");
-  toDiscard(lb); toDiscard(t2); S.res = null; S.revealed = false;
-  beat(2, "Les deux cartes partent à la défausse, face visible.");
-  const f2 = completer("B");
-  beat(2, f2.txt + " Au tour de Chloé.", null, { hi: f2.got });
-
-  // Coup 3 : le Traître de Chloé
-  newCoup("C");
-  const tc = h("C", "T");
-  beat(3, "Chloé a un Traître. Pour voler, il faut mener avec.", null, { hi: [tc] });
-  toMid("m", tc); S.announce = "« Clé du Casino, qui a le Butin ? »";
-  beat(3, "Elle le pose face cachée et ment : elle annonce une Clé du Casino.");
-  const a3 = h("A", "L-C"), b3 = h("B", "L-C");
-  offer("A", a3); offer("B", b3);
-  beat(3, "Ana et Bilal ont la caisse, le Butin du Casino : « Je l'ai ! ». Ils posent leur carte.", null, { says: { A: JLA, B: JLA } });
-  toMid("c", a3); back("B"); S.roles.A = "complice";
-  beat(3, "Chloé choisit Ana. Bilal reprend sa carte.");
+  const a2 = h("A", "K-B"), tc = h("C", "T");
+  offer("A", a2); offer("C", tc);
+  beat(2, "Ana a la combinaison : « Je l'ai ! ». Chloé aussi… avec un Traître.", "Annoncer un Butin, c'est montrer son portefeuille.", { says: { A: JLA, C: JLA }, hi: [tc] });
+  toMid("c", tc); back("A"); S.roles.C = "complice";
+  beat(2, "Bilal choisit Chloé. Ana reprend sa carte.");
   S.revealed = true; S.res = ["vol", "Trahison !"];
-  beat(3, "On retourne : un Traître face à un Butin. Chloé vole la caisse !");
-  toPlanq("C", a3); toDiscard(tc); S.res = null; S.revealed = false;
-  beat(3, "La caisse va dans la Planque de Chloé : 1 point. Le Traître part à la défausse.", "Les Clés ne se volent jamais : le badge d'Ana est à l'abri.");
+  beat(2, "On retourne : un Traître face à un Butin. Chloé, la complice, vole les lingots !", "Meneur ou complice, le Traître vole pareil.");
+  toPlanq("C", lb); toDiscard(tc); S.res = null; S.revealed = false;
+  beat(2, "Les lingots vont dans la Planque de Chloé : 1 point. Le Traître part à la défausse.", "Les Clés ne se volent jamais : la combinaison d'Ana ne risquait rien.");
+  const f2 = completer("B");
+  beat(2, f2.txt + " Au tour de Chloé.", "Bilal révise sa confiance en l'humanité.", { hi: f2.got });
+
+  // Coup 3 : plus personne ne répond à Chloé, la pioche joue le complice
+  newCoup("C");
+  const kc = h("C", "K-C");
+  beat(3, "Chloé a le passe du Casino, une Clé. Il lui faut la caisse, le Butin du Casino.", null, { hi: [kc] });
+  toMid("m", kc); S.announce = "« Clé du Casino, qui a le Butin ? »";
+  beat(3, "Elle pose sa Clé face cachée et annonce.");
+  beat(3, "Ana a la caisse… mais se tait. Après le coup des lingots, personne n'a envie d'aider Chloé.", null, { hi: [h("A", "L-C")], says: { A: "…" } });
+  const t3 = S.deck[0]; toMid("c", t3);
+  beat(3, "Personne ne dit « Je l'ai ! ». Chloé prend donc la carte du dessus de la pioche.", "Sans volontaire, la pioche joue le complice.");
+  S.revealed = true; S.res = ["ok", "Coup réussi"];
+  beat(3, "C'est la caisse ! Passe et caisse, même lieu : coup réussi.", "La pioche, elle, ne trahit personne.");
+  toPlanq("C", kc); toDiscard(t3); S.res = null; S.revealed = false;
+  beat(3, "Chloé range sa Clé dans sa Planque : 2 points. La caisse piochée part à la défausse.");
   const f3 = completer("C");
-  beat(3, f3.txt + " Ana remplace sa caisse volée. Au tour de Dov.", "Ana révise sa confiance en l'humanité.", { hi: f3.got });
+  beat(3, f3.txt + " Au tour de Dov.", null, { hi: f3.got });
 
   // Coup 4 : l'Alarme d'Ana annule un coup réussi
   newCoup("D");
   const kd = h("D", "K-J");
-  beat(4, "Dov a deux codes de l'alarme, la Clé de la Bijouterie. Il lui faut les diamants.", null, { hi: S.hands.D.filter(id => K[id] === "K-J") });
+  beat(4, "Dov a le code de l'alarme, la Clé de la Bijouterie. Il lui faut les diamants.", null, { hi: [kd] });
   toMid("m", kd); S.announce = "« Clé de la Bijouterie, qui a le Butin ? »";
-  beat(4, "Il en pose un face cachée et annonce.");
+  beat(4, "Il le pose face cachée et annonce.");
   const c4 = h("C", "L-J"), b4 = h("B", "L-J");
   offer("C", c4); offer("B", b4);
   beat(4, "Chloé et Bilal ont les diamants : « Je l'ai ! ». Ils posent leur carte.", null, { says: { C: JLA, B: JLA } });
   toMid("c", c4); back("B"); S.roles.C = "complice";
   beat(4, "Dov choisit Chloé. Bilal reprend sa carte.");
   S.revealed = true; S.res = ["ok", "Coup réussi"];
-  beat(4, "Code et diamants : coup réussi. Chloé passerait à 2 points, et l'effet de la Bijouterie lui donnerait une Alarme…");
+  beat(4, "Code et diamants : coup réussi. Chloé passerait à 3 points, seule en tête…");
   const al = h("A", "A"); toAlarm(al); S.roles.A = "alarme"; S.res = ["al", "Annulé par l'Alarme d'Ana"];
-  beat(4, "… mais Ana, qui n'est pas dans le coup, joue une Alarme. Coup annulé !", "Une Alarme se joue à tout moment, sur un coup réussi.", { says: { A: "Alarme !" } });
+  beat(4, "… mais Ana, qui n'est pas dans le coup, joue une Alarme. Coup annulé !", "Une Alarme se joue sur un coup réussi, par quelqu'un qui n'est pas dedans.", { says: { A: "Alarme !" } });
   toDiscard(kd); toDiscard(c4); toDossier(al); S.res = null; S.revealed = false;
-  beat(4, "Pas d'effet : les deux cartes vont à la défausse, l'Alarme au dossier de police.", "À la cinquième Alarme, la police débarque.");
+  beat(4, "Les deux cartes vont à la défausse, l'Alarme au dossier de police.", "Quand la police débarque, la partie s'arrête.");
   const f4 = completer("D");
   beat(4, f4.txt + " Ana, qui n'était pas dans le coup, remplace son Alarme. Retour à Ana.", "Elle repioche… une Alarme. Certains ont le chic.", { hi: f4.got });
 
-  // Coup 5 : le Pactole de Bilal, puis l'effet de la Banque
+  // Coup 5 : le Pactole de Dov
   newCoup("A");
   const kb = h("A", "K-B");
   beat(5, "Ana a la combinaison du coffre, la Clé de la Banque. Il lui faut les lingots.", null, { hi: [kb] });
   toMid("m", kb); S.announce = "« Clé de la Banque, qui a le Butin ? »";
   beat(5, "Elle la pose face cachée et annonce.");
-  const d5 = h("D", "L-B"), c5 = h("C", "L-B"), b5 = h("B", "L-U");
-  offer("D", d5); offer("C", c5); offer("B", b5);
-  beat(5, "Dov et Chloé ont les lingots. Bilal a le Pactole, qui va avec toutes les Clés. Trois « Je l'ai ! ».", null, { says: { D: JLA, C: JLA, B: JLA } });
-  toMid("c", b5); back("D"); back("C"); S.roles.B = "complice";
-  beat(5, "Ana choisit Bilal. Dov et Chloé reprennent leur carte.");
+  const d5 = h("D", "L-U"), c5 = h("C", "L-B");
+  offer("D", d5); offer("C", c5);
+  beat(5, "Chloé a les lingots. Dov a le Pactole, qui va avec toutes les Clés. Deux « Je l'ai ! ».", null, { says: { D: JLA, C: JLA } });
+  toMid("c", d5); back("C"); S.roles.D = "complice";
+  beat(5, "Ana choisit Dov plutôt que Chloé. Chloé reprend sa carte.", "Échaudée par les lingots, toute la table se méfie de Chloé.");
   S.revealed = true; S.res = ["ok", "Coup réussi"];
-  beat(5, "Combinaison et Pactole : coup réussi, dans le lieu de la vraie carte, la Banque.");
-  toPlanq("A", kb); toPlanq("B", b5); S.res = null; S.revealed = false;
-  beat(5, "Chacun range sa carte. Bilal : 2 points. Ana : deux Clés de lieux différents, 2 points.");
-  MAX.B = 6; const b6 = draw("B");
-  beat(5, "Effet de la Banque, pour le complice : Bilal pioche une carte. Sa main compte une carte de plus pour toute la partie.", null, { hi: b6 });
+  beat(5, "Combinaison et Pactole : coup réussi, à la Banque.");
+  toPlanq("A", kb); toPlanq("D", d5); S.res = null; S.revealed = false;
+  beat(5, "Chacun range sa carte. Dov : 1 point. Ana : deux Clés de lieux différents, 2 points.");
   const f5 = completer("A");
-  beat(5, f5.txt + " Ana tombe sur un deuxième badge du gardien. Au tour de Bilal.", "Tout le monde surveille Bilal. Personne ne surveille Ana.", { hi: f5.got });
+  beat(5, f5.txt + " Ana tombe sur un deuxième badge du gardien. Au tour de Bilal.", "Tout le monde surveille Chloé. Personne ne surveille Ana.", { hi: f5.got });
 
   // Coup 6 : Ana répond avec son deuxième badge et fait une paire de Clés en Planque
   newCoup("B");
   const lm6 = h("B", "L-M");
   beat(6, "Bilal a le tableau, le Butin du Musée. Il lui faut le badge du gardien.", null, { hi: [lm6] });
   toMid("m", lm6); S.announce = "« Butin du Musée, qui a la clé ? »";
-  beat(6, "Il pose le tableau face cachée et annonce.");
+  beat(6, "Il pose le tableau face cachée et annonce. Encore un Butin : il a du courage.");
   const a6 = h("A", "K-M"), c6 = h("C", "K-M");
   offer("A", a6); offer("C", c6);
-  beat(6, "Ana et Chloé ont le badge : « Je l'ai ! ». Elles posent leur carte.", null, { says: { A: JLA, C: JLA } });
+  beat(6, "Ana et Chloé : « Je l'ai ! ». Elles posent leur carte.", null, { says: { A: JLA, C: JLA } });
   toMid("c", a6); back("C"); S.roles.A = "complice";
-  beat(6, "Bilal choisit Ana. Chloé reprend sa carte.");
+  beat(6, "Bilal ne refera pas deux fois la même erreur : il choisit Ana. Chloé reprend sa carte.");
   S.revealed = true; S.res = ["ok", "Coup réussi"];
   beat(6, "Tableau et badge : coup réussi.");
   toPlanq("B", lm6); toPlanq("A", a6); S.res = null; S.revealed = false;
-  beat(6, "Ana range son badge contre celui du coup 1. Deux Clés du même lieu : c'est une paire, 4 points au lieu de 2. Ana passe à 5 points, Bilal à 3.", "Une Clé seule, c'est 1 point. Deux, c'est un double des clés, et personne ne peut les voler.", { hi: [km, a6] });
-  const tb = h("B", "T"), lj = h("A", "L-J");
-  toHand("A", tb); toHand("B", lj);
-  beat(6, "Effet du Musée, pour la complice : Ana regarde la main de Bilal, lui prend son Traître et lui donne les diamants.", "Le Traître change de camp.", { hi: [tb, lj] });
+  beat(6, "Ana range son badge contre celui du coup 1. Deux Clés du même lieu : c'est une paire, 4 points au lieu de 2. Ana passe à 5 points, Bilal à 2.", "Une Clé seule, c'est 1 point. Deux, c'est un double des clés, et personne ne peut les voler.", { hi: [km, a6] });
   const f6 = completer("B");
-  beat(6, f6.txt + " Bilal revient à six, grâce à la Banque. Ana mène au score avec 5 points.", "Fin de l'exemple. Maintenant, tout le monde surveille Ana.", { hi: f6.got });
+  beat(6, f6.txt + " Ana mène au score avec 5 points.", "Fin de l'exemple. Maintenant, tout le monde surveille Ana.", { hi: f6.got });
 
   // Géométrie du plateau (unités : % de la largeur du plateau). Chaque joueur tient sa main en éventail autour d'un pivot hors de la table.
   const SEAT = { A: { px: 50, py: -2.5, R: 180 }, B: { px: 102.5, py: 50, R: -90 }, C: { px: 50, py: 102.5, R: 0 }, D: { px: -2.5, py: 50, R: 90 } };
