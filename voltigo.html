@@ -557,8 +557,8 @@
   <div class="sechead"><div class="pastille">66</div><div><h2>Les cartes</h2><div class="sub">Tout tient dans un paquet. Le reste, c'est du bluff.</div></div></div>
   <div class="toggle-row"><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>48 Clés et Butins, 6 + 6 par lieu</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg>2 Passe-partout</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg>2 Pactole</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg>6 Alarmes</span><span class="pill"><svg class="ico" aria-hidden="true"><use href="#i-traitre"/></svg>2 Traîtres</span><span class="pill">6 Aide-mémoire</span></div>
   <div class="gallery" aria-label="Aperçu des cartes">
-    <img src="cartes/01-la-combinaison-du-coffre.webp" alt="La combinaison du coffre · Clé de la Banque" loading="lazy" width="512" height="715">
-    <img src="cartes/02-les-lingots.webp" alt="Les lingots · Butin de la Banque" loading="lazy" width="512" height="715">
+    <img src="cartes/01-le-tampon-du-directeur.webp" alt="Le tampon du directeur · Clé de la Banque" loading="lazy" width="512" height="715">
+    <img src="cartes/02-le-coffre.webp" alt="Le coffre · Butin de la Banque" loading="lazy" width="512" height="715">
     <img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien · Clé du Musée" loading="lazy" width="512" height="715">
     <img src="cartes/04-le-tableau.webp" alt="Le tableau · Butin du Musée" loading="lazy" width="512" height="715">
     <img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée · Clé du Casino" loading="lazy" width="512" height="715">
@@ -638,7 +638,7 @@
             <span class="suite fin">Fin du coup</span>
           </div>
           <div class="branche ko">
-            <div class="duo"><img src="cartes/02-les-lingots.webp" alt="Les lingots" loading="lazy" width="512" height="715"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" loading="lazy" width="512" height="715"></div>
+            <div class="duo"><img src="cartes/02-le-coffre.webp" alt="Le coffre" loading="lazy" width="512" height="715"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" loading="lazy" width="512" height="715"></div>
             <span class="issue">Coup raté</span>
             <p><strong>Tout le reste.</strong> Les deux cartes vont à la défausse.</p>
             <p class="note">Une Alarme posée face cachée dans un coup ne sonne pas : le coup rate.</p>
@@ -682,7 +682,7 @@
   <div class="combos">
     <div class="combo"><div class="pts">1</div><div class="fan"><img src="cartes/03-le-badge-du-gardien-de-nuit.webp" alt="Le badge du gardien" width="512" height="715" style="--r:0deg"></div><span class="tag">1 carte</span><h4>La carte seule</h4><p>Une Clé ou un Butin hors d’un groupe.</p><p class="punch">Petit, mais ça compte.</p></div>
     <div class="combo"><div class="pts">4</div><div class="fan"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:-8deg"><img src="cartes/05-le-passe-de-la-salle-privee.webp" alt="Le passe de la salle privée" width="512" height="715" style="--r:8deg"></div><span class="tag">2 Clés · même lieu</span><h4>La paire</h4><p>Deux Clés du même lieu : 4 points au lieu de 2.</p><p class="punch">Un double des clés, et la porte est à toi.</p></div>
-    <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-les-lingots.webp" alt="Les lingots" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><span class="tag">3 Butins · lieux différents</span><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés : 7 points au lieu de 3.</p><p class="punch">Le tour des grands magasins.</p></div>
+    <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-le-coffre.webp" alt="Le coffre" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><span class="tag">3 Butins · lieux différents</span><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés : 7 points au lieu de 3.</p><p class="punch">Le tour des grands magasins.</p></div>
   </div>
   <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux. Le Passe-partout complète une paire, le Pactole une famille, au lieu de ton choix.</p>
   <div class="grid2 fin-seule" style="margin-top:26px">
@@ -1045,9 +1045,9 @@
   // ---- Exemple : un début de partie joué pas à pas (18 oct. 2026 : sans effets de lieu, Traître des deux côtés ; « Je l'ai ! », pioche, universelles jokers).
   // Le script ci-dessous rejoue les six coups sur une table ; chaque étape en garde un instantané complet.
   // Afficher une étape, c'est poser chaque carte à sa place : les transitions CSS font glisser et retourner les cartes, dans les deux sens.
-  const LIEU = { B: ["banque", "Banque", "la combinaison du coffre", "les lingots"], M: ["musee", "Musée", "le badge du gardien", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
+  const LIEU = { B: ["banque", "Banque", "le tampon du directeur", "le coffre"], M: ["musee", "Musée", "le badge du gardien", "le tableau"], C: ["casino", "Casino", "le passe de la salle privée", "la caisse"], J: ["bijou", "Bijouterie", "le code de l'alarme", "les diamants"] };
   const NOM = { A: "Ana", B: "Bilal", C: "Chloé", D: "Dov" };
-  const IMG = { "K-B": "01-la-combinaison-du-coffre", "L-B": "02-les-lingots", "K-M": "03-le-badge-du-gardien-de-nuit", "L-M": "04-le-tableau", "K-C": "05-le-passe-de-la-salle-privee", "L-C": "06-la-caisse", "K-J": "07-le-code-de-l-alarme", "L-J": "08-les-diamants", "T": "09-traitre", "A": "10-alarme", "K-U": "15-passe-partout", "L-U": "16-pactole" };
+  const IMG = { "K-B": "01-le-tampon-du-directeur", "L-B": "02-le-coffre", "K-M": "03-le-badge-du-gardien-de-nuit", "L-M": "04-le-tableau", "K-C": "05-le-passe-de-la-salle-privee", "L-C": "06-la-caisse", "K-J": "07-le-code-de-l-alarme", "L-J": "08-les-diamants", "T": "09-traitre", "A": "10-alarme", "K-U": "15-passe-partout", "L-U": "16-pactole" };
   function cardName(code) {
     if (code === "T") return "Le traître"; if (code === "A") return "Alarme";
     if (code === "K-U") return "Le passe-partout · Clé de tous les lieux"; if (code === "L-U") return "Le pactole · Butin de tous les lieux";
@@ -1170,18 +1170,18 @@
   // Coup 2 : Bilal annonce un Butin, et un Traître se cache parmi les volontaires
   newCoup("B");
   const lb = h("B", "L-B");
-  beat(2, "Bilal a les lingots, un Butin de la Banque. Il lui faut la combinaison du coffre, la Clé de la Banque.", null, { hi: [lb] });
+  beat(2, "Bilal a le coffre, un Butin de la Banque. Il lui faut le tampon du directeur, la Clé de la Banque.", null, { hi: [lb] });
   toMid("m", lb); S.announce = "« Butin de la Banque, qui a la clé ? »";
-  beat(2, "Il pose les lingots face cachée et annonce.");
+  beat(2, "Il pose le coffre face cachée et annonce.");
   const a2 = h("A", "K-B"), tc = h("C", "T");
   offer("A", a2); offer("C", tc);
-  beat(2, "Ana a la combinaison : « Je l'ai ! ». Chloé aussi… avec un Traître.", "Annoncer un Butin, c'est montrer son portefeuille.", { says: { A: JLA, C: JLA }, hi: [tc] });
+  beat(2, "Ana a le tampon : « Je l'ai ! ». Chloé aussi… avec un Traître.", "Annoncer un Butin, c'est montrer son portefeuille.", { says: { A: JLA, C: JLA }, hi: [tc] });
   toMid("c", tc); back("A"); S.roles.C = "complice";
   beat(2, "Bilal choisit Chloé. Ana reprend sa carte.");
   S.revealed = true; S.res = ["vol", "Trahison !"];
-  beat(2, "On retourne : un Traître face à un Butin. Chloé, la complice, vole les lingots !", "Meneur ou complice, le Traître vole pareil.");
+  beat(2, "On retourne : un Traître face à un Butin. Chloé, la complice, vole le coffre !", "Meneur ou complice, le Traître vole pareil.");
   toPlanq("C", lb); toDiscard(tc); S.res = null; S.revealed = false;
-  beat(2, "Les lingots vont dans la Planque de Chloé : 1 point. Le Traître part à la défausse.", "Les Clés ne se volent jamais : la combinaison d'Ana ne risquait rien.");
+  beat(2, "Le coffre va dans la Planque de Chloé : 1 point. Le Traître part à la défausse.", "Les Clés ne se volent jamais : le tampon d'Ana ne risquait rien.");
   const f2 = completer("B");
   beat(2, f2.txt + " Au tour de Chloé.", "Bilal révise sa confiance en l'humanité.", { hi: f2.got });
 
@@ -1191,7 +1191,7 @@
   beat(3, "Chloé a le passe du Casino, une Clé. Il lui faut la caisse, le Butin du Casino.", null, { hi: [kc] });
   toMid("m", kc); S.announce = "« Clé du Casino, qui a le Butin ? »";
   beat(3, "Elle pose sa Clé face cachée et annonce.");
-  beat(3, "Ana a la caisse… mais se tait. Après le coup des lingots, personne n'a envie d'aider Chloé.", null, { hi: [h("A", "L-C")], says: { A: "…" } });
+  beat(3, "Ana a la caisse… mais se tait. Après le vol du coffre, personne n'a envie d'aider Chloé.", null, { hi: [h("A", "L-C")], says: { A: "…" } });
   const t3 = S.deck[0]; toMid("c", t3);
   beat(3, "Personne ne dit « Je l'ai ! ». Chloé prend donc la carte du dessus de la pioche.", "Sans volontaire, la pioche joue le complice.");
   S.revealed = true; S.res = ["ok", "Coup réussi"];
@@ -1224,16 +1224,16 @@
   // Coup 5 : le Pactole de Dov
   newCoup("A");
   const kb = h("A", "K-B");
-  beat(5, "Ana a la combinaison du coffre, la Clé de la Banque. Il lui faut les lingots.", null, { hi: [kb] });
+  beat(5, "Ana a le tampon du directeur, la Clé de la Banque. Il lui faut le coffre.", null, { hi: [kb] });
   toMid("m", kb); S.announce = "« Clé de la Banque, qui a le Butin ? »";
   beat(5, "Elle la pose face cachée et annonce.");
   const d5 = h("D", "L-U"), c5 = h("C", "L-B");
   offer("D", d5); offer("C", c5);
-  beat(5, "Chloé a les lingots. Dov a le Pactole, qui va avec toutes les Clés. Deux « Je l'ai ! ».", null, { says: { D: JLA, C: JLA } });
+  beat(5, "Chloé a le coffre. Dov a le Pactole, qui va avec toutes les Clés. Deux « Je l'ai ! ».", null, { says: { D: JLA, C: JLA } });
   toMid("c", d5); back("C"); S.roles.D = "complice";
-  beat(5, "Ana choisit Dov plutôt que Chloé. Chloé reprend sa carte.", "Échaudée par les lingots, toute la table se méfie de Chloé.");
+  beat(5, "Ana choisit Dov plutôt que Chloé. Chloé reprend sa carte.", "Échaudée par le vol du coffre, toute la table se méfie de Chloé.");
   S.revealed = true; S.res = ["ok", "Coup réussi"];
-  beat(5, "Combinaison et Pactole : coup réussi, à la Banque.");
+  beat(5, "Tampon et Pactole : coup réussi, à la Banque.");
   toPlanq("A", kb); toPlanq("D", d5); S.res = null; S.revealed = false;
   beat(5, "Chacun range sa carte. Dov : 1 point. Ana : deux Clés de lieux différents, 2 points.");
   const f5 = completer("A");
