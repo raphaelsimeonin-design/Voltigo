@@ -144,7 +144,6 @@
   .kcard.tint-muted .plaque { background: var(--surface-2); color: var(--ink); }
 
   .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 22px; min-width: 0; }
-  .grid2.fin-seule { max-width: 560px; }
   .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr)); gap: 22px; min-width: 0; }
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr)); gap: 22px; min-width: 0; }
 
@@ -245,6 +244,16 @@
   .win .dossier .al .ico { width: 16px; height: 16px; }
   .win .dossier .al.n { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; }
   .dossier .arrow { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; color: var(--gold-ink); }
+  /* Fortune faite : des lots de cartes en éventail, chacun avec sa pastille de points */
+  .win .dossier.lots { flex-wrap: nowrap; gap: 8px; align-items: center; }
+  .lots .lot { display: grid; justify-items: center; gap: 4px; }
+  .lots .pile { display: flex; }
+  .lots .pile .al + .al { margin-left: -12px; }
+  .lots .pile .al:first-child:not(:only-child) { transform: rotate(-6deg); } .lots .pile .al:nth-child(2):last-child { transform: rotate(6deg); }
+  .lots .lot b { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 14px; line-height: 1; padding: 2px 8px; border-radius: 999px; background: var(--gold); color: #2A1B00; }
+  .lots .arrow { margin-bottom: 22px; }
+  .lots > .al.n { margin-bottom: 22px; margin-left: 4px; }
+  @media (max-width: 420px) { .win .dossier.lots { gap: 5px; } .lots .pile .al + .al { margin-left: -16px; } .lots > .al.n { margin-left: 2px; } }
 
   /* Variantes */
   .variant header { padding: 0; border: 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -676,7 +685,7 @@
 </section>
 
 <section id="gagner">
-  <div class="sechead"><div class="pastille">4</div><div><h2>Gagner</h2><div class="sub">Des points dans ta Planque. Seule la police arrête la partie.</div></div></div>
+  <div class="sechead"><div class="pastille">4</div><div><h2>Gagner</h2><div class="sub">Des points dans ta Planque, et deux façons d’arrêter la partie.</div></div></div>
   <h3 class="combos-title" style="margin-top:0">Le barème, en images</h3>
   <p class="bareme-lead">Chaque Clé ou Butin de ta Planque vaut <strong>1 point</strong>. Une paire ou une famille rapporte plus.</p>
   <div class="combos">
@@ -685,11 +694,18 @@
     <div class="combo"><div class="pts">7</div><div class="fan"><img src="cartes/02-le-coffre.webp" alt="Le coffre" width="512" height="715" style="--r:-12deg"><img src="cartes/04-le-tableau.webp" alt="Le tableau" width="512" height="715" style="--r:0deg"><img src="cartes/06-la-caisse.webp" alt="La caisse" width="512" height="715" style="--r:12deg"></div><span class="tag">3 Butins · lieux différents</span><h4>La famille</h4><p>Trois Butins de trois lieux différents, gagnés ou volés : 7 points au lieu de 3.</p><p class="punch">Le tour des grands magasins.</p></div>
   </div>
   <p class="note" style="margin-top:14px">Chaque carte compte dans un seul groupe, regroupé au mieux. Le Passe-partout complète une paire, le Pactole une famille, au lieu de ton choix.</p>
-  <div class="grid2 fin-seule" style="margin-top:26px">
+  <div class="grid2" style="margin-top:26px">
+    <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg><h3>Fortune faite</h3></div><div class="body">
+      <div class="big">10 points</div>
+      <div class="dossier lots" role="img" aria-label="Par exemple : deux paires (4 points chacune) et deux cartes seules (1 chacune) font 10 points"><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div></span><b>4</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-cle"/></svg></div></span><b>4</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>1</b></span><span class="arrow">+</span><span class="lot"><span class="pile"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-butin"/></svg></div></span><b>1</b></span><span class="arrow">=</span><div class="al n last">10</div></div>
+      <p class="note" style="margin:0 0 10px">Deux paires et deux cartes seules : 10 points. Toute combinaison qui y arrive gagne.</p>
+      <p>À la fin d’un coup, dès qu’un joueur atteint <strong>10 points</strong> dans sa Planque, la partie s’arrête : <strong>il gagne.</strong> Plusieurs à la fois : le plus de points l’emporte.</p>
+      <span class="pop">On raccroche les gants.</span>
+    </div></div>
     <div class="kcard win"><div class="plaque"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg><h3>La police débarque</h3></div><div class="body">
       <div class="big">Dernière Alarme</div>
       <div class="dossier" aria-hidden="true"><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div><div class="al last"><svg class="ico" aria-hidden="true"><use href="#i-alarme"/></svg></div></div>
-      <p>Quand la <strong>dernière Alarme</strong> du paquet rejoint le dossier, la partie s’arrête aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong></p>
+      <p>Personne n’a encore 10 points ? Quand la <strong>dernière Alarme</strong> du paquet rejoint le dossier, la partie s’arrête aussitôt. Chacun compte sa Planque : <strong>le plus de points gagne.</strong></p>
       <p class="note">Les deux dernières ne se gardent pas. Quand il ne reste plus que deux Alarmes hors du dossier, si tu en as une en main au début de ton tour, elle sonne d’elle-même et rejoint le dossier.</p>
       <span class="pop">Rangé des voitures.</span>
     </div></div>
